@@ -139,7 +139,7 @@ class VendorClientTests(unittest.TestCase):
 
 
 class SecretsTests(unittest.TestCase):
-    KEY_PATTERNS = re.compile(r"(AIza[0-9A-Za-z_\-]{30,}|gsk_[0-9A-Za-z]{20,}|sk-[0-9A-Za-z_\-]{20,})")
+    KEY_PATTERNS = re.compile(r"(AQ\.[0-9A-Za-z_\-]{30,}|AIza[0-9A-Za-z_\-]{30,}|gsk_[0-9A-Za-z]{20,}|sk-[0-9A-Za-z_\-]{20,})")
 
     def test_no_api_keys_in_tracked_or_untracked_files(self):
         files = subprocess.run(

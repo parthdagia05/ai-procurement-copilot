@@ -11,8 +11,8 @@ from dataclasses import dataclass
 import src  # noqa: F401  (loads .env)
 
 PRESETS: dict[str, tuple[str, str]] = {
-    "gemini": ("https://generativelanguage.googleapis.com/v1beta/openai/", "gemini-2.5-flash"),
-    "groq": ("https://api.groq.com/openai/v1", "llama-3.3-70b-versatile"),
+    "gemini": ("https://generativelanguage.googleapis.com/v1beta/openai/", "gemini-3.8-flash"),
+    "groq": ("https://api.groq.com/openai/v1", "openai/gpt-oss-120b"),
     "openai": ("https://api.openai.com/v1", "gpt-4o-mini"),
 }
 # Provider-specific key names are accepted as a convenience.
@@ -37,14 +37,15 @@ class LLMSettings:
 
 
 def load_settings() -> LLMSettings:
-    provider = os.getenv("LLM_PROVIDER", "gemini").strip().lower() or "gemini"
-    base_url, model = PRESETS.get(provider, PRESETS["gemini"])
-    api_key = os.getenv("LLM_API_KEY", "").strip() or None
-    if api_key is None:
-        for name in KEY_FALLBACKS.get(provider, ()):
-            api_key = os.getenv(name, "").strip() or None
-            if api_key:
-                break
+    provider = os.getenv("LLM_PROVIDER", "groq").strip().lower() or "groq"
+    base_url, model = PRESETS.get(provider, PRESETS["groq"])
+    # A provider-specific key wins over the generic LLM_API_KEY, so switching
+    # LLM_PROVIDER never sends one provider's key to another provider.
+    api_key = None
+    for name in (*KEY_FALLBACKS.get(provider, ()), "LLM_API_KEY"):
+        api_key = os.getenv(name, "").strip() or None
+        if api_key:
+            break
     return LLMSettings(
         provider=provider,
         base_url=os.getenv("LLM_BASE_URL", "").strip() or base_url,
