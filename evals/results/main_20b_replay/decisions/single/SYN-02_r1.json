@@ -1,0 +1,250 @@
+{
+ "decision": {
+  "request_id": "REQ-9002",
+  "recommendation": "route_for_specialist_review: Route for specialist review before approval. The request for QuillPoint Proposals requires a new vendor with an annual spend of $10,000, triggering both security and legal review requirements per policy s5 and s7. The vendor is new and has no completed security assessment, and its legal terms are in draft form, necessitating specialist oversight.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "QuillPoint Proposals from QuillPoint (Proposal Software): annual cost $10,000, 14 users, data access 'internal_documents', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-9002"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Elena Garcia (IC3, Sales); manager Robert King (E007).",
+    "reference": "employee:E003"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Sales software budget: annual $220,000, committed $202,000, available $18,000; request $10,000 is within the available budget (headroom $8,000).",
+    "reference": "budget:Sales"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of QuillPoint Proposals.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: QuillPoint procurement status New, security Pending (no review date), legal terms Draft.",
+    "reference": "vendor_registry:V101"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review not_completed (last review none), risk medium, processes personal data: no, stores data outside region: no.",
+    "reference": "vendor_api:QuillPoint"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $10,000 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required: vendor security assessment not completed (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Legal review required: new vendor with annual spend $10,000 (>= $10,000); legal terms are 'Draft', not approved/standard (policy s7).",
+    "reference": "policy:s7"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Annual spend of $10,000 falls within the $1,000.01-$10,000 band, requiring Department Head and Procurement approvals (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Vendor security assessment is not completed, triggering a security review requirement (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Vendor is new with annual spend >= $10,000 and legal terms are draft, triggering a legal review requirement (policy s7).",
+    "reference": "policy:s7"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Security",
+   "Legal"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "legal_review_required"
+  ],
+  "next_step": "Send the evidence package to Security and Legal for review, then to Department Head and Procurement for approval. Do not purchase until every approval is recorded. Request the vendor to provide a completed security assessment and finalized legal terms before proceeding.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 5.3,
+   "rate_limit_wait_ms": 0.0,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "route_for_specialist_review",
+  "rationale": "The request for QuillPoint Proposals requires a new vendor with an annual spend of $10,000, triggering both security and legal review requirements per policy s5 and s7. The vendor is new and has no completed security assessment, and its legal terms are in draft form, necessitating specialist oversight.",
+  "next_step_detail": "Request the vendor to provide a completed security assessment and finalized legal terms before proceeding.",
+  "overlap_assessment": "",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Annual spend of $10,000 falls within the $1,000.01-$10,000 band, requiring Department Head and Procurement approvals (policy s4).",
+    "evidence_ids": [
+     "policy:s4"
+    ]
+   },
+   {
+    "finding": "Vendor security assessment is not completed, triggering a security review requirement (policy s5).",
+    "evidence_ids": [
+     "policy:s5#vendor"
+    ]
+   },
+   {
+    "finding": "Vendor is new with annual spend >= $10,000 and legal terms are draft, triggering a legal review requirement (policy s7).",
+    "evidence_ids": [
+     "policy:s7"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "single",
+  "repeat": 1,
+  "case_id": "SYN-02",
+  "request_id": "REQ-9002",
+  "label": "route_for_specialist_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 5,
+  "values_total": 5,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 5.3,
+  "rate_limit_wait_ms": 0.0,
+  "net_latency_ms": 5.3,
+  "llm_calls": 1,
+  "tool_calls": 5,
+  "tokens": 2386,
+  "cache_hits": 1,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.3,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.3,
+   "evidence_ids": [
+    "request:REQ-9002",
+    "employee:E003"
+   ]
+  },
+  {
+   "t_ms": 0.4,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "budget:Sales"
+   ]
+  },
+  {
+   "t_ms": 0.6,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 1.9,
+   "kind": "vendor_api",
+   "vendor": "QuillPoint",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 1.2
+  },
+  {
+   "t_ms": 1.9,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 1.3,
+   "evidence_ids": [
+    "vendor_registry:V101",
+    "vendor_api:QuillPoint"
+   ]
+  },
+  {
+   "t_ms": 2.0,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s5#vendor",
+    "policy:s7"
+   ]
+  },
+  {
+   "t_ms": 5.1,
+   "kind": "llm",
+   "cached": true,
+   "key": "26c7c19456f2bf4a0a4c54c39b1f7d86",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 316,
+    "prompt_tokens": 2070,
+    "total_tokens": 2386
+   }
+  },
+  {
+   "t_ms": 5.3,
+   "kind": "merge",
+   "label": "route_for_specialist_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

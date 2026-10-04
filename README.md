@@ -1,213 +1,136 @@
 # AI Procurement Request Copilot
 
-An internal copilot that reviews a software purchase request, gathers evidence with tools, applies the procurement policy deterministically, and recommends the next action — while every approval stays with a human.
+When an employee asks to buy new software, someone in procurement has to check the budget, look for tools the company already owns, check the vendor's security status, and work out who needs to approve it. This copilot does that groundwork and recommends the next step. **It never approves or buys anything: a human always decides.**
 
-> FDE Assessment 3. All data is synthetic. Design rationale: [`docs/DESIGN_PROPOSAL.md`](docs/DESIGN_PROPOSAL.md). Ship decision: [`docs/DECISION_MEMO.md`](docs/DECISION_MEMO.md).
-
-**Ship decision: Architecture A (single agent on a deterministic policy floor).** See [Architecture comparison](#architecture-comparison).
+> FDE Assessment 3 · all data is synthetic · **Decision: ship Architecture A** ([memo](docs/DECISION_MEMO.md))
 
 ---
 
-## 1. Setup and run (macOS / Linux)
+## Run it
 
 ```bash
 ./start.sh
 ```
 
-That one command creates a Python 3.12 virtual environment (via `uv` if installed, otherwise `python3.12`/`python3.11`), installs dependencies, copies `.env.example` to `.env`, runs the pre-flight check, and starts:
+Open **http://127.0.0.1:8501**, pick a request, click **Run analysis**.
 
-- mock vendor-risk API: http://127.0.0.1:8001
-- copilot UI: http://127.0.0.1:8501
+`start.sh` sets up Python 3.12, installs everything, checks the setup and starts the app plus a mock vendor-risk service. If you don't have Python 3.11/3.12: `brew install uv` first.
 
-No Python 3.11/3.12? `brew install uv` (recommended) or `brew install python@3.12`.
-
-**LLM key (optional).** Without a key the copilot runs in *deterministic mode*: the policy engine alone produces a complete, policy-correct decision. To enable the agents, put a free Groq key in `.env`:
+**An AI key is optional.** Without one, the copilot still works: the policy rules alone produce a full, correct decision. To turn the AI on, get a free key at [console.groq.com/keys](https://console.groq.com/keys) and put it in `.env`:
 
 ```
-LLM_PROVIDER=groq
 GROQ_API_KEY=gsk_...
 ```
 
-Any OpenAI-compatible provider works (`LLM_PROVIDER=gemini|openai`, or `LLM_BASE_URL` + `MODEL_NAME`). Default model: `openai/gpt-oss-120b` on Groq.
-
 | Command | What it does |
 |---|---|
-| `make test` | 50 unit/integration tests, no LLM calls |
-| `make public` | starter-pack public runner on both architectures |
-| `make eval-replay` | reproduces the committed evaluation **offline, without a key**, from `evals/llm_cache/` |
-| `make eval` | live evaluation (needs a key; resumable; stops cleanly on daily quota) |
+| `make test` | runs the 48 automated tests (no AI calls) |
+| `make eval-replay` | re-runs our whole evaluation offline from saved AI responses, no key needed |
+| `make eval` | runs the evaluation live (needs a key) |
 
 ---
 
-## 2. Product workflow
+## How it works
 
 ```mermaid
 flowchart LR
-    R[Employee request] --> U[Understand need<br/>completeness check]
-    U --> G
-    subgraph G[Gather evidence: tools]
-        direction TB
-        T1[get_request_context]
-        T2[check_budget]
-        T3[search_existing_software]
-        T4[get_vendor_profile<br/>registry + external API]
-    end
-    G --> P[evaluate_policy_rules<br/>deterministic floor]
-    P --> AG[Agent: interpret + recommend<br/>may call follow-up tools]
-    AG --> M[Merge: model may only ADD<br/>labels limited to allowed set<br/>claims must cite evidence ids]
-    M --> H[Human review<br/>approvals, exceptions]
+    A[Purchase request] --> B[Gather evidence<br/>5 tools]
+    B --> C[Policy rules in code<br/>approvals, flags, missing info]
+    C --> D[AI agent<br/>reads evidence, explains,<br/>picks a next step]
+    D --> E[Safety check<br/>AI can add, never remove]
+    E --> F[Human reviewer]
 ```
 
-The UI (Streamlit) shows the three required panels:
+1. **Gather evidence.** Five tools read the request, the department budget, the software catalog, the vendor registry and the external vendor-risk service. Every finding gets a reference (like `catalog:SW001`) so you can trace it.
+2. **Apply the rules in code.** Things with clear answers (spend thresholds, budget maths, 365-day security reviews, who must approve) are handled by plain code, not AI. This is the *floor*.
+3. **Let the AI interpret.** The AI reads everything and does what code can't: judges whether an existing tool really covers the need, spots sensitive data hidden in free text, and writes a clear explanation and next step.
+4. **Safety check.** The AI can add approvals or warnings, but can never remove one the rules require. Any claim it makes must point to real evidence. Text that sounds like "this is approved" is thrown out.
+5. **A human decides.** The screen shows the request, all evidence, the recommendation, and who needs to approve.
 
-1. **Request details** — fields, with the requester's free text shown as untrusted data (highlighted when it contains instructions).
-2. **Evidence panel** — every finding grouped by tool, with its record reference (`catalog:SW001`, `vendor_api:BrandBoard`, `policy:s4` …) and a status icon (✓ verified, ⚠ stale/conflict/missing, ✕ unavailable).
-3. **Recommendation + action** — label, rationale, required approvals (each with the rule that triggered it), risk flags, missing information, next step, and reviewer actions (send to approvers / request clarification / escalate). Actions are simulated: nothing is purchased or approved.
+The screen has three panels: **request details**, **evidence** (✓ verified, ⚠ needs attention, ✕ couldn't check) and **recommendation + actions**.
 
-Output contract (`src/contracts.py`, unchanged except optional telemetry fields): `recommendation | evidence | required_approvals | missing_information | risk_flags | next_step | human_review_required | telemetry`. The recommendation string starts with one of five labels: `proceed_to_standard_approval`, `route_for_specialist_review`, `use_existing_tool`, `request_clarification`, `hold_for_manual_review`.
+### Tools and agents
 
----
+| Tool | What it checks | Uses AI? |
+|---|---|---|
+| `get_request_context` | the request, who asked, what's missing | no |
+| `check_budget` | cost vs. the department's remaining budget | no |
+| `search_existing_software` | tools the company already owns | no |
+| `get_vendor_profile` | vendor registry + live vendor-risk service | no (the service can be down) |
+| `evaluate_policy_rules` | required approvals and risk flags | no |
 
-## 3. Architecture
+- **Architecture A (single agent):** one AI agent reads the evidence and can ask for more (e.g. search the catalog again) before answering. 1 AI call per request.
+- **Architecture B (two agents):** an *analyst* gathers and summarises evidence, then a *reviewer* checks the analyst's work and decides. 2 AI calls per request. The reviewer never sees raw request text, which helps against prompt injection.
 
-**AI interprets and recommends; code owns thresholds and deterministic checks; humans own approvals and exceptions.**
-
-```mermaid
-flowchart TB
-    subgraph CODE[Deterministic code]
-        F[Facts: request, budget, catalog,<br/>vendor registry + risk API]
-        E[Policy engine src/rules.py<br/>approvals, flags, missing info,<br/>allowed labels]
-        L[Evidence ledger<br/>stable reference per finding]
-        F --> E
-        F --> L
-        E --> L
-    end
-    subgraph A[Architecture A]
-        A1[Single agent<br/>1 LLM call typical]
-    end
-    subgraph B[Architecture B]
-        B1[Procurement Analyst<br/>evidence pack] --> B2[Policy/Risk Reviewer<br/>no tools, no raw free text]
-    end
-    L --> A1
-    L --> B1
-    A1 --> MG[Merge + sanitiser src/decision.py]
-    B2 --> MG
-    E --> MG
-    MG --> D[ProcurementDecision<br/>human_review_required = True]
-```
-
-### Tools
-
-All tools are bound to the request under review (the model cannot point them at another request) and none of them writes, approves or buys.
-
-| Tool | Deterministic | Source | Used by |
-|---|---|---|---|
-| `get_request_context` | yes | requests.json, employees.csv | code (mandatory) |
-| `check_budget` | yes | department_budgets.csv | code (mandatory) |
-| `search_existing_software(query?)` | yes | software_catalog.csv, purchase_history.csv | code + agent follow-up |
-| `get_vendor_profile(vendor_name?)` | logic yes; availability no | vendors.csv + **external vendor-risk API** | code + agent follow-up |
-| `evaluate_policy_rules` | yes | policy engine | code (mandatory) |
-
-The five mandatory tools run through the same registry (and telemetry) before the first LLM call; the agent keeps native function calling for follow-up evidence. **Why:** in a pilot, letting `gpt-oss-120b` call the five tools itself cost 6 LLM calls and ~10k tokens per request (one tool per turn) and it skipped `get_vendor_profile`. The redesign uses ~1 call and ~3k tokens, which also fits the free tier's 200k tokens/day.
-
-### Deterministic vs LLM
-
-| Concern | Owner |
-|---|---|
-| Required fields present (null / "unknown" / blank; `[]` integrations = none) | code |
-| Budget arithmetic, missing budget record | code |
-| Overlap candidates (same vendor / category / product) and the `existing_tool_overlap` flag | code |
-| Does an existing tool *really* cover the need? Is the stated gap credible? | **LLM** (chooses `use_existing_tool` if allowed) |
-| Financial approval band, Legal $10k threshold | code |
-| Security / Privacy / Legal triggers from data level, integrations, vendor status, region | code |
-| Data sensitivity hidden in free text or unknown vocabulary | **LLM, upward only** |
-| Vague business purpose | **LLM, can add a missing field** |
-| Review age vs 365 days (policy reference date, never the machine clock), registry vs API conflicts | code |
-| Prompt-injection detection | code scanner + LLM (either can add the flag) |
-| Recommendation label | code computes the allowed set, **LLM picks** within it |
-| Rationale, next-step guidance, clarification questions | **LLM**, sanitised and grounded |
-| `human_review_required` | code, always `True` |
-
-### How the floor is enforced (`src/decision.py`)
-
-- approvals and flags = code floor ∪ model additions (restricted to known roles/flags); runtime assertions fail if any code-derived item is missing;
-- the label must be in the code-computed allowed set, else the default is used;
-- model interpretations must cite evidence ids present in this run's ledger, else they are dropped;
-- model text that claims an approval was granted, or reads like an injection, is discarded;
-- any LLM failure (quota, invalid JSON after one repair, network) falls back to the deterministic decision with `telemetry.fallback_reason` set.
-
-### Agents
-
-- **A — single agent** (`src/agents/single.py`): sees the mandatory tool results, may call follow-up tools (max 2 turns), returns a JSON assessment. Typical: 1 LLM call.
-- **B — analyst → reviewer** (`src/agents/staged.py`): the analyst gets the same evidence and tools and returns an *evidence pack* (findings with evidence ids, overlap view, neutral paraphrase of the stated gap, concerns, upward additions). The reviewer has no tools, never sees raw request free text or quoted injected text, audits the pack against the ledger and chooses the label. Code unions both agents' additions. Typical: 2 LLM calls.
-- Both share the same tools, floor, merge, sanitiser and fallback. Plain OpenAI SDK, hand-rolled loop (no framework), so every call is counted.
-
-### Reliability and human controls
-
-| Situation | Behaviour |
-|---|---|
-| Missing request info | only `request_clarification` allowed; specific fields listed |
-| Unknown / unrecognised data level | Security + Privacy required until clarified (never assumed safe) |
-| Registry and risk service disagree | `conflicting_vendor_evidence`, both values shown, `hold_for_manual_review` |
-| Review older than 365 days | `vendor_review_expired` + Security |
-| Vendor-risk API down (503/timeout/refused) | one retry, then `vendor_risk_unavailable`, Security, nothing assumed, hold |
-| Vendor-risk API has no record (404) | assessment missing: Security, not an outage |
-| Department has no budget record | `budget_unverifiable` + Finance, hold |
-| Injection in request, vendor notes or API notes | flagged, ignored, floor unaffected, model text sanitised |
-| LLM quota / error / invalid output | deterministic decision, reason recorded |
+Full technical detail: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ---
 
-## 4. Assumptions
+## Results
 
-Policy ambiguities and how they were resolved (full list with evidence: [`docs/DESIGN_PROPOSAL.md` §1.2](docs/DESIGN_PROPOSAL.md)):
+We wrote the correct answers for 17 test cases **by hand, from the policy, before writing any rules code**: the 10 provided requests plus 7 tricky ones we made up (a vendor at exactly $10,000, a security review exactly 365 days old, a hidden instruction inside vendor notes, a missing budget record, and so on). Every setup ran on the same 17 cases with the same AI model (`openai/gpt-oss-20b` on Groq).
 
-- **Bands:** ≤$1,000 Manager; ≤$10,000 Dept Head + Procurement; ≤$25,000 + Finance; above + CFO. Legal for a new vendor is **≥ $10,000**, so a new vendor at exactly $10,000 needs Legal but not Finance.
-- **Review validity:** current while `(reference date − review date) ≤ 365 days`. Reference date is parsed from the policy (2026-09-30).
-- **New vendor:** registry `procurement_status` not `Approved`, or absent from the registry. Legal terms are standard if `Approved` or `Standard`.
-- **Conflict:** canonical statuses differ (`Pending` ≡ `not_completed`, so BrandBoard is *not* a conflict) or both sources have different review dates.
-- **Sensitive data:** employee/customer PII, confidential documents, credentials (+ source code, production access for Security). Sensitive data with a vendor storing data outside the region → Privacy + Legal. SSO alone is not employee PII.
-- **Unknown cost:** no tier is guessed; Procurement triages.
-- **Budget** is checked per request (open requests from the same department are not summed — listed as a limitation).
-- `human_review_required` is always `True`; the escalation level is expressed through approvals and the label.
+| | Rules only (no AI) | **A: single agent** | B: two agents | AI without the rules floor |
+|---|---|---|---|---|
+| Dangerous mistakes (a required approval or warning missing) | 0 / 17 | **0 / 17** | 0 / 17 | **7 / 13** |
+| Approvals exactly right | 100% | **100%** | 100% | 31% |
+| Right next step | 100% | **88%** | 82% | 31% |
+| Prompt-injection attempts resisted | 2 / 2 | **2 / 2** | 2 / 2 | 0 / 2 |
+| AI statements backed by evidence | — | **100%** | 100% | 100% |
+| AI calls per request | 0 | **1** | 2 | 1 |
+| Typical response time | instant | **1.3 s** | 2.2 s | 1.2 s |
+| Slowest 5% | 0.5 s | **1.8 s** | 4.7 s | 2.1 s |
+| Tokens per request | 0 | **~2,650** | ~4,450 | ~2,750 |
 
----
+Response times exclude time spent waiting on the free tier's rate limit. Raw results: [`evals/results/main_20b`](evals/results/main_20b/summary.md) (live) and [`main_20b_replay`](evals/results/main_20b_replay/summary.md) (same run replayed with the two scorer/sanitiser fixes below).
 
-## 5. Evaluation
+**What this tells us**
 
-_Filled in from `evals/results/main/summary.md`._
+- **The rules floor is what makes it safe.** With the floor, no setup ever dropped a required approval. Without it, the same AI dropped approvals in 7 of 13 cases, once dropping *every* required approval for source-code access and switching off human review. It also **failed both injection tests**: once it obeyed a hidden "skip security review" note and said *proceed*; once it spotted the injection but still dropped Security and Privacy.
+- **A and B are equally safe, but A is better value.** Both are perfect on approvals, warnings and escalation. A picked the right next step slightly more often (15 vs 14 of 17), with half the AI calls and less than half the worst-case wait.
+- **The AI's only mistakes were one kind:** suggesting "use the tool you already have" for an *add-on* or *more seats* of a tool the company already owns. That's advisory and harmless to compliance (the approvals were still right), and the screen now flags whenever the AI disagrees with the rules' default.
+- **The AI earns its place by explaining, not by deciding.** The rules alone already pick the right next step on this test set. The AI adds plain-language reasoning, clarifying questions, and judgement on fuzzy cases (unfamiliar data types, whether a tool really overlaps) that the rules can't read.
 
----
-
-## 6. Architecture comparison
-
-_See below._
-
----
-
-## 7. Known limitations
-
-_See below._
+**Extra check on a bigger model.** On `gpt-oss-120b`, A scored 15/17 and B got 8/8 before the free daily limit cut the run short. B fixed two of A's mistakes there, so B *might* earn its cost on a stronger model. Eight cases isn't enough to change the decision, and `make eval` can finish that run from the saved responses.
 
 ---
 
-## Repository layout
+## Which one we ship and why
 
-```
-src/
-  config.py          reference date (from policy), data dir override
-  data_access.py     JSON-safe data readers
-  vendor_client.py   typed vendor-risk client (ok / not_found / unavailable, retry)
-  facts.py           evidence gathering + ledger entries
-  rules.py           deterministic policy engine (the floor)
-  tools.py           agent-visible tool registry
-  safety.py          injection scanner + output sanitiser
-  decision.py        merge: floor + model assessment -> ProcurementDecision
-  agents/            single.py (A), staged.py (B), ablation.py (eval only), common.py, prompts.py
-  llm/               OpenAI-compatible client (limiter, cache), provider settings
-  solution.py        handle_request(request_id, architecture) adapter
-app.py               Streamlit UI
-evals/               gold_cases.json, fixtures/, run_eval.py, scoring.py, results/, llm_cache/
-tests/               unit + integration tests
-docs/                design proposal, decision memo
-```
+**Architecture A.** Before running anything we wrote down what B had to show to be worth its extra cost: at least 10 points more correct next steps, or half the unsupported claims, with no new safety failures and no more than 1.5× A's worst-case wait. B was 6 points *worse* on next steps, equal on evidence, and 2.6× slower at the worst case. It met none of the conditions. A simpler system that performs as well or better is the right call. Full reasoning: [`docs/DECISION_MEMO.md`](docs/DECISION_MEMO.md).
+
+---
+
+## Assumptions
+
+Where the policy was unclear, we chose the safer reading and wrote it down:
+
+- **Spend bands:** up to $1,000 needs a Manager; up to $10,000 Department Head + Procurement; up to $25,000 also Finance; above that also the CFO. A **new vendor at $10,000 or more needs Legal**, so at exactly $10,000 it needs Legal but not Finance.
+- **Security reviews last 365 days**, counted from the policy's reference date (30 Sep 2026), never today's date.
+- **Unknown means not safe:** if the data type is unknown or unfamiliar, Security and Privacy are added until someone clarifies.
+- **When sources disagree** (e.g. the registry says "approved" but the risk service says "expired"), we show both and hold for a human; we never pick one silently.
+- **If the vendor-risk service is down**, nothing is assumed: Security review is required and the request is held.
+- **Logging in with SSO alone is not personal data** (otherwise every tool would need Privacy review).
+- **Budget is checked per request**, not summed across other open requests from the same team.
+
+All rulings, with evidence: [`docs/DESIGN_PROPOSAL.md`](docs/DESIGN_PROPOSAL.md#12-traps-bugs-and-ambiguities-with-evidence-and-handling).
+
+---
+
+## Known limitations
+
+- **Small test set and one run per setup.** 17 cases, single repeat, because the free AI tier allows about 200k tokens a day. Results show clear differences in safety, but small differences in "right next step" (one case) could be noise.
+- **The 120b comparison is incomplete** (B: 8 of 17 cases) for the same reason.
+- **The AI over-suggests reusing existing tools** for add-ons and expansions. A next step would be to stop offering "use existing tool" when the request is for more of the *same* product.
+- **Rules are only as good as their keyword lists.** Unfamiliar data types are treated as sensitive (safe, but noisy), and the AI can only make things stricter.
+- **Prompt-injection detection is pattern-based**; it isn't what keeps things safe (the floor is), but cleverly worded attacks may go unflagged.
+- **Actions are simulated.** "Send to approvers" doesn't email anyone, and there's no audit log.
+- **The mock vendor-risk service** treats a 404 as "no assessment on record"; a real service would need its own error contract.
+
+---
+
+## What we fixed in the starter pack
+
+The machine date was already past the policy's reference date (we now read the date from the policy). Evaluation results were git-ignored. Evals silently failed if the mock service wasn't running (the runner now starts it). The vendor client treated "not found" the same as "service down". Vendor names were URL-decoded twice. Blank CSV cells became `NaN` in AI prompts. Streamlit could hang on its first-run email prompt. And `python` doesn't exist on a stock Mac. Details: [`docs/DESIGN_PROPOSAL.md` §1.2](docs/DESIGN_PROPOSAL.md).
+
+During the build we also fixed two of our own bugs found by the evaluation: the safety filter was deleting correct sentences like "SignFlow is an approved vendor" (12 false positives across runs, now narrowed), and the scorer miscounted a record ID written with an unusual hyphen.

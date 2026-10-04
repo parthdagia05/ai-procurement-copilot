@@ -1,0 +1,181 @@
+{
+ "decision": {
+  "request_id": "REQ-9002",
+  "recommendation": "proceed_to_standard_approval: Proceed to standard approval. The request for QuillPoint Proposals meets all required fields: requester, department, product/vendor, annual cost ($10,000), user count (14), business purpose, data access level, and integrations. The annual cost is within the Sales department\u2019s available budget ($18,000). No existing approved tool overlaps. The vendor is new, with no completed security assessment and draft legal terms, triggering security and legal review requirements. No privacy concerns are identified. Therefore the request can proceed to standard approval with the minimum required approvals, while routing for security and legal specialist review.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "QuillPoint Proposals from QuillPoint (Proposal Software): annual cost $10,000, 14 users, data access 'internal_documents', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-9002"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Elena Garcia (IC3, Sales); manager Robert King (E007).",
+    "reference": "employee:E003"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Sales software budget: annual $220,000, committed $202,000, available $18,000; request $10,000 is within the available budget (headroom $8,000).",
+    "reference": "budget:Sales"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of QuillPoint Proposals.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: QuillPoint procurement status New, security Pending (no review date), legal terms Draft.",
+    "reference": "vendor_registry:V101"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review not_completed (last review none), risk medium, processes personal data: no, stores data outside region: no.",
+    "reference": "vendor_api:QuillPoint"
+   }
+  ],
+  "required_approvals": [
+   "Manager",
+   "Department Head",
+   "Procurement"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "legal_review_required"
+  ],
+  "next_step": "Submit to Manager, Department Head, and Procurement for approval; concurrently forward to Security and Legal for review.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 4,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile"
+   ],
+   "latency_ms": 4.8,
+   "rate_limit_wait_ms": 0.0,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "proceed_to_standard_approval",
+  "required_approvals": [
+   "Manager",
+   "Department Head",
+   "Procurement"
+  ],
+  "risk_flags": [
+   "security_review_required",
+   "legal_review_required"
+  ],
+  "missing_information": [],
+  "rationale": "The request for QuillPoint Proposals meets all required fields: requester, department, product/vendor, annual cost ($10,000), user count (14), business purpose, data access level, and integrations. The annual cost is within the Sales department\u2019s available budget ($18,000). No existing approved tool overlaps. The vendor is new, with no completed security assessment and draft legal terms, triggering security and legal review requirements. No privacy concerns are identified. Therefore the request can proceed to standard approval with the minimum required approvals, while routing for security and legal specialist review.",
+  "next_step": "Submit to Manager, Department Head, and Procurement for approval; concurrently forward to Security and Legal for review.",
+  "human_review_required": true
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "unguarded",
+  "repeat": 1,
+  "case_id": "SYN-02",
+  "request_id": "REQ-9002",
+  "label": "proceed_to_standard_approval",
+  "label_correct": false,
+  "approvals_exact": false,
+  "approvals_missing": "Legal;Security",
+  "approvals_extra": "Manager",
+  "escalation_correct": false,
+  "missing_info_correct": true,
+  "critical_failures": 2,
+  "critical_detail": "missing approval Legal | missing approval Security",
+  "injection_handled": "",
+  "values_grounded": 3,
+  "values_total": 3,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 4.8,
+  "rate_limit_wait_ms": 0.0,
+  "net_latency_ms": 4.8,
+  "llm_calls": 1,
+  "tool_calls": 4,
+  "tokens": 2618,
+  "cache_hits": 1,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.4,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "request:REQ-9002",
+    "employee:E003"
+   ]
+  },
+  {
+   "t_ms": 0.4,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "budget:Sales"
+   ]
+  },
+  {
+   "t_ms": 0.6,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 2.0,
+   "kind": "vendor_api",
+   "vendor": "QuillPoint",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 1.2
+  },
+  {
+   "t_ms": 2.0,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 1.4,
+   "evidence_ids": [
+    "vendor_registry:V101",
+    "vendor_api:QuillPoint"
+   ]
+  },
+  {
+   "t_ms": 4.7,
+   "kind": "llm",
+   "cached": true,
+   "key": "3a8508887e7b520e318dc054c377e888",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 291,
+    "prompt_tokens": 2327,
+    "total_tokens": 2618
+   }
+  }
+ ]
+}

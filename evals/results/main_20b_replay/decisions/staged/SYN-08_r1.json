@@ -1,0 +1,322 @@
+{
+ "decision": {
+  "request_id": "REQ-9008",
+  "recommendation": "route_for_specialist_review: Route for specialist review before approval. The request meets the budget band and has an approved vendor, but policy s5 and s6 require security and privacy reviews for employee PII and HRIS integration, which are not yet documented in the evidence ledger.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "Kudosly Recognition from Kudosly (Employee Engagement): annual cost $7,000, 40 users, data access 'employee_pii', integrations: SSO, HRIS, urgency 'normal'.",
+    "reference": "request:REQ-9008"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Mia Thompson (IC4, Customer Success); manager Robert King (E007).",
+    "reference": "employee:E005"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Customer Success software budget: annual $140,000, committed $133,000, available $7,000; request $7,000 is within the available budget (headroom $0).",
+    "reference": "budget:Customer Success"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of Kudosly Recognition.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: Kudosly procurement status Approved, security Approved (2026-07-15), legal terms Approved.",
+    "reference": "vendor_registry:V107"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-07-15), risk low, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:Kudosly"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-07-15 is 77 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:Kudosly#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-07-15 is 77 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:Kudosly#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $7,000 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required because the request involves employee_pii (integration 'HRIS' implies employee_pii) (policy s5).",
+    "reference": "policy:s5#data"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Privacy review required: the tool will process employee_pii (policy s6).",
+    "reference": "policy:s6"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The request is for Kudosly Recognition, an employee engagement tool costing $7,000 annually for 40 users, with employee PII access and SSO/HRIS integrations.",
+    "reference": "request:REQ-9008"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The Customer Success department has a software budget of $140,000 with $7,000 remaining, so the request is within budget.",
+    "reference": "budget:Customer Success"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Kudosly is an approved vendor with a recent security review (2026-07-15) and standard legal terms, and it processes personal data but does not store data outside the region.",
+    "reference": "vendor_registry:V107, vendor_api:Kudosly, vendor_registry:Kudosly#review-age, vendor_api:Kudosly#review-age"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Security",
+   "Privacy"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "privacy_review_required"
+  ],
+  "next_step": "Send the evidence package to Security and Privacy for review, then to Department Head and Procurement for approval. Do not purchase until every approval is recorded. Request a formal security and privacy review documentation for the HRIS integration before proceeding.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 2,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 2.6,
+   "rate_limit_wait_ms": 0.0,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "route_for_specialist_review",
+  "rationale": "The request meets the budget band and has an approved vendor, but policy s5 and s6 require security and privacy reviews for employee PII and HRIS integration, which are not yet documented in the evidence ledger.",
+  "next_step_detail": "Request a formal security and privacy review documentation for the HRIS integration before proceeding.",
+  "overlap_assessment": "",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [
+   "employee_pii"
+  ],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "The request is for Kudosly Recognition, an employee engagement tool costing $7,000 annually for 40 users, with employee PII access and SSO/HRIS integrations.",
+    "evidence_ids": [
+     "request:REQ-9008"
+    ]
+   },
+   {
+    "finding": "The Customer Success department has a software budget of $140,000 with $7,000 remaining, so the request is within budget.",
+    "evidence_ids": [
+     "budget:Customer Success"
+    ]
+   },
+   {
+    "finding": "Kudosly is an approved vendor with a recent security review (2026-07-15) and standard legal terms, and it processes personal data but does not store data outside the region.",
+    "evidence_ids": [
+     "vendor_registry:V107",
+     "vendor_api:Kudosly",
+     "vendor_registry:Kudosly#review-age",
+     "vendor_api:Kudosly#review-age"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": {
+  "key_findings": [
+   {
+    "finding": "The request is for Kudosly Recognition, an employee engagement tool costing $7,000 annually for 40 users, with employee PII access and SSO/HRIS integrations.",
+    "evidence_ids": [
+     "request:REQ-9008"
+    ]
+   },
+   {
+    "finding": "The Customer Success department has a software budget of $140,000 with $7,000 remaining, so the request is within budget.",
+    "evidence_ids": [
+     "budget:Customer Success"
+    ]
+   },
+   {
+    "finding": "No approved catalog product shares the vendor, category, or product name of Kudosly Recognition.",
+    "evidence_ids": [
+     "catalog:search:default"
+    ]
+   },
+   {
+    "finding": "Kudosly is an approved vendor with a recent security review (2026-07-15) and standard legal terms, and it processes personal data but does not store data outside the region.",
+    "evidence_ids": [
+     "vendor_registry:V107",
+     "vendor_api:Kudosly",
+     "vendor_registry:Kudosly#review-age",
+     "vendor_api:Kudosly#review-age"
+    ]
+   }
+  ],
+  "overlap_assessment": "No existing catalog tool covers the requested functionality.",
+  "stated_gap": "",
+  "concerns": [
+   "Confirm that the HRIS integration complies with internal data handling policies.",
+   "Verify that employee PII is protected in accordance with privacy requirements.",
+   "Ensure the recent security review is still current and sufficient for the requested integrations."
+  ],
+  "additional_data_classes": [
+   "employee_pii"
+  ],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "injection_suspected": false
+ },
+ "score": {
+  "arm": "staged",
+  "repeat": 1,
+  "case_id": "SYN-08",
+  "request_id": "REQ-9008",
+  "label": "route_for_specialist_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 10,
+  "values_total": 10,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 2.6,
+  "rate_limit_wait_ms": 0.0,
+  "net_latency_ms": 2.6,
+  "llm_calls": 2,
+  "tool_calls": 5,
+  "tokens": 4455,
+  "cache_hits": 2,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 1.1,
+   "kind": "vendor_api",
+   "vendor": "Kudosly",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 0.8
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "request:REQ-9008",
+    "employee:E005"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "budget:Customer Success"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "vendor_registry:V107",
+    "vendor_api:Kudosly",
+    "vendor_registry:Kudosly#review-age",
+    "vendor_api:Kudosly#review-age"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s5#data",
+    "policy:s6"
+   ]
+  },
+  {
+   "t_ms": 1.7,
+   "kind": "llm",
+   "cached": true,
+   "key": "712489621ffb6b8288360f3593030de7",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 467,
+    "prompt_tokens": 1928,
+    "total_tokens": 2395
+   }
+  },
+  {
+   "t_ms": 2.4,
+   "kind": "llm",
+   "cached": true,
+   "key": "d0dd283776316e880be9b9ff93b8da8e",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 352,
+    "prompt_tokens": 1708,
+    "total_tokens": 2060
+   }
+  },
+  {
+   "t_ms": 2.6,
+   "kind": "merge",
+   "label": "route_for_specialist_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

@@ -1,0 +1,316 @@
+{
+ "decision": {
+  "request_id": "REQ-1001",
+  "recommendation": "use_existing_tool: Use the existing tool instead of a new purchase. The request for SignFlow Add-on is for an E\u2011signature tool already available company\u2011wide (catalog SW010) and previously purchased (PO\u20112513). The $800 annual cost is within the available budget and the vendor has current security and legal approvals. Policy s3 requires consideration of existing catalog products before a new purchase, and the overlap is not an automatic rejection.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "SignFlow Add-on from SignFlow (E-signature): annual cost $800, 3 users, data access 'internal_documents', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-1001"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Noah Williams (IC4, Finance); manager Priya Shah (E006).",
+    "reference": "employee:E004"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Finance software budget: annual $90,000, committed $61,000, available $29,000; request $800 is within the available budget (headroom $28,200).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool SignFlow (E-signature, vendor SignFlow): 45 seats, scope Company-wide, $16,000/yr - \"Electronic signatures\". Match: same_vendor, same_category, product_name; available for Finance.",
+    "reference": "catalog:SW010"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Prior purchase PO-2513 on 2026-07-04: Finance bought SignFlow for $16,000/yr (Approved; Company-wide agreement).",
+    "reference": "purchase:PO-2513"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: SignFlow procurement status Approved, security Approved (2026-06-20), legal terms Approved.",
+    "reference": "vendor_registry:V010"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-06-20), risk low, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:SignFlow"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-20 is 102 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:SignFlow#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-20 is 102 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:SignFlow#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $800 falls in the up to $1,000 band: minimum approvals Manager (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Existing catalog products in the same category (SignFlow (SW010)) must be considered before a new purchase; overlap is not an automatic rejection (policy s3).",
+    "reference": "policy:s3"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The request is for SignFlow Add-on from SignFlow, an E\u2011signature tool, costing $800 annually for 3 users.",
+    "reference": "request:REQ-1001"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Finance has an available budget of $29,000, so the $800 request is within budget.",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "SignFlow is already an approved, company\u2011wide tool (SW010) with a prior purchase PO\u20112513 for $16,000/yr.",
+    "reference": "catalog:SW010, purchase:PO-2513"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Existing SignFlow (SW010) is available to Finance and covers the requested e\u2011signature need.",
+    "reference": "catalog:SW010, purchase:PO-2513"
+   }
+  ],
+  "required_approvals": [
+   "Manager"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "existing_tool_overlap"
+  ],
+  "next_step": "Ask the requester whether the existing tool meets the need. If a genuine gap remains, route to Manager with the gap documented. Confirm that the existing SignFlow tool supports the three additional signing identities required by Finance and that the internal_documents data access level is acceptable for the requested use.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 2,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 6.6,
+   "rate_limit_wait_ms": 0.0,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "use_existing_tool",
+  "rationale": "The request for SignFlow Add-on is for an E\u2011signature tool already available company\u2011wide (catalog SW010) and previously purchased (PO\u20112513). The $800 annual cost is within the available budget and the vendor has current security and legal approvals. Policy s3 requires consideration of existing catalog products before a new purchase, and the overlap is not an automatic rejection.",
+  "next_step_detail": "Confirm that the existing SignFlow tool supports the three additional signing identities required by Finance and that the internal_documents data access level is acceptable for the requested use.",
+  "overlap_assessment": "Existing SignFlow (SW010) is available to Finance and covers the requested e\u2011signature need.",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "The request is for SignFlow Add-on from SignFlow, an E\u2011signature tool, costing $800 annually for 3 users.",
+    "evidence_ids": [
+     "request:REQ-1001"
+    ]
+   },
+   {
+    "finding": "Finance has an available budget of $29,000, so the $800 request is within budget.",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "SignFlow is already an approved, company\u2011wide tool (SW010) with a prior purchase PO\u20112513 for $16,000/yr.",
+    "evidence_ids": [
+     "catalog:SW010",
+     "purchase:PO-2513"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": {
+  "key_findings": [
+   {
+    "finding": "The request is for SignFlow Add-on from SignFlow, an E-signature tool, costing $800 annually for 3 users.",
+    "evidence_ids": [
+     "request:REQ-1001"
+    ]
+   },
+   {
+    "finding": "Finance has an available budget of $29,000, so the $800 request is within budget.",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "SignFlow is already an approved, company-wide tool (SW010) with a prior purchase PO-2513 for $16,000/yr.",
+    "evidence_ids": [
+     "catalog:SW010",
+     "purchase:PO-2513"
+    ]
+   },
+   {
+    "finding": "Vendor SignFlow has a current security review, processes personal data, and stores data within the region.",
+    "evidence_ids": [
+     "vendor_registry:V010",
+     "vendor_api:SignFlow"
+    ]
+   }
+  ],
+  "overlap_assessment": "Existing SignFlow (SW010) is available to Finance and covers the requested e\u2011signature need.",
+  "stated_gap": "",
+  "concerns": [
+   "Confirm that the existing SignFlow tool supports the three additional signing identities required by Finance.",
+   "Verify that no integrations are needed for the new add\u2011on.",
+   "Ensure the internal_documents data access level is acceptable for the requested use."
+  ],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "injection_suspected": false
+ },
+ "score": {
+  "arm": "staged",
+  "repeat": 1,
+  "case_id": "PUB-01",
+  "request_id": "REQ-1001",
+  "label": "use_existing_tool",
+  "label_correct": false,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 16,
+  "values_total": 16,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": true,
+  "latency_ms": 6.6,
+  "rate_limit_wait_ms": 0.0,
+  "net_latency_ms": 6.6,
+  "llm_calls": 2,
+  "tool_calls": 5,
+  "tokens": 4336,
+  "cache_hits": 2,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 4.3,
+   "kind": "vendor_api",
+   "vendor": "SignFlow",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 1.4
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "request:REQ-1001",
+    "employee:E004"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "budget:Finance"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "catalog:SW010",
+    "purchase:PO-2513"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "vendor_registry:V010",
+    "vendor_api:SignFlow",
+    "vendor_registry:SignFlow#review-age",
+    "vendor_api:SignFlow#review-age"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s3"
+   ]
+  },
+  {
+   "t_ms": 5.4,
+   "kind": "llm",
+   "cached": true,
+   "key": "a2615e35a96245e855872f1b6ceddac2",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 372,
+    "prompt_tokens": 1924,
+    "total_tokens": 2296
+   }
+  },
+  {
+   "t_ms": 6.2,
+   "kind": "llm",
+   "cached": true,
+   "key": "058343d30cfed6bfbd986f07caec4935",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 382,
+    "prompt_tokens": 1658,
+    "total_tokens": 2040
+   }
+  },
+  {
+   "t_ms": 6.5,
+   "kind": "merge",
+   "label": "use_existing_tool",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

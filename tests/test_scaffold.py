@@ -157,3 +157,10 @@ class SecretsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DocsTests(unittest.TestCase):
+    def test_decision_memo_is_at_most_500_words(self):
+        text = (ROOT / "docs" / "DECISION_MEMO.md").read_text(encoding="utf-8")
+        words = len(re.findall(r"[A-Za-z0-9][\w'’.,/%-]*", text))  # strict: tables count too
+        self.assertLessEqual(words, 500, f"memo has {words} words")

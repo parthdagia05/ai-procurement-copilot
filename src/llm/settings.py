@@ -12,7 +12,7 @@ import src  # noqa: F401  (loads .env)
 
 PRESETS: dict[str, tuple[str, str]] = {
     "gemini": ("https://generativelanguage.googleapis.com/v1beta/openai/", "gemini-3.8-flash"),
-    "groq": ("https://api.groq.com/openai/v1", "openai/gpt-oss-120b"),
+    "groq": ("https://api.groq.com/openai/v1", "openai/gpt-oss-20b"),
     "openai": ("https://api.openai.com/v1", "gpt-4o-mini"),
 }
 # Provider-specific key names are accepted as a convenience.

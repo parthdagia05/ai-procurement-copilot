@@ -47,8 +47,8 @@ def scan(location: str, text: object) -> list[InjectionHit]:
 
 # Phrases in LLM-written text that would claim THIS request/purchase was approved.
 # Factual statements about an existing vendor or tool ("SignFlow is approved") are allowed:
-# v1 of this pattern blocked those too, which removed 11 grounded explanations in the first
-# evaluation run (all false positives) and was narrowed.
+# v1 of this pattern blocked those too: 12 drops across the first two evaluation runs, all
+# false positives on grounded statements, so it was narrowed.
 _SUBJECT = r"(this |the )?(request|purchase|spend|order|purchase order|acquisition|it|this)"
 _GRANTED_CLAIM = re.compile(
     rf"\b{_SUBJECT}\s+(is|has been|was|have been|are)\s+(now\s+|already\s+|fully\s+)?(approved|authori[sz]ed|signed off)\b"
