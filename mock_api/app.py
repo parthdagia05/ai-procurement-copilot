@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from urllib.parse import unquote
 
 from fastapi import FastAPI, HTTPException
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = json.loads((ROOT / "data" / "vendor_risk.json").read_text(encoding="utf-8"))
+# Optional override for eval fixtures; default (unset) behaviour is unchanged.
+_DATA_DIR = Path(os.getenv("PROCUREMENT_DATA_DIR", "").strip() or ROOT / "data")
+if not _DATA_DIR.is_absolute():
+    _DATA_DIR = ROOT / _DATA_DIR
+DATA = json.loads((_DATA_DIR / "vendor_risk.json").read_text(encoding="utf-8"))
 
 app = FastAPI(title="FDE Mock Vendor Risk API", version="1.0")
 

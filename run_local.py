@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import signal
 import subprocess
 import sys
@@ -8,9 +9,14 @@ from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
 load_dotenv(ROOT / ".env", override=False)
+
+
+VENDOR_RISK_BASE_URL = os.getenv("VENDOR_RISK_BASE_URL", "http://127.0.0.1:8001").rstrip("/")
+VENDOR_RISK_PORT = str(urlparse(VENDOR_RISK_BASE_URL).port or 8001)
 
 
 def start(cmd: list[str]) -> subprocess.Popen:
@@ -45,7 +51,7 @@ def main() -> None:
     signal.signal(signal.SIGTERM, _handle_termination)
     procs: list[subprocess.Popen] = []
     try:
-        print("Starting vendor-risk API on http://127.0.0.1:8001 ...")
+        print(f"Starting vendor-risk API on {VENDOR_RISK_BASE_URL} ...")
         api_proc = start(
             [
                 sys.executable,
@@ -55,11 +61,11 @@ def main() -> None:
                 "--host",
                 "127.0.0.1",
                 "--port",
-                "8001",
+                VENDOR_RISK_PORT,
             ]
         )
         procs.append(api_proc)
-        wait_for_api("http://127.0.0.1:8001/health", api_proc)
+        wait_for_api(f"{VENDOR_RISK_BASE_URL}/health", api_proc)
         print("Vendor-risk API is ready.")
 
         try:
@@ -79,6 +85,11 @@ def main() -> None:
                         "app.py",
                         "--server.port",
                         "8501",
+                        # Headless: avoids the first-run email prompt blocking the subprocess.
+                        "--server.headless",
+                        "true",
+                        "--browser.gatherUsageStats",
+                        "false",
                     ]
                 )
             )
