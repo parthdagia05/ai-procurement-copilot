@@ -45,13 +45,18 @@ def scan(location: str, text: object) -> list[InjectionHit]:
     return hits
 
 
-# Phrases in LLM-written text that would claim an approval was GRANTED.
+# Phrases in LLM-written text that would claim THIS request/purchase was approved.
+# Factual statements about an existing vendor or tool ("SignFlow is approved") are allowed:
+# v1 of this pattern blocked those too, which removed 11 grounded explanations in the first
+# evaluation run (all false positives) and was narrowed.
+_SUBJECT = r"(this |the )?(request|purchase|spend|order|purchase order|acquisition|it|this)"
 _GRANTED_CLAIM = re.compile(
-    r"\b(is|has been|was|are|have been|been)\s+(fully\s+|already\s+)?(approved|authori[sz]ed|signed off)\b"
-    r"|\b(has|have|had)\s+(already\s+)?(approved|authori[sz]ed|signed off)\b"
-    r"|\b(cfo|security|legal|privacy|finance)[- ]approved\b"
+    rf"\b{_SUBJECT}\s+(is|has been|was|have been|are)\s+(now\s+|already\s+|fully\s+)?(approved|authori[sz]ed|signed off)\b"
+    r"|\b(has|have|had)\s+(already\s+)?(approved|authori[sz]ed|signed off)\s+(this|the|it)\b"
+    r"|\b(cfo|ceo|security|legal|privacy|finance|procurement)[- ]approved\b"
     r"|\bpre-?approved\b"
-    r"|\bapproval (is )?granted\b",
+    r"|\bapproval (is |has been )?granted\b"
+    r"|\b(approve|purchase|buy) (it|this) (now|immediately)\b",
     re.IGNORECASE,
 )
 

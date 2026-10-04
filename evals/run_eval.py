@@ -56,9 +56,10 @@ def load_cases() -> tuple[list[dict], dict]:
     return gold, public
 
 
-def run_arm(arm: str, cases: list[dict], public: dict, repeat: int, llm: LLMClient | None, out: Path) -> list[dict]:
+def run_arm(arm: str, cases: list[dict], public: dict, repeat: int, llm: LLMClient | None, out: Path,
+            rows: list[dict]) -> None:
+    """Appends to `rows` as it goes, so an abort keeps every completed case."""
     architecture, mode = ARMS[arm]
-    rows = []
     for data_dir in sorted({c["data_dir"] for c in cases}):
         os.environ["PROCUREMENT_DATA_DIR"] = data_dir
         with ensure_mock_api(ROOT / data_dir):
@@ -80,7 +81,6 @@ def run_arm(arm: str, cases: list[dict], public: dict, repeat: int, llm: LLMClie
                       + (f"  !! {row['critical_detail']}" if row["critical_failures"] else "")
                       + (f"  [fallback: {reason[:90]}]" if reason and arm != "deterministic" else ""), flush=True)
     os.environ.pop("PROCUREMENT_DATA_DIR", None)
-    return rows
 
 
 def pct(values: list) -> str:
@@ -139,6 +139,7 @@ def main() -> None:
     ap.add_argument("--repeats", type=int, default=1)
     ap.add_argument("--replay", action="store_true", help="use cached responses only (offline)")
     ap.add_argument("--out", default=None, help="results directory name under evals/results/")
+    ap.add_argument("--summarise-only", action="store_true", help="rebuild summary from saved decisions in --out")
     args = ap.parse_args()
 
     os.environ["LLM_CACHE"] = "replay" if args.replay else os.environ.get("LLM_CACHE", "record")
@@ -148,23 +149,35 @@ def main() -> None:
     out = ROOT / "evals" / "results" / (args.out or f"{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}_{llm.settings.model.replace('/', '_')}")
     out.mkdir(parents=True, exist_ok=True)
     git = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
-    (out / "config.json").write_text(json.dumps({
+    config = {
         "model": llm.settings.model, "provider": llm.settings.provider, "temperature": 0, "arms": arms,
         "repeats": args.repeats, "cache_mode": os.environ["LLM_CACHE"], "git_commit": git, "cases": [c["case_id"] for c in gold],
-    }, indent=2), encoding="utf-8")
+    }
+    if not args.summarise_only:
+        (out / "config.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
 
     rows: list[dict] = []
     aborted = None
+    if args.summarise_only:
+        rows = [json.loads(f.read_text(encoding="utf-8"))["score"] for f in sorted((out / "decisions").glob("*/*.json"))]
+        rows.sort(key=lambda r: (r["repeat"], arms.index(r["arm"]) if r["arm"] in arms else 99))
+        expected = {a: len([c for c in gold if a != "unguarded" or c["source"] in {"public", "synthetic"}]) for a in arms}
+        partial = [f"{a} {sum(1 for r in rows if r['arm'] == a)}/{n}" for a, n in expected.items() if sum(1 for r in rows if r["arm"] == a) < n]
+        aborted = ("partial arms: " + ", ".join(partial)) if partial else None
+        arms = [a for a in arms if any(r["arm"] == a for r in rows)]
     try:
+        if args.summarise_only:
+            raise Abort("summarise-only")
         for repeat in range(1, args.repeats + 1):
             for arm in arms:
                 cases = [c for c in gold if c["source"] in {"public", "synthetic"}] if arm == "unguarded" else gold
                 if arm == "deterministic" and repeat > 1:
                     continue  # deterministic: identical every run
                 print(f"\n== {ARM_TITLES[arm]} (repeat {repeat}, {len(cases)} cases)", flush=True)
-                rows += run_arm(arm, cases, public, repeat, None if arm == "deterministic" else llm, out)
+                run_arm(arm, cases, public, repeat, None if arm == "deterministic" else llm, out, rows)
     except Abort as exc:
-        aborted = str(exc)
+        if str(exc) != "summarise-only":
+            aborted = str(exc)
         print(f"\nSTOPPED: {aborted}\nRe-run the same command later: cached responses are reused, so it resumes where it stopped.")
 
     if rows:
