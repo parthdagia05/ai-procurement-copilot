@@ -1,0 +1,300 @@
+{
+ "decision": {
+  "request_id": "REQ-9006",
+  "recommendation": "route_for_specialist_review: Route for specialist review before approval. The request meets the budget band and has available budget, but the vendor has no security assessment record, triggering a security review per policy s5, and requires Department Head and Procurement approvals per policy s4.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "Corvid Survey Pro from Corvid Survey (Survey Tools): annual cost $3,200, 6 users, data access 'internal_documents', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-9006"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Lisa Park (VP, Operations); manager none on record. Requester is the department's own leader; approval must go to the next level.",
+    "reference": "employee:E010"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Operations software budget: annual $120,000, committed $100,000, available $20,000; request $3,200 is within the available budget (headroom $16,800).",
+    "reference": "budget:Operations"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of Corvid Survey Pro.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: Corvid Survey procurement status New, security Pending (no review date), legal terms Standard.",
+    "reference": "vendor_registry:V105"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service has no assessment record for Corvid Survey: security assessment is missing (policy s5).",
+    "reference": "vendor_api:Corvid Survey"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $3,200 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required: no vendor security assessment on record; vendor security assessment not completed (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Corvid Survey Pro is a new vendor product with an annual cost of $3,200 for 6 users, classified as a Survey Tool.",
+    "reference": "request:REQ-9006"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The Operations department has $20,000 available in its software budget, so the request is within budget limits.",
+    "reference": "budget:Operations"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The vendor Corvid Survey has no security assessment record in the vendor-risk service, triggering a security review requirement.",
+    "reference": "vendor_api:Corvid Survey"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "No existing catalog tool covers the requested product.",
+    "reference": "catalog:search:default"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Security"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "vendor_assessment_missing"
+  ],
+  "next_step": "Send the evidence package to Security for review, then to Department Head and Procurement for approval. Do not purchase until every approval is recorded. Obtain Department Head and Procurement approvals and initiate a vendor security assessment before proceeding.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 2,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 2783.5,
+   "rate_limit_wait_ms": 1178.3,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "route_for_specialist_review",
+  "rationale": "The request meets the budget band and has available budget, but the vendor has no security assessment record, triggering a security review per policy s5, and requires Department Head and Procurement approvals per policy s4.",
+  "next_step_detail": "Obtain Department Head and Procurement approvals and initiate a vendor security assessment before proceeding.",
+  "overlap_assessment": "No existing catalog tool covers the requested product.",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Corvid Survey Pro is a new vendor product with an annual cost of $3,200 for 6 users, classified as a Survey Tool.",
+    "evidence_ids": [
+     "request:REQ-9006"
+    ]
+   },
+   {
+    "finding": "The Operations department has $20,000 available in its software budget, so the request is within budget limits.",
+    "evidence_ids": [
+     "budget:Operations"
+    ]
+   },
+   {
+    "finding": "The vendor Corvid Survey has no security assessment record in the vendor-risk service, triggering a security review requirement.",
+    "evidence_ids": [
+     "vendor_api:Corvid Survey"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": {
+  "key_findings": [
+   {
+    "finding": "Corvid Survey Pro is a new vendor product with an annual cost of $3,200 for 6 users, classified as a Survey Tool.",
+    "evidence_ids": [
+     "request:REQ-9006"
+    ]
+   },
+   {
+    "finding": "The Operations department has $20,000 available in its software budget, so the request is within budget limits.",
+    "evidence_ids": [
+     "budget:Operations"
+    ]
+   },
+   {
+    "finding": "No approved catalog product shares the vendor, category, or product name of Corvid Survey Pro, indicating no existing tool overlap.",
+    "evidence_ids": [
+     "catalog:search:default"
+    ]
+   },
+   {
+    "finding": "The vendor Corvid Survey has no security assessment record in the vendor-risk service, triggering a security review requirement.",
+    "evidence_ids": [
+     "vendor_api:Corvid Survey"
+    ]
+   }
+  ],
+  "overlap_assessment": "No existing catalog tool covers the requested product.",
+  "stated_gap": "",
+  "concerns": [
+   "Security review required due to missing vendor assessment",
+   "Vendor is new and has no security assessment record",
+   "Approvals from Department Head and Procurement are required per policy s4"
+  ],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "injection_suspected": false
+ },
+ "score": {
+  "arm": "staged",
+  "repeat": 1,
+  "case_id": "SYN-06",
+  "request_id": "REQ-9006",
+  "label": "route_for_specialist_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 4,
+  "values_total": 4,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 2783.5,
+  "rate_limit_wait_ms": 1178.3,
+  "net_latency_ms": 1605.2,
+  "llm_calls": 2,
+  "tool_calls": 5,
+  "tokens": 3930,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 6.3,
+   "kind": "vendor_api",
+   "vendor": "Corvid Survey",
+   "status": "not_found",
+   "reason": "no_assessment_record",
+   "attempts": 1,
+   "latency_ms": 4.3
+  },
+  {
+   "t_ms": 6.5,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "request:REQ-9006",
+    "employee:E010"
+   ]
+  },
+  {
+   "t_ms": 6.5,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "budget:Operations"
+   ]
+  },
+  {
+   "t_ms": 6.5,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 6.5,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "vendor_registry:V105",
+    "vendor_api:Corvid Survey"
+   ]
+  },
+  {
+   "t_ms": 6.5,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s5#vendor"
+   ]
+  },
+  {
+   "t_ms": 1176.4,
+   "kind": "llm",
+   "cached": false,
+   "key": "54c6a59c850fc5e9fc901e5fb1c83690",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 312,
+    "prompt_tokens": 1772,
+    "total_tokens": 2084
+   },
+   "latency_ms": 1168.4
+  },
+  {
+   "t_ms": 2781.2,
+   "kind": "llm",
+   "cached": false,
+   "key": "00440cb2407fd35c92600754407a388a",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 334,
+    "prompt_tokens": 1512,
+    "total_tokens": 1846
+   },
+   "latency_ms": 1602.1
+  },
+  {
+   "t_ms": 2783.5,
+   "kind": "merge",
+   "label": "route_for_specialist_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

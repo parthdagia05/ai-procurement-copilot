@@ -1,0 +1,10 @@
+{
+ "content": "{\"key_findings\":[{\"finding\":\"The request for ProspectPilot from GrowthForge is for a Sales Intelligence tool with an annual cost of $22,000, 35 users, and customer PII access via CRM integration.\",\"evidence_ids\":[\"request:REQ-1005\"]},{\"finding\":\"The request exceeds the available budget for Sales ($18,000 remaining), requiring a budget exception review.\",\"evidence_ids\":[\"budget:Sales\"]},{\"finding\":\"The vendor GrowthForge is new, has no completed security review, processes personal data, and stores data outside the operating region, triggering security, privacy, and legal reviews.\",\"evidence_ids\":[\"vendor_registry:V012\",\"vendor_api:GrowthForge\"]},{\"finding\":\"The request falls within the $10,000.01-$25,000 spend band, so Department Head, Finance, and Procurement approvals are required.\",\"evidence_ids\":[\"policy:s4\"]}],\"overlap_assessment\":\"No existing catalog product shares the vendor, category, or product name of ProspectPilot, so existing tools do not cover the need.\",\"stated_gap\":\"\",\"concerns\":[\"Budget exceeds available headroom\",\"Vendor security review not completed\",\"Data will be stored outside the operating region\"],\"additional_data_classes\":[\"customer_pii\"],\"additional_missing_information\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 351,
+  "prompt_tokens": 2064,
+  "total_tokens": 2415
+ },
+ "latency_ms": 59092.7
+}

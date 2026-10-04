@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"key_findings\": [\n    {\n      \"finding\": \"TaskFlow Pro requested for Marketing at $8,000/yr for 15 users, internal_marketing data access, SSO integration.\",\n      \"evidence_ids\": [\"request:REQ-1008\"]\n    },\n    {\n      \"finding\": \"Marketing software budget has $15,000 available; request $8,000 is within budget.\",\n      \"evidence_ids\": [\"budget:Marketing\"]\n    },\n    {\n      \"finding\": \"Existing approved tool TaskFlow (SW003) is company\u2011wide, same vendor and category, available to Marketing.\",\n      \"evidence_ids\": [\"catalog:SW003\"]\n    },\n    {\n      \"finding\": \"Vendor TaskFlow is approved, low risk, processes personal data, stores data within region, security review current.\",\n      \"evidence_ids\": [\"vendor_registry:V003\"]\n    }\n  ],\n  \"overlap_assessment\": \"An existing approved TaskFlow tool already covers the project\u2011management need for Marketing.\",\n  \"stated_gap\": \"\",\n  \"concerns\": [\n    \"Ensure Department Head approval is obtained as required by policy s4.\",\n    \"Confirm procurement approval aligns with the $1,000\u2011$10,000 approval band.\",\n    \"Verify that the requested internal_marketing data classification complies with data handling policies.\"\n  ],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 442,
+  "prompt_tokens": 1806,
+  "total_tokens": 2248
+ },
+ "latency_ms": 1475.7
+}

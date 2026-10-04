@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"rationale\":\"The request meets the budget and policy requirements, with all necessary approvals identified in the policy floor and evidence confirming vendor status and security review.\",\"next_step_detail\":\"Ensure Department Head and Procurement sign off before procurement processing.\",\"overlap_assessment\":\"No existing catalog tool matches Ledgerly Close in vendor, category, or product name.\",\"interpretations\":[{\"finding\":\"Ledgerly Close is a new expense management tool requested by Finance with an annual cost of $4,500 for 6 users.\",\"evidence_ids\":[\"request:REQ-9041\"]},{\"finding\":\"The request falls within the Finance software budget, leaving $24,500 headroom.\",\"evidence_ids\":[\"budget:Finance\"]},{\"finding\":\"Ledgerly is an approved vendor with current security and legal reviews, and does not process personal data.\",\"evidence_ids\":[\"vendor_registry:V102\",\"vendor_api:Ledgerly\"]}],\"additional_approvals\":[],\"additional_data_classes\":[],\"additional_missing_information\":[],\"additional_risk_flags\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 261,
+  "prompt_tokens": 1502,
+  "total_tokens": 1763
+ },
+ "latency_ms": 1446.4
+}

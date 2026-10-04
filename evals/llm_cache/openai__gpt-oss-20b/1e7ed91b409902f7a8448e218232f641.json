@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"required_approvals\":[\"Department Head\",\"Procurement\",\"Finance\",\"Security\",\"Privacy\",\"Legal\"],\"risk_flags\":[\"existing_tool_overlap\",\"security_review_required\",\"privacy_review_required\",\"legal_review_required\"],\"missing_information\":[],\"rationale\":\"The request for BrandBoard Enterprise is within the Marketing department\u2019s available budget ($12,000 vs $15,000 headroom). However, the vendor is new, the annual spend exceeds $10,000, and the vendor\u2019s security assessment is missing and the legal terms are not standard. The tool processes personal data, triggering a privacy review. Existing approved tools in the same category (PixelCraft Pro, CreativeSuite) overlap, so the request should be evaluated against those options. All these factors require specialist reviews in Security, Privacy, and Legal before proceeding.\",\"next_step\":\"Submit the request to Procurement with the required approvals and attach the vendor risk assessment, legal terms, and privacy impact documentation for specialist review.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 400,
+  "prompt_tokens": 2464,
+  "total_tokens": 2864
+ },
+ "latency_ms": 57329.5
+}

@@ -1,0 +1,10 @@
+{
+ "content": "{\"key_findings\":[{\"finding\":\"The request is for Kudosly Recognition, an employee engagement tool costing $7,000 annually for 40 users, with employee PII access and SSO/HRIS integrations.\",\"evidence_ids\":[\"request:REQ-9008\"]},{\"finding\":\"The Customer Success department has a software budget of $140,000 with $7,000 remaining, so the request is within budget.\",\"evidence_ids\":[\"budget:Customer Success\"]},{\"finding\":\"No approved catalog product shares the vendor, category, or product name of Kudosly Recognition.\",\"evidence_ids\":[\"catalog:search:default\"]},{\"finding\":\"Kudosly is an approved vendor with a recent security review (2026-07-15) and standard legal terms, and it processes personal data but does not store data outside the region.\",\"evidence_ids\":[\"vendor_registry:V107\",\"vendor_api:Kudosly\",\"vendor_registry:Kudosly#review-age\",\"vendor_api:Kudosly#review-age\"]}],\"overlap_assessment\":\"No existing catalog tool covers the requested functionality.\",\"stated_gap\":\"\",\"concerns\":[\"Confirm that the HRIS integration complies with internal data handling policies.\",\"Verify that employee PII is protected in accordance with privacy requirements.\",\"Ensure the recent security review is still current and sufficient for the requested integrations.\"],\"additional_data_classes\":[\"employee_pii\"],\"additional_missing_information\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 467,
+  "prompt_tokens": 1928,
+  "total_tokens": 2395
+ },
+ "latency_ms": 3271.8
+}

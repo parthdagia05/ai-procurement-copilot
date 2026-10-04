@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"hold_for_manual_review\",\n  \"rationale\": \"The request lacks a verified department budget record, triggering policy s2/s10 and requiring Finance review; while required approvals are identified, the budget cannot be confirmed.\",\n  \"next_step_detail\": \"Obtain the Go To Market department's software budget allocation or a formal budget approval from Finance.\",\n  \"overlap_assessment\": \"\",\n  \"additional_approvals\": [],\n  \"additional_risk_flags\": [\n    {\n      \"flag\": \"budget_unverifiable\",\n      \"reason\": \"No budget record found for Go To Market department (policy s2, s10).\"\n    }\n  ],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [\n    {\n      \"field\": \"budget_record\",\n      \"question\": \"Provide the approved software budget amount for the Go To Market department.\"\n    }\n  ],\n  \"clarification_questions\": [],\n  \"interpretations\": [\n    {\n      \"finding\": \"Request cost $7,500 with 12 users for Fieldnote Territory Planner.\",\n      \"evidence_ids\": [\"request:REQ-9007\"]\n    },\n    {\n      \"finding\": \"Requester is department head; approvals required from Department Head, Procurement, and Finance due to budget verification failure.\",\n      \"evidence_ids\": [\"employee:E007\", \"policy:s4\", \"policy:s2\"]\n    },\n    {\n      \"finding\": \"No existing catalog tool overlaps the requested sales planning functionality.\",\n      \"evidence_ids\": [\"catalog:search:default\"]\n    }\n  ],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 402,
+  "prompt_tokens": 1942,
+  "total_tokens": 2344
+ },
+ "latency_ms": 2399.0
+}

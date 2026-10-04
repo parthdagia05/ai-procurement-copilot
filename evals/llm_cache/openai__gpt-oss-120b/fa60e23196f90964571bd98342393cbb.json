@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"route_for_specialist_review\",\n  \"rationale\": \"The request exceeds the Sales department's available budget, requires a finance budget\u2011exception, and involves a new vendor with no completed security assessment and unknown legal terms, triggering mandatory security, privacy, and legal reviews per policies s5, s6, and s7.\",\n  \"next_step_detail\": \"Initiate a budget\u2011exception review with Finance and obtain completed security and legal assessments before any further approvals.\",\n  \"overlap_assessment\": \"No approved catalog product matches ProspectPilot or its vendor, so no existing tool can satisfy the requirement.\",\n  \"interpretations\": [\n    {\n      \"finding\": \"Requested annual cost $22,000 exceeds the Sales department's available budget of $18,000.\",\n      \"evidence_ids\": [\"budget:Sales\"]\n    },\n    {\n      \"finding\": \"Policy s4 requires approvals from Department Head, Finance, and Procurement for amounts in the $10,000.01\u2013$25,000 band.\",\n      \"evidence_ids\": [\"policy:s4\"]\n    },\n    {\n      \"finding\": \"Vendor GrowthForge is a new vendor with no completed security assessment and unknown legal terms.\",\n      \"evidence_ids\": [\"vendor_registry:V012\", \"vendor_api:GrowthForge\"]\n    }\n  ],\n  \"additional_approvals\": [],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"additional_risk_flags\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 475,
+  "prompt_tokens": 1779,
+  "total_tokens": 2254
+ },
+ "latency_ms": 58001.0
+}

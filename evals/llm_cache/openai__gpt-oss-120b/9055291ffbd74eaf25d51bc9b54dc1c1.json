@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"route_for_specialist_review\",\n  \"rationale\": \"The request exceeds the $1,000 threshold and therefore requires Department Head, Procurement, and Security approvals, and the vendor lacks a completed security assessment per policy s5.\",\n  \"next_step_detail\": \"Obtain a completed security assessment for Corvid Survey before proceeding.\",\n  \"overlap_assessment\": \"\",\n  \"additional_approvals\": [\n    {\n      \"role\": \"Department Head\",\n      \"reason\": \"Policy s4 requires Department Head approval for amounts $1,000.01-$10,000.\"\n    },\n    {\n      \"role\": \"Procurement\",\n      \"reason\": \"Policy s4 requires Procurement approval for amounts $1,000.01-$10,000.\"\n    },\n    {\n      \"role\": \"Security\",\n      \"reason\": \"Policy s5 mandates a security review due to missing vendor assessment.\"\n    }\n  ],\n  \"additional_risk_flags\": [\n    {\n      \"flag\": \"security_review_required\",\n      \"reason\": \"Vendor has no security assessment on record.\"\n    },\n    {\n      \"flag\": \"vendor_assessment_missing\",\n      \"reason\": \"Security assessment is required but not completed.\"\n    }\n  ],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"clarification_questions\": [],\n  \"interpretations\": [\n    {\n      \"finding\": \"Request cost $3,200 is within the Operations budget headroom.\",\n      \"evidence_ids\": [\"budget:Operations\"]\n    },\n    {\n      \"finding\": \"No existing catalog tool overlaps with the requested survey product.\",\n      \"evidence_ids\": [\"catalog:search:default\"]\n    },\n    {\n      \"finding\": \"Vendor Corvid Survey lacks a security assessment in the vendor risk service.\",\n      \"evidence_ids\": [\"vendor_api:Corvid Survey\"]\n    }\n  ],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 525,
+  "prompt_tokens": 1839,
+  "total_tokens": 2364
+ },
+ "latency_ms": 3017.9
+}

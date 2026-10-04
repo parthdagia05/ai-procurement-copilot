@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"rationale\":\"The request exceeds the available budget and requires a budget exception review (budget:Sales). The vendor has no completed security review and processes customer PII outside the operating region, triggering security, privacy, and legal reviews (vendor_registry:V012, vendor_api:GrowthForge). The spend falls within the $10,000.01-$25,000 band, so Department Head, Finance, and Procurement approvals are required (policy:s4).\",\"next_step_detail\":\"Proceed to specialist review for budget exception, security, privacy, and legal approvals.\",\"overlap_assessment\":\"No existing catalog product covers the vendor, category, or product name.\",\"interpretations\":[{\"finding\":\"The request exceeds the available budget for Sales ($18,000 remaining), requiring a budget exception review.\",\"evidence_ids\":[\"budget:Sales\"]},{\"finding\":\"The vendor GrowthForge is new, has no completed security review, processes personal data, and stores data outside the operating region, triggering security, privacy, and legal reviews.\",\"evidence_ids\":[\"vendor_registry:V012\",\"vendor_api:GrowthForge\"]},{\"finding\":\"The request falls within the $10,000.01-$25,000 spend band, so Department Head, Finance, and Procurement approvals are required.\",\"evidence_ids\":[\"policy:s4\"]}],\"additional_approvals\":[],\"additional_data_classes\":[],\"additional_missing_information\":[],\"additional_risk_flags\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 331,
+  "prompt_tokens": 1809,
+  "total_tokens": 2140
+ },
+ "latency_ms": 1031.1
+}

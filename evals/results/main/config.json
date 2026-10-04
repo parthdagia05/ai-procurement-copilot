@@ -1,0 +1,32 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "provider": "groq",
+  "temperature": 0,
+  "arms": [
+    "deterministic",
+    "single",
+    "staged"
+  ],
+  "repeats": 1,
+  "cache_mode": "record",
+  "git_commit": "d7a7acd",
+  "cases": [
+    "PUB-01",
+    "PUB-02",
+    "PUB-03",
+    "EXT-04",
+    "PUB-04",
+    "PUB-05",
+    "EXT-07",
+    "EXT-08",
+    "PUB-06",
+    "EXT-10",
+    "SYN-02",
+    "SYN-04A",
+    "SYN-04B",
+    "SYN-05",
+    "SYN-06",
+    "SYN-07",
+    "SYN-08"
+  ]
+}

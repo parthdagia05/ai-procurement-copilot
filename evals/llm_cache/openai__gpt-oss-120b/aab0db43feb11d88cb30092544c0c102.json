@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"key_findings\": [\n    {\n      \"finding\": \"BrandBoard Enterprise costs $12,000 annually for 25 Marketing users with internal_marketing data access and SSO integration.\",\n      \"evidence_ids\": [\"request:REQ-1002\"]\n    },\n    {\n      \"finding\": \"Marketing software budget has $15,000 available; the $12,000 request is within budget.\",\n      \"evidence_ids\": [\"budget:Marketing\"]\n    },\n    {\n      \"finding\": \"Existing approved Design & Creative tools PixelCraft Pro and CreativeSuite are available to Marketing.\",\n      \"evidence_ids\": [\"catalog:SW001\", \"catalog:SW002\"]\n    },\n    {\n      \"finding\": \"Vendor BrandBoard is a new vendor; security assessment not completed and legal terms are in Draft.\",\n      \"evidence_ids\": [\"vendor_registry:V011\", \"vendor_api:BrandBoard\"]\n    }\n  ],\n  \"overlap_assessment\": \"Existing tools in the same category are available, but the requester cites a functional gap.\",\n  \"stated_gap\": \"PixelCraft is too specialist for non\u2011designers; Marketing needs a fast campaign\u2011template creation tool.\",\n  \"concerns\": [\n    \"Security review for BrandBoard is pending (policy s5).\",\n    \"Legal terms are Draft and not approved (policy s7).\",\n    \"Overlap with existing tools requires justification before proceeding.\"\n  ],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 405,
+  "prompt_tokens": 1894,
+  "total_tokens": 2299
+ },
+ "latency_ms": 3951.7
+}

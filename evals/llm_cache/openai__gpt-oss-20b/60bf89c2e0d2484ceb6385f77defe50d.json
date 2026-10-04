@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"required_approvals\":[\"Department Head\",\"Procurement\",\"Security\"],\"risk_flags\":[\"vendor_review_expired\",\"security_review_required\"],\"missing_information\":[],\"rationale\":\"The request for Tallyhub Reconcile ($4,500 annual, 6 users) is within the Finance department\u2019s available budget ($29,000). No existing catalog overlap exists. The vendor\u2019s security review is expired (last review 2025-09-29, 366 days before the policy reference date 2026-09-30), triggering a required security review. The annual cost falls in the $1,000.01\u2013$10,000 range, so the minimum approvals are Department Head and Procurement, and the expired security review adds a Security approval. No privacy or legal concerns are present. All mandatory fields are supplied, so no clarification is needed.\",\"next_step\":\"Submit for Department Head, Procurement, and Security approval.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 314,
+  "prompt_tokens": 2263,
+  "total_tokens": 2577
+ },
+ "latency_ms": 3074.1
+}

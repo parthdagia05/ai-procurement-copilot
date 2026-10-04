@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"rationale\":\"The request exceeds the available Sales budget (budget exception required) and involves customer PII with a new vendor that has not completed a security review or provided approved legal terms. These conditions trigger mandatory approvals from Finance, Procurement, Department Head, Security, Privacy, and Legal, and a specialist review is required.\",\"next_step_detail\":\"Request the vendor\u2019s completed security assessment and signed legal terms, and confirm the data residency details for the customer PII.\",\"overlap_assessment\":\"\",\"additional_approvals\":[],\"additional_risk_flags\":[],\"additional_data_classes\":[\"customer_pii\"],\"additional_missing_information\":[],\"clarification_questions\":[],\"interpretations\":[{\"finding\":\"Budget exception needed because the request cost $22,000 exceeds the available $18,000 in the Sales budget.\",\"evidence_ids\":[\"policy:s2\"]},{\"finding\":\"Security review required due to customer PII and incomplete vendor security assessment.\",\"evidence_ids\":[\"policy:s5#data\",\"policy:s5#vendor\"]},{\"finding\":\"Legal review required because the vendor is new, stores data outside the region, and legal terms are unknown.\",\"evidence_ids\":[\"policy:s7\"]}],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 340,
+  "prompt_tokens": 2296,
+  "total_tokens": 2636
+ },
+ "latency_ms": 58220.5
+}

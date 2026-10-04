@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"rationale\":\"The request for Kudosly Recognition is within budget but involves employee PII and HRIS integration, triggering mandatory Security (s5) and Privacy (s6) reviews. Vendor risk is low and recent, but the tool processes personal data, requiring specialist oversight.\",\"next_step_detail\":\"Ask the requester to confirm the specific HRIS system to be integrated and provide any existing internal tool that might already support peer recognition.\",\"overlap_assessment\":\"\",\"additional_approvals\":[],\"additional_risk_flags\":[],\"additional_data_classes\":[\"employee_pii\"],\"additional_missing_information\":[],\"clarification_questions\":[],\"interpretations\":[{\"finding\":\"Annual cost $7,000 is within the available budget of $7,000 for Customer Success.\",\"evidence_ids\":[\"budget:Customer Success\"]},{\"finding\":\"Kudosly processes employee PII and integrates with HRIS, necessitating Security and Privacy reviews.\",\"evidence_ids\":[\"policy:s5#data\",\"policy:s6\"]},{\"finding\":\"Vendor risk assessment is current and low, with no conflicts or expiration.\",\"evidence_ids\":[\"vendor_registry:V107\",\"vendor_api:Kudosly\"]}],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 311,
+  "prompt_tokens": 2160,
+  "total_tokens": 2471
+ },
+ "latency_ms": 837.7
+}

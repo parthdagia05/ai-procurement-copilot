@@ -1,0 +1,275 @@
+{
+ "decision": {
+  "request_id": "REQ-9008",
+  "recommendation": "route_for_specialist_review: Route for specialist review before approval. The request for Kudosly Recognition costs $7,000, fits within the department's remaining budget and meets policy thresholds requiring Department Head, Procurement, Security, and Privacy approvals; specialist review is needed to confirm these approvals and assess data handling.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "Kudosly Recognition from Kudosly (Employee Engagement): annual cost $7,000, 40 users, data access 'employee_pii', integrations: SSO, HRIS, urgency 'normal'.",
+    "reference": "request:REQ-9008"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Mia Thompson (IC4, Customer Success); manager Robert King (E007).",
+    "reference": "employee:E005"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Customer Success software budget: annual $140,000, committed $133,000, available $7,000; request $7,000 is within the available budget (headroom $0).",
+    "reference": "budget:Customer Success"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of Kudosly Recognition.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: Kudosly procurement status Approved, security Approved (2026-07-15), legal terms Approved.",
+    "reference": "vendor_registry:V107"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-07-15), risk low, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:Kudosly"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-07-15 is 77 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:Kudosly#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-07-15 is 77 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:Kudosly#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $7,000 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required because the request involves employee_pii (integration 'HRIS' implies employee_pii) (policy s5).",
+    "reference": "policy:s5#data"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Privacy review required: the tool will process employee_pii (policy s6).",
+    "reference": "policy:s6"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Kudosly Recognition annual cost $7,000 for 40 users accesses employee_pii and integrates with SSO and HRIS.",
+    "reference": "request:REQ-9008"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The request is within the Customer Success software budget, leaving $0 headroom after allocation.",
+    "reference": "budget:Customer Success"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Policy s4, s5, and s6 mandate Department Head, Procurement, Security, and Privacy approvals for this amount and data class.",
+    "reference": "policy:s4, policy:s5#data, policy:s6"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "No existing catalog tool covers employee recognition for Customer Success, so a new purchase is justified.",
+    "reference": "catalog:search:default"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Security",
+   "Privacy"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "privacy_review_required"
+  ],
+  "next_step": "Send the evidence package to Security and Privacy for review, then to Department Head and Procurement for approval. Do not purchase until every approval is recorded. Obtain documented approvals from the Department Head, Procurement, Security, and Privacy teams before proceeding.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 60710.7,
+   "rate_limit_wait_ms": 57242.4,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-120b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "route_for_specialist_review",
+  "rationale": "The request for Kudosly Recognition costs $7,000, fits within the department's remaining budget and meets policy thresholds requiring Department Head, Procurement, Security, and Privacy approvals; specialist review is needed to confirm these approvals and assess data handling.",
+  "next_step_detail": "Obtain documented approvals from the Department Head, Procurement, Security, and Privacy teams before proceeding.",
+  "overlap_assessment": "No existing catalog tool covers employee recognition for Customer Success, so a new purchase is justified.",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Kudosly Recognition annual cost $7,000 for 40 users accesses employee_pii and integrates with SSO and HRIS.",
+    "evidence_ids": [
+     "request:REQ-9008"
+    ]
+   },
+   {
+    "finding": "The request is within the Customer Success software budget, leaving $0 headroom after allocation.",
+    "evidence_ids": [
+     "budget:Customer Success"
+    ]
+   },
+   {
+    "finding": "Policy s4, s5, and s6 mandate Department Head, Procurement, Security, and Privacy approvals for this amount and data class.",
+    "evidence_ids": [
+     "policy:s4",
+     "policy:s5#data",
+     "policy:s6"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "single",
+  "repeat": 1,
+  "case_id": "SYN-08",
+  "request_id": "REQ-9008",
+  "label": "route_for_specialist_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 4,
+  "values_total": 4,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 60710.7,
+  "rate_limit_wait_ms": 57242.4,
+  "net_latency_ms": 3468.3,
+  "llm_calls": 1,
+  "tool_calls": 5,
+  "tokens": 2423,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.8,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.8,
+   "evidence_ids": [
+    "request:REQ-9008",
+    "employee:E005"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.3,
+   "evidence_ids": [
+    "budget:Customer Success"
+   ]
+  },
+  {
+   "t_ms": 1.7,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.5,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 8.6,
+   "kind": "vendor_api",
+   "vendor": "Kudosly",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 6.5
+  },
+  {
+   "t_ms": 8.7,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 7.0,
+   "evidence_ids": [
+    "vendor_registry:V107",
+    "vendor_api:Kudosly",
+    "vendor_registry:Kudosly#review-age",
+    "vendor_api:Kudosly#review-age"
+   ]
+  },
+  {
+   "t_ms": 8.9,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s5#data",
+    "policy:s6"
+   ]
+  },
+  {
+   "t_ms": 57205.4,
+   "kind": "tool_use_failed_retry_without_tools",
+   "error": "Error code: 400 - {'error': {'message': \"Tool call validation failed: tool call validation failed: attempted to call tool 'json' which was not in request.tools\", 'type': 'invalid_request_error', 'code"
+  },
+  {
+   "t_ms": 60708.6,
+   "kind": "llm",
+   "cached": false,
+   "key": "e9dadb6b61116a22787ee0be94e403d0",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 428,
+    "prompt_tokens": 1995,
+    "total_tokens": 2423
+   },
+   "latency_ms": 3502.5
+  },
+  {
+   "t_ms": 60710.7,
+   "kind": "merge",
+   "label": "route_for_specialist_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

@@ -1,0 +1,318 @@
+{
+ "decision": {
+  "request_id": "REQ-9042",
+  "recommendation": "route_for_specialist_review: Route for specialist review before approval. The request meets the budget band for s4 but the vendor security review is expired per vendor_registry and vendor_api records, triggering the security_review_required flag in the policy floor. Therefore a specialist review is required to address the expired security assessment and confirm Department Head and Procurement approvals.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "Tallyhub Reconcile from Tallyhub (Expense Management): annual cost $4,500, 6 users, data access 'none', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-9042"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Noah Williams (IC4, Finance); manager Priya Shah (E006).",
+    "reference": "employee:E004"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Finance software budget: annual $90,000, committed $61,000, available $29,000; request $4,500 is within the available budget (headroom $24,500).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of Tallyhub Reconcile.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: Tallyhub procurement status Approved, security Approved (2025-09-29), legal terms Approved.",
+    "reference": "vendor_registry:V103"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2025-09-29), risk low, processes personal data: no, stores data outside region: no.",
+    "reference": "vendor_api:Tallyhub"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2025-09-29 is 366 days before the reference date 2026-09-30 (valid 365 days): expired per registry.",
+    "reference": "vendor_registry:Tallyhub#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2025-09-29 is 366 days before the reference date 2026-09-30 (valid 365 days): expired per vendor-risk service.",
+    "reference": "vendor_api:Tallyhub#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $4,500 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required: vendor security review expired (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Tallyhub Reconcile is a new expense management tool costing $4,500 annually for 6 users.",
+    "reference": "request:REQ-9042"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Finance department has $29,000 available budget, so the request is within budget limits.",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Vendor security review for Tallyhub expired 366 days ago, requiring a new review.",
+    "reference": "vendor_registry:V103, vendor_api:Tallyhub, vendor_registry:Tallyhub#review-age, vendor_api:Tallyhub#review-age"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "No existing catalog tool covers the requested need.",
+    "reference": "catalog:search:default"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Security"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "vendor_review_expired"
+  ],
+  "next_step": "Send the evidence package to Security for review, then to Department Head and Procurement for approval. Do not purchase until every approval is recorded. Obtain a new security review for Tallyhub and secure Department Head approval before proceeding.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 2,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 58513.4,
+   "rate_limit_wait_ms": 56284.0,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "route_for_specialist_review",
+  "rationale": "The request meets the budget band for s4 but the vendor security review is expired per vendor_registry and vendor_api records, triggering the security_review_required flag in the policy floor. Therefore a specialist review is required to address the expired security assessment and confirm Department Head and Procurement approvals.",
+  "next_step_detail": "Obtain a new security review for Tallyhub and secure Department Head approval before proceeding.",
+  "overlap_assessment": "No existing catalog tool covers the requested need.",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Tallyhub Reconcile is a new expense management tool costing $4,500 annually for 6 users.",
+    "evidence_ids": [
+     "request:REQ-9042"
+    ]
+   },
+   {
+    "finding": "Finance department has $29,000 available budget, so the request is within budget limits.",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "Vendor security review for Tallyhub expired 366 days ago, requiring a new review.",
+    "evidence_ids": [
+     "vendor_registry:V103",
+     "vendor_api:Tallyhub",
+     "vendor_registry:Tallyhub#review-age",
+     "vendor_api:Tallyhub#review-age"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": {
+  "key_findings": [
+   {
+    "finding": "Tallyhub Reconcile is a new expense management tool costing $4,500 annually for 6 users.",
+    "evidence_ids": [
+     "request:REQ-9042"
+    ]
+   },
+   {
+    "finding": "Finance department has $29,000 available budget, so the request is within budget limits.",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "No approved catalog product shares the vendor, category, or product name of Tallyhub Reconcile.",
+    "evidence_ids": [
+     "catalog:search:default"
+    ]
+   },
+   {
+    "finding": "Vendor security review for Tallyhub expired 366 days ago, requiring a new review.",
+    "evidence_ids": [
+     "vendor_registry:V103",
+     "vendor_api:Tallyhub",
+     "vendor_registry:Tallyhub#review-age",
+     "vendor_api:Tallyhub#review-age"
+    ]
+   }
+  ],
+  "overlap_assessment": "No existing catalog tool covers the requested need.",
+  "stated_gap": "",
+  "concerns": [
+   "Vendor security review expired and requires renewal",
+   "Specialist review or budget exception needed per policy s5",
+   "Department Head and Procurement approvals required per policy s4"
+  ],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "injection_suspected": false
+ },
+ "score": {
+  "arm": "staged",
+  "repeat": 1,
+  "case_id": "SYN-04B",
+  "request_id": "REQ-9042",
+  "label": "route_for_specialist_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 6,
+  "values_total": 6,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 58513.4,
+  "rate_limit_wait_ms": 56284.0,
+  "net_latency_ms": 2229.4,
+  "llm_calls": 2,
+  "tool_calls": 5,
+  "tokens": 4100,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 4.1,
+   "kind": "vendor_api",
+   "vendor": "Tallyhub",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 2.7
+  },
+  {
+   "t_ms": 4.3,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "request:REQ-9042",
+    "employee:E004"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "budget:Finance"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "vendor_registry:V103",
+    "vendor_api:Tallyhub",
+    "vendor_registry:Tallyhub#review-age",
+    "vendor_api:Tallyhub#review-age"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s5#vendor"
+   ]
+  },
+  {
+   "t_ms": 57283.3,
+   "kind": "llm",
+   "cached": false,
+   "key": "5d80350daf6f6ea70ec8482de197d957",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 309,
+    "prompt_tokens": 1859,
+    "total_tokens": 2168
+   },
+   "latency_ms": 57277.3
+  },
+  {
+   "t_ms": 58511.4,
+   "kind": "llm",
+   "cached": false,
+   "key": "9235a743e703c45fabfee6c17f8377cb",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 342,
+    "prompt_tokens": 1590,
+    "total_tokens": 1932
+   },
+   "latency_ms": 1223.9
+  },
+  {
+   "t_ms": 58513.3,
+   "kind": "merge",
+   "label": "route_for_specialist_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

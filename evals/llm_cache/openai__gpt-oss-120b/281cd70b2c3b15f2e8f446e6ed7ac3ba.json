@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"use_existing_tool\",\n  \"rationale\": \"An approved company-wide TaskFlow instance (SW003) already exists and is available to Marketing, covering the same project management needs, making a new purchase redundant.\",\n  \"next_step_detail\": \"\",\n  \"overlap_assessment\": \"The existing TaskFlow tool satisfies the requested functionality; no credible gap is stated.\",\n  \"additional_approvals\": [],\n  \"additional_risk_flags\": [],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"clarification_questions\": [],\n  \"interpretations\": [\n    {\n      \"finding\": \"TaskFlow Pro request costs $8,000 and is within Marketing's $15,000 available budget.\",\n      \"evidence_ids\": [\"budget:Marketing\"]\n    },\n    {\n      \"finding\": \"Existing approved TaskFlow (SW003) is company-wide and matches vendor, category, and product name, and is available to Marketing.\",\n      \"evidence_ids\": [\"catalog:SW003\"]\n    },\n    {\n      \"finding\": \"Vendor risk assessment for TaskFlow is current and low risk.\",\n      \"evidence_ids\": [\"vendor_registry:V003\", \"vendor_api:TaskFlow\"]\n    }\n  ],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 345,
+  "prompt_tokens": 2044,
+  "total_tokens": 2389
+ },
+ "latency_ms": 2164.2
+}

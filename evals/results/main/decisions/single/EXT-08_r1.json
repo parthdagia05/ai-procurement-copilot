@@ -1,0 +1,271 @@
+{
+ "decision": {
+  "request_id": "REQ-1008",
+  "recommendation": "use_existing_tool: Use the existing tool instead of a new purchase. An approved company-wide TaskFlow instance (SW003) already exists and is available to Marketing, covering the same project management needs, making a new purchase redundant.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "TaskFlow Pro from TaskFlow (Project Management): annual cost $8,000, 15 users, data access 'internal_marketing', integrations: SSO, urgency 'normal'.",
+    "reference": "request:REQ-1008"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Sarah Lee (IC4, Marketing); manager David Chen (E009).",
+    "reference": "employee:E001"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Marketing software budget: annual $180,000, committed $165,000, available $15,000; request $8,000 is within the available budget (headroom $7,000).",
+    "reference": "budget:Marketing"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool TaskFlow (Project Management, vendor TaskFlow): 180 seats, scope Company-wide, $36,000/yr - \"Project and task management\". Match: same_vendor, same_category, product_name; available for Marketing.",
+    "reference": "catalog:SW003"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Prior purchase PO-2501 on 2026-06-22: Operations bought TaskFlow for $36,000/yr (Approved; Company-wide agreement).",
+    "reference": "purchase:PO-2501"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: TaskFlow procurement status Approved, security Approved (2026-06-03), legal terms Approved.",
+    "reference": "vendor_registry:V003"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-06-03), risk low, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:TaskFlow"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-03 is 119 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:TaskFlow#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-03 is 119 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:TaskFlow#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $8,000 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Existing catalog products in the same category (TaskFlow (SW003)) must be considered before a new purchase; overlap is not an automatic rejection (policy s3).",
+    "reference": "policy:s3"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "TaskFlow Pro request costs $8,000 and is within Marketing's $15,000 available budget.",
+    "reference": "budget:Marketing"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Existing approved TaskFlow (SW003) is company-wide and matches vendor, category, and product name, and is available to Marketing.",
+    "reference": "catalog:SW003"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Vendor risk assessment for TaskFlow is current and low risk.",
+    "reference": "vendor_registry:V003, vendor_api:TaskFlow"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The existing TaskFlow tool satisfies the requested functionality; no credible gap is stated.",
+    "reference": "catalog:SW003, purchase:PO-2501"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "existing_tool_overlap"
+  ],
+  "next_step": "Ask the requester whether the existing tool meets the need. If a genuine gap remains, route to Department Head and Procurement with the gap documented.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 59080.3,
+   "rate_limit_wait_ms": 56501.3,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-120b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "use_existing_tool",
+  "rationale": "An approved company-wide TaskFlow instance (SW003) already exists and is available to Marketing, covering the same project management needs, making a new purchase redundant.",
+  "next_step_detail": "",
+  "overlap_assessment": "The existing TaskFlow tool satisfies the requested functionality; no credible gap is stated.",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "TaskFlow Pro request costs $8,000 and is within Marketing's $15,000 available budget.",
+    "evidence_ids": [
+     "budget:Marketing"
+    ]
+   },
+   {
+    "finding": "Existing approved TaskFlow (SW003) is company-wide and matches vendor, category, and product name, and is available to Marketing.",
+    "evidence_ids": [
+     "catalog:SW003"
+    ]
+   },
+   {
+    "finding": "Vendor risk assessment for TaskFlow is current and low risk.",
+    "evidence_ids": [
+     "vendor_registry:V003",
+     "vendor_api:TaskFlow"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "single",
+  "repeat": 1,
+  "case_id": "EXT-08",
+  "request_id": "REQ-1008",
+  "label": "use_existing_tool",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 4,
+  "values_total": 4,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 59080.3,
+  "rate_limit_wait_ms": 56501.3,
+  "net_latency_ms": 2579.0,
+  "llm_calls": 1,
+  "tool_calls": 5,
+  "tokens": 2389,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.8,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.8,
+   "evidence_ids": [
+    "request:REQ-1008",
+    "employee:E001"
+   ]
+  },
+  {
+   "t_ms": 1.1,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.3,
+   "evidence_ids": [
+    "budget:Marketing"
+   ]
+  },
+  {
+   "t_ms": 1.7,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.6,
+   "evidence_ids": [
+    "catalog:SW003",
+    "purchase:PO-2501"
+   ]
+  },
+  {
+   "t_ms": 6.1,
+   "kind": "vendor_api",
+   "vendor": "TaskFlow",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 4.0
+  },
+  {
+   "t_ms": 6.2,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 4.4,
+   "evidence_ids": [
+    "vendor_registry:V003",
+    "vendor_api:TaskFlow",
+    "vendor_registry:TaskFlow#review-age",
+    "vendor_api:TaskFlow#review-age"
+   ]
+  },
+  {
+   "t_ms": 6.3,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s3"
+   ]
+  },
+  {
+   "t_ms": 56913.0,
+   "kind": "tool_use_failed_retry_without_tools",
+   "error": "Error code: 400 - {'error': {'message': \"Tool call validation failed: tool call validation failed: attempted to call tool 'json' which was not in request.tools\", 'type': 'invalid_request_error', 'code"
+  },
+  {
+   "t_ms": 59078.5,
+   "kind": "llm",
+   "cached": false,
+   "key": "281cd70b2c3b15f2e8f446e6ed7ac3ba",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 345,
+    "prompt_tokens": 2044,
+    "total_tokens": 2389
+   },
+   "latency_ms": 2164.2
+  },
+  {
+   "t_ms": 59080.2,
+   "kind": "merge",
+   "label": "use_existing_tool",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

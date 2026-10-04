@@ -1,0 +1,10 @@
+{
+ "content": "{\"key_findings\":[{\"finding\":\"Corvid Survey Pro is a new vendor product with an annual cost of $3,200 for 6 users, classified as a Survey Tool.\",\"evidence_ids\":[\"request:REQ-9006\"]},{\"finding\":\"The Operations department has $20,000 available in its software budget, so the request is within budget limits.\",\"evidence_ids\":[\"budget:Operations\"]},{\"finding\":\"No approved catalog product shares the vendor, category, or product name of Corvid Survey Pro, indicating no existing tool overlap.\",\"evidence_ids\":[\"catalog:search:default\"]},{\"finding\":\"The vendor Corvid Survey has no security assessment record in the vendor-risk service, triggering a security review requirement.\",\"evidence_ids\":[\"vendor_api:Corvid Survey\"]}],\"overlap_assessment\":\"No existing catalog tool covers the requested product.\",\"stated_gap\":\"\",\"concerns\":[\"Security review required due to missing vendor assessment\",\"Vendor is new and has no security assessment record\",\"Approvals from Department Head and Procurement are required per policy s4\"],\"additional_data_classes\":[],\"additional_missing_information\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 312,
+  "prompt_tokens": 1772,
+  "total_tokens": 2084
+ },
+ "latency_ms": 1168.4
+}

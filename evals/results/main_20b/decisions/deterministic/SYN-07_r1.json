@@ -1,0 +1,198 @@
+{
+ "decision": {
+  "request_id": "REQ-9007",
+  "recommendation": "hold_for_manual_review: Hold for manual review. Material evidence is unavailable, conflicting or unverifiable; Procurement must review before approval routing.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "Fieldnote Territory Planner from Fieldnote (Sales Planning): annual cost $7,500, 12 users, data access 'internal_documents', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-9007"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Robert King (Director, Go To Market); manager Lisa Park (E010). Requester is the department's own leader; approval must go to the next level.",
+    "reference": "employee:E007"
+   },
+   {
+    "source": "check_budget",
+    "finding": "No software budget record for department 'Go To Market'; budget cannot be verified (policy s2, s10).",
+    "reference": "budget:Go To Market"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of Fieldnote Territory Planner.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: Fieldnote procurement status Approved, security Approved (2026-03-20), legal terms Approved.",
+    "reference": "vendor_registry:V106"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-03-20), risk low, processes personal data: no, stores data outside region: no.",
+    "reference": "vendor_api:Fieldnote"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-03-20 is 194 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:Fieldnote#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-03-20 is 194 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:Fieldnote#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $7,500 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Budget could not be verified: not assumed sufficient; routed to Finance (policy s2, s10).",
+    "reference": "policy:s2"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Finance"
+  ],
+  "missing_information": [
+   "department budget record (Go To Market)"
+  ],
+  "risk_flags": [
+   "budget_unverifiable"
+  ],
+  "next_step": "Hold the request. Procurement to manually verify the unresolved evidence (material evidence is unavailable, conflicting or unverifiable) before routing to Department Head, Procurement and Finance for approval.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 0,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 1.2,
+   "rate_limit_wait_ms": 0.0,
+   "fallback_reason": "deterministic_mode",
+   "model": null
+  }
+ },
+ "assessment": null,
+ "evidence_pack": null,
+ "score": {
+  "arm": "deterministic",
+  "repeat": 1,
+  "case_id": "SYN-07",
+  "request_id": "REQ-9007",
+  "label": "hold_for_manual_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 0,
+  "values_total": 0,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 1.2,
+  "rate_limit_wait_ms": 0.0,
+  "net_latency_ms": 1.2,
+  "llm_calls": 0,
+  "tool_calls": 5,
+  "tokens": 0,
+  "cache_hits": 0,
+  "fallback_reason": "deterministic_mode"
+ },
+ "trace": [
+  {
+   "t_ms": 0.1,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "request:REQ-9007",
+    "employee:E007"
+   ]
+  },
+  {
+   "t_ms": 0.2,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "unverifiable_no_budget_record",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "budget:Go To Market"
+   ]
+  },
+  {
+   "t_ms": 0.3,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "vendor_api",
+   "vendor": "Fieldnote",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 0.8
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.9,
+   "evidence_ids": [
+    "vendor_registry:V106",
+    "vendor_api:Fieldnote",
+    "vendor_registry:Fieldnote#review-age",
+    "vendor_api:Fieldnote#review-age"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s2"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "merge",
+   "label": "hold_for_manual_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

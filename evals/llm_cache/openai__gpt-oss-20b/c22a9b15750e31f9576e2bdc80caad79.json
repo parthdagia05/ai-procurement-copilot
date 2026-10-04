@@ -1,0 +1,10 @@
+{
+ "content": "{\"key_findings\":[{\"finding\":\"The request is for NeuralDesk Support Assistant, a General AI tool costing $6,000 annually for 20 users, with customer_pii data access and integration to HelpDeskly.\",\"evidence_ids\":[\"request:REQ-1004\"]},{\"finding\":\"The existing catalog contains NeuralDesk Business (SW009), a General AI tool from the same vendor, available to Customer Success, but its approved use does not cover the new customer_pii integration.\",\"evidence_ids\":[\"catalog:SW009\",\"purchase:PO-2531\"]},{\"finding\":\"Vendor NeuralDesk has passed security, legal, and privacy reviews within the last 365 days, but the new use case involves cross\u2011region data processing and customer_pii, triggering additional reviews.\",\"evidence_ids\":[\"vendor_registry:V009\",\"vendor_api:NeuralDesk\",\"policy:s5#data\",\"policy:s6\",\"policy:s6-s7#region\",\"policy:s7\"]},{\"finding\":\"The request falls within the $1,000.01\u2013$10,000 annual amount band, requiring Department Head and Procurement approvals.\",\"evidence_ids\":[\"policy:s4\"]}],\"overlap_assessment\":\"Existing NeuralDesk Business covers general AI functionality but does not authorize the new customer_pii integration or the specific support\u2011reply use case.\",\"stated_gap\":\"Draft support replies and summarize ticket history for customer\u2011success agents.\",\"concerns\":[\"Security review required for customer_pii integration\",\"Privacy review required for cross\u2011region data processing\",\"Legal review required for material cross\u2011region data\u2011processing issue\"],\"additional_data_classes\":[\"customer_pii\"],\"additional_missing_information\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 466,
+  "prompt_tokens": 2245,
+  "total_tokens": 2711
+ },
+ "latency_ms": 57794.4
+}

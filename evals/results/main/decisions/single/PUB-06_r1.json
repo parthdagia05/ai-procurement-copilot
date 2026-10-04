@@ -1,0 +1,298 @@
+{
+ "decision": {
+  "request_id": "REQ-1009",
+  "recommendation": "hold_for_manual_review: Hold for manual review. The request exceeds $10,000 and involves confidential documents, but the vendor risk assessment is unavailable and legal terms are unknown, triggering mandatory security, privacy, and legal reviews.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "NimbusAI Contract Reviewer from NimbusAI (Legal AI): annual cost $15,000, 8 users, data access 'confidential_documents', integrations: Document repository, urgency 'normal'.",
+    "reference": "request:REQ-1009"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Noah Williams (IC4, Finance); manager Priya Shah (E006).",
+    "reference": "employee:E004"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Finance software budget: annual $90,000, committed $61,000, available $29,000; request $15,000 is within the available budget (headroom $14,000).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of NimbusAI Contract Reviewer.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: NimbusAI procurement status New, security Unknown (no review date), legal terms Unknown.",
+    "reference": "vendor_registry:V013"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service unavailable (http_503 after 2 attempt(s)): security status, personal-data processing and data region could not be verified; no favourable status assumed (policy s10).",
+    "reference": "vendor_api:NimbusAI"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $15,000 falls in the $10,000.01-$25,000 band: minimum approvals Department Head, Finance, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required because the request involves confidential_documents (integration 'Document repository' implies confidential_documents) (policy s5).",
+    "reference": "policy:s5#data"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required: vendor-risk service unavailable, assessment unverified; vendor security status unknown (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Data residency could not be verified for sensitive data: Privacy review; no favourable status assumed (policy s6, s10).",
+    "reference": "policy:s6#region-unverified"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Legal review required: new vendor with annual spend $15,000 (>= $10,000); legal terms are 'Unknown', not approved/standard (policy s7).",
+    "reference": "policy:s7"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "AI tool: prior approvals of this vendor do not extend to new use cases or data classes (policy s8).",
+    "reference": "policy:s8"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Budget is sufficient: $15,000 request fits within Finance's remaining $29,000 budget.",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "No existing catalog tool matches the requested product or vendor.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Vendor risk service unavailable; security and data\u2011region status unverified.",
+    "reference": "vendor_registry:V013, vendor_api:NimbusAI"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Finance",
+   "Security",
+   "Privacy",
+   "Legal"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "privacy_review_required",
+   "legal_review_required",
+   "vendor_risk_unavailable"
+  ],
+  "next_step": "Hold the request. Security, Privacy and Legal to manually verify the unresolved evidence (material evidence is unavailable, conflicting or unverifiable) before routing to Department Head, Procurement and Finance for approval. Obtain a completed vendor security assessment and confirm that legal terms are acceptable before proceeding.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 60547.1,
+   "rate_limit_wait_ms": 56050.0,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-120b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "hold_for_manual_review",
+  "rationale": "The request exceeds $10,000 and involves confidential documents, but the vendor risk assessment is unavailable and legal terms are unknown, triggering mandatory security, privacy, and legal reviews.",
+  "next_step_detail": "Obtain a completed vendor security assessment and confirm that legal terms are acceptable before proceeding.",
+  "overlap_assessment": "",
+  "additional_approvals": [],
+  "additional_risk_flags": [
+   {
+    "flag": "security_review_required",
+    "reason": "Data class confidential_documents and vendor security status unknown (policy s5)."
+   },
+   {
+    "flag": "privacy_review_required",
+    "reason": "Data residency could not be verified for confidential documents (policy s6/s10)."
+   },
+   {
+    "flag": "legal_review_required",
+    "reason": "New vendor with spend $15,000 and unknown legal terms (policy s7)."
+   },
+   {
+    "flag": "vendor_risk_unavailable",
+    "reason": "Vendor\u2011risk service returned 503, no security assessment available (policy s5)."
+   }
+  ],
+  "additional_data_classes": [
+   "confidential_documents"
+  ],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Budget is sufficient: $15,000 request fits within Finance's remaining $29,000 budget.",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "No existing catalog tool matches the requested product or vendor.",
+    "evidence_ids": [
+     "catalog:search:default"
+    ]
+   },
+   {
+    "finding": "Vendor risk service unavailable; security and data\u2011region status unverified.",
+    "evidence_ids": [
+     "vendor_registry:V013",
+     "vendor_api:NimbusAI"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "single",
+  "repeat": 1,
+  "case_id": "PUB-06",
+  "request_id": "REQ-1009",
+  "label": "hold_for_manual_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 3,
+  "values_total": 3,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": true,
+  "latency_ms": 60547.1,
+  "rate_limit_wait_ms": 56050.0,
+  "net_latency_ms": 4497.1,
+  "llm_calls": 1,
+  "tool_calls": 5,
+  "tokens": 2596,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.8,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.8,
+   "evidence_ids": [
+    "request:REQ-1009",
+    "employee:E004"
+   ]
+  },
+  {
+   "t_ms": 1.2,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.3,
+   "evidence_ids": [
+    "budget:Finance"
+   ]
+  },
+  {
+   "t_ms": 1.9,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.7,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 514.7,
+   "kind": "vendor_api",
+   "vendor": "NimbusAI",
+   "status": "unavailable",
+   "reason": "http_503",
+   "attempts": 2,
+   "latency_ms": 512.4
+  },
+  {
+   "t_ms": 514.9,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 513.0,
+   "evidence_ids": [
+    "vendor_registry:V013",
+    "vendor_api:NimbusAI"
+   ]
+  },
+  {
+   "t_ms": 515.1,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s5#data",
+    "policy:s5#vendor",
+    "policy:s6#region-unverified",
+    "policy:s7",
+    "policy:s8"
+   ]
+  },
+  {
+   "t_ms": 59093.6,
+   "kind": "tool_use_failed_retry_without_tools",
+   "error": "Error code: 400 - {'error': {'message': \"Tool call validation failed: tool call validation failed: attempted to call tool 'json' which was not in request.tools\", 'type': 'invalid_request_error', 'code"
+  },
+  {
+   "t_ms": 60545.0,
+   "kind": "llm",
+   "cached": false,
+   "key": "df32d1c9e5e38ec65eff230b0d7dddc8",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 497,
+    "prompt_tokens": 2099,
+    "total_tokens": 2596
+   },
+   "latency_ms": 1450.7
+  },
+  {
+   "t_ms": 60547.1,
+   "kind": "merge",
+   "label": "hold_for_manual_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

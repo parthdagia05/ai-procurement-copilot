@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"key_findings\": [\n    {\n      \"finding\": \"SignalWatch Advanced requested for $24,000 annually for 25 users, accessing production telemetry.\",\n      \"evidence_ids\": [\"request:REQ-1007\"]\n    },\n    {\n      \"finding\": \"Engineering software budget has $26,000 available, so the request is within budget.\",\n      \"evidence_ids\": [\"budget:Engineering\"]\n    },\n    {\n      \"finding\": \"Existing approved SignalWatch tool (SW005) is available to Engineering and covers observability.\",\n      \"evidence_ids\": [\"catalog:SW005\"]\n    },\n    {\n      \"finding\": \"Vendor security review is expired and registry information conflicts with vendor\u2011risk service.\",\n      \"evidence_ids\": [\"vendor_registry:V005\", \"vendor_api:SignalWatch\"]\n    }\n  ],\n  \"overlap_assessment\": \"An existing approved SignalWatch observability tool is available to Engineering and appears to satisfy the stated need.\",\n  \"stated_gap\": \"\",\n  \"concerns\": [\n    \"Security review is expired and conflicting between registry and vendor\u2011risk service.\",\n    \"Policy requires a fresh security review due to production access integration.\",\n    \"Manual review is needed to confirm whether the existing tool fully meets the advanced analytics requirement.\"\n  ],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 470,
+  "prompt_tokens": 1984,
+  "total_tokens": 2454
+ },
+ "latency_ms": 2310.4
+}

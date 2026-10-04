@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"proceed_to_standard_approval\",\n  \"rationale\": \"The request for a SignFlow add\u2011on costing $800 is within the Manager\u2011only approval band (policy s4) and fits within Finance's available software budget ($29,000 headroom). An existing company\u2011wide SignFlow license is already approved, but the policy does not forbid additional seats, so standard approval can proceed.\",\n  \"next_step_detail\": \"Obtain the required Manager approval (Priya Shah) before creating a purchase order for the add\u2011on.\",\n  \"overlap_assessment\": \"An existing approved SignFlow deployment (SW010) covers e\u2011signature needs, but the requested three additional identities are not confirmed to be covered by current seats.\",\n  \"interpretations\": [\n    {\n      \"finding\": \"Finance requests SignFlow Add-on for three additional signing identities at $800/yr.\",\n      \"evidence_ids\": [\"request:REQ-1001\"]\n    },\n    {\n      \"finding\": \"The request is within Finance's available software budget ($29,000 headroom).\",\n      \"evidence_ids\": [\"budget:Finance\"]\n    },\n    {\n      \"finding\": \"Policy s4 requires only Manager approval for amounts up to $1,000.\",\n      \"evidence_ids\": [\"policy:s4\"]\n    }\n  ],\n  \"additional_approvals\": [],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"additional_risk_flags\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false,\n  \"overlap_assessment\": \"An existing approved SignFlow deployment (SW010) covers e\u2011signature needs, but the request adds three new signing identities that may require additional seats.\"\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 471,
+  "prompt_tokens": 1623,
+  "total_tokens": 2094
+ },
+ "latency_ms": 1466.8
+}

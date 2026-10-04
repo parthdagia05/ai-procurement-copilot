@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"rationale\":\"The request for Ledgerly Close ($4,500 annual) is within the Finance department\u2019s available budget ($29,000) and meets policy s4 approval requirements for the $1,000.01\u2013$10,000 band. Vendor Ledgerly has current security and legal approvals, and no personal data is processed.\",\"next_step_detail\":\"\",\"overlap_assessment\":\"\",\"additional_approvals\":[],\"additional_risk_flags\":[],\"additional_data_classes\":[],\"additional_missing_information\":[],\"clarification_questions\":[],\"interpretations\":[{\"finding\":\"Ledgerly Close is a new expense management tool with no existing catalog equivalent.\",\"evidence_ids\":[\"catalog:search:default\"]},{\"finding\":\"Finance budget allows the purchase with $24,500 remaining headroom.\",\"evidence_ids\":[\"budget:Finance\"]},{\"finding\":\"Vendor Ledgerly has up-to-date security and legal approvals.\",\"evidence_ids\":[\"vendor_registry:V102\",\"vendor_api:Ledgerly\"]}],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 249,
+  "prompt_tokens": 1872,
+  "total_tokens": 2121
+ },
+ "latency_ms": 59321.6
+}

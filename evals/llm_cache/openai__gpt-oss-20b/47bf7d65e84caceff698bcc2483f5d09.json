@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"required_approvals\":[\"Department Head\",\"Procurement\",\"Security\"],\"risk_flags\":[\"security_review_required\",\"vendor_assessment_missing\"],\"missing_information\":[],\"rationale\":\"The request includes all mandatory fields (requester, department, product, cost, users, purpose, data access, integrations). The annual cost of $3,200 is within the Operations available budget of $20,000. The vendor is new and has no current security assessment, triggering a required security review. No privacy or legal flags apply. The request meets the $1,000\u2013$10,000 threshold, so the minimum approvals are Department Head and Procurement, with an additional Security review due to the missing assessment.\",\"next_step\":\"Submit the request to the Department Head, Procurement, and Security for approval and conduct the required security assessment before final purchase.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 381,
+  "prompt_tokens": 2325,
+  "total_tokens": 2706
+ },
+ "latency_ms": 3345.6
+}

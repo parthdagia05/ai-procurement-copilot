@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"hold_for_manual_review\",\"rationale\":\"The request requires security, privacy, and legal reviews due to confidential data access, vendor risk unavailability, and unknown legal terms, all supported by evidence in the ledger.\",\"next_step_detail\":\"Obtain a vendor security assessment, confirm data residency for confidential documents, and review legal terms before proceeding.\",\"overlap_assessment\":\"No existing catalog tool covers the requested NimbusAI Contract Reviewer.\",\"interpretations\":[{\"finding\":\"Vendor NimbusAI is new with unknown security status and legal terms; vendor-risk service unavailable.\",\"evidence_ids\":[\"vendor_registry:V013\",\"vendor_api:NimbusAI\"]},{\"finding\":\"Data access involves confidential_documents, requiring security, privacy, and legal reviews.\",\"evidence_ids\":[\"policy:s5#data\",\"policy:s5#vendor\",\"policy:s6#region-unverified\",\"policy:s7\"]},{\"finding\":\"Annual cost $15,000 is within Finance budget headroom of $14,000.\",\"evidence_ids\":[\"budget:Finance\"]}],\"additional_approvals\":[],\"additional_data_classes\":[],\"additional_missing_information\":[],\"additional_risk_flags\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 324,
+  "prompt_tokens": 1751,
+  "total_tokens": 2075
+ },
+ "latency_ms": 1018.6
+}

@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"rationale\":\"The request meets the budget band and has an approved vendor, but policy s5 and s6 require security and privacy reviews for employee PII and HRIS integration, which are not yet documented in the evidence ledger.\",\"next_step_detail\":\"Request a formal security and privacy review documentation for the HRIS integration before proceeding.\",\"overlap_assessment\":\"\",\"interpretations\":[{\"finding\":\"The request is for Kudosly Recognition, an employee engagement tool costing $7,000 annually for 40 users, with employee PII access and SSO/HRIS integrations.\",\"evidence_ids\":[\"request:REQ-9008\"]},{\"finding\":\"The Customer Success department has a software budget of $140,000 with $7,000 remaining, so the request is within budget.\",\"evidence_ids\":[\"budget:Customer Success\"]},{\"finding\":\"Kudosly is an approved vendor with a recent security review (2026-07-15) and standard legal terms, and it processes personal data but does not store data outside the region.\",\"evidence_ids\":[\"vendor_registry:V107\",\"vendor_api:Kudosly\",\"vendor_registry:Kudosly#review-age\",\"vendor_api:Kudosly#review-age\"]}],\"additional_approvals\":[],\"additional_data_classes\":[],\"additional_missing_information\":[],\"additional_risk_flags\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 352,
+  "prompt_tokens": 1708,
+  "total_tokens": 2060
+ },
+ "latency_ms": 55737.8
+}

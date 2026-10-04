@@ -1,0 +1,317 @@
+{
+ "decision": {
+  "request_id": "REQ-1007",
+  "recommendation": "hold_for_manual_review: Hold for manual review. The request for SignalWatch Advanced overlaps with an existing approved tool (SignalWatch) in the same category, but vendor security review has expired and registry/vendor\u2011risk data conflict, requiring a security review. The budget is within limits but the request still needs a Department Head, Procurement, Finance, and Security approval per policy s4 and s5.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "SignalWatch Advanced from SignalWatch (Observability): annual cost $24,000, 25 users, data access 'production_telemetry', integrations: Production cloud account, urgency 'high'.",
+    "reference": "request:REQ-1007"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Arjun Mehta (IC5, Engineering); manager Maya Rao (E008).",
+    "reference": "employee:E002"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Engineering software budget: annual $300,000, committed $274,000, available $26,000; request $24,000 is within the available budget (headroom $2,000).",
+    "reference": "budget:Engineering"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool SignalWatch (Observability, vendor SignalWatch): 80 seats, scope Engineering, $80,000/yr - \"Production monitoring\". Match: same_vendor, same_category, product_name; available for Engineering.",
+    "reference": "catalog:SW005"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Prior purchase PO-2418 on 2026-03-01: Engineering bought SignalWatch for $80,000/yr (Approved; Annual renewal).",
+    "reference": "purchase:PO-2418"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: SignalWatch procurement status Approved, security Approved (2025-07-01), legal terms Approved.",
+    "reference": "vendor_registry:V005"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review expired (last review 2025-07-01), risk medium, processes personal data: no, stores data outside region: no.",
+    "reference": "vendor_api:SignalWatch"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2025-07-01 is 456 days before the reference date 2026-09-30 (valid 365 days): expired per registry.",
+    "reference": "vendor_registry:SignalWatch#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2025-07-01 is 456 days before the reference date 2026-09-30 (valid 365 days): expired per vendor-risk service.",
+    "reference": "vendor_api:SignalWatch#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Sources disagree, not silently resolved (policy s5): registry security status 'Approved' vs vendor-risk service 'expired'.",
+    "reference": "vendor_reconciliation:SignalWatch"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $24,000 falls in the $10,000.01-$25,000 band: minimum approvals Department Head, Finance, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Existing catalog products in the same category (SignalWatch (SW005)) must be considered before a new purchase; overlap is not an automatic rejection (policy s3).",
+    "reference": "policy:s3"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required because the request involves production_access (integration 'Production cloud account' implies production_access) (policy s5).",
+    "reference": "policy:s5#data"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required: registry and vendor-risk service disagree; vendor security review expired (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Existing approved tool SignalWatch (SW005) is available to Engineering and matches vendor and category, but the request specifies advanced analytics, indicating a potential gap.",
+    "reference": "catalog:SW005, request:REQ-1007"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Security review is required because the integration involves production_access and vendor security review is expired, with conflicting evidence between registry and vendor-risk service.",
+    "reference": "policy:s5#data, policy:s5#vendor, vendor_registry:V005, vendor_api:SignalWatch"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Existing SignalWatch (SW005) is available to Engineering and covers basic production monitoring, but the request specifies advanced analytics, so a gap may exist.",
+    "reference": "catalog:SW005, purchase:PO-2418"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Finance",
+   "Security"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "existing_tool_overlap",
+   "security_review_required",
+   "vendor_review_expired",
+   "conflicting_vendor_evidence"
+  ],
+  "next_step": "Hold the request. Security to manually verify the unresolved evidence (material evidence is unavailable, conflicting or unverifiable) before routing to Department Head, Procurement and Finance for approval. Ask the requester whether the existing SignalWatch tool (SW005) already satisfies the advanced incident analytics need, and confirm if any new features are required.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 58760.3,
+   "rate_limit_wait_ms": 57281.9,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "hold_for_manual_review",
+  "rationale": "The request for SignalWatch Advanced overlaps with an existing approved tool (SignalWatch) in the same category, but vendor security review has expired and registry/vendor\u2011risk data conflict, requiring a security review. The budget is within limits but the request still needs a Department Head, Procurement, Finance, and Security approval per policy s4 and s5.",
+  "next_step_detail": "Ask the requester whether the existing SignalWatch tool (SW005) already satisfies the advanced incident analytics need, and confirm if any new features are required.",
+  "overlap_assessment": "Existing SignalWatch (SW005) is available to Engineering and covers basic production monitoring, but the request specifies advanced analytics, so a gap may exist.",
+  "additional_approvals": [
+   {
+    "role": "Department Head",
+    "reason": "Annual amount $24,000 falls in $10,000.01-$25,000 band (policy s4)."
+   },
+   {
+    "role": "Procurement",
+    "reason": "Annual amount $24,000 falls in $10,000.01-$25,000 band (policy s4)."
+   },
+   {
+    "role": "Finance",
+    "reason": "Annual amount $24,000 falls in $10,000.01-$25,000 band (policy s4)."
+   },
+   {
+    "role": "Security",
+    "reason": "Security review required due to production_access and conflicting vendor evidence (policy s5)."
+   }
+  ],
+  "additional_risk_flags": [
+   {
+    "flag": "existing_tool_overlap",
+    "reason": "Existing approved tool SignalWatch (SW005) is in the same category (policy s3)."
+   },
+   {
+    "flag": "security_review_required",
+    "reason": "Request involves production_access and vendor security review expired (policy s5)."
+   },
+   {
+    "flag": "vendor_review_expired",
+    "reason": "Vendor security review expired per registry and vendor-risk service (policy s5)."
+   },
+   {
+    "flag": "conflicting_vendor_evidence",
+    "reason": "Registry and vendor-risk service disagree on security status (policy s5)."
+   }
+  ],
+  "additional_data_classes": [
+   "production_access"
+  ],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Existing approved tool SignalWatch (SW005) is available to Engineering and matches vendor and category, but the request specifies advanced analytics, indicating a potential gap.",
+    "evidence_ids": [
+     "catalog:SW005",
+     "request:REQ-1007"
+    ]
+   },
+   {
+    "finding": "Security review is required because the integration involves production_access and vendor security review is expired, with conflicting evidence between registry and vendor-risk service.",
+    "evidence_ids": [
+     "policy:s5#data",
+     "policy:s5#vendor",
+     "vendor_registry:V005",
+     "vendor_api:SignalWatch"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "single",
+  "repeat": 1,
+  "case_id": "EXT-07",
+  "request_id": "REQ-1007",
+  "label": "hold_for_manual_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 3,
+  "values_total": 3,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 58760.3,
+  "rate_limit_wait_ms": 57281.9,
+  "net_latency_ms": 1478.4,
+  "llm_calls": 1,
+  "tool_calls": 5,
+  "tokens": 3035,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.7,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.6,
+   "evidence_ids": [
+    "request:REQ-1007",
+    "employee:E002"
+   ]
+  },
+  {
+   "t_ms": 0.9,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "budget:Engineering"
+   ]
+  },
+  {
+   "t_ms": 1.4,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.4,
+   "evidence_ids": [
+    "catalog:SW005",
+    "purchase:PO-2418"
+   ]
+  },
+  {
+   "t_ms": 5.0,
+   "kind": "vendor_api",
+   "vendor": "SignalWatch",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 3.3
+  },
+  {
+   "t_ms": 5.1,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 3.7,
+   "evidence_ids": [
+    "vendor_registry:V005",
+    "vendor_api:SignalWatch",
+    "vendor_registry:SignalWatch#review-age",
+    "vendor_api:SignalWatch#review-age",
+    "vendor_reconciliation:SignalWatch"
+   ]
+  },
+  {
+   "t_ms": 5.3,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s3",
+    "policy:s5#data",
+    "policy:s5#vendor"
+   ]
+  },
+  {
+   "t_ms": 58757.2,
+   "kind": "llm",
+   "cached": false,
+   "key": "36073864606b1584423277158d5ac79a",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 650,
+    "prompt_tokens": 2385,
+    "total_tokens": 3035
+   },
+   "latency_ms": 58750.2
+  },
+  {
+   "t_ms": 58760.3,
+   "kind": "merge",
+   "label": "hold_for_manual_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

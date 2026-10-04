@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"route_for_specialist_review\",\n  \"rationale\": \"The request involves processing customer PII, triggering required Security, Privacy, and Legal reviews per policies s5, s6, and s7, and the existing limited\u2011use NeuralDesk Business license does not clearly cover the new data class and integration.\",\n  \"next_step_detail\": \"Initiate formal Security, Privacy, and Legal assessments and verify whether the existing NeuralDesk Business license can be extended to meet the required data handling.\",\n  \"overlap_assessment\": \"An existing NeuralDesk Business tool exists but its limited\u2011use restrictions likely do not satisfy the requested customer\u2011PII use case.\",\n  \"interpretations\": [\n    {\n      \"finding\": \"Requested NeuralDesk Support Assistant costs $6,000 annually for 20 users, which is within the Customer Success department's available budget of $7,000.\",\n      \"evidence_ids\": [\"request:REQ-1004\", \"budget:Customer Success\"]\n    },\n    {\n      \"finding\": \"The tool will process customer_pii and therefore requires Security, Privacy, and Legal reviews.\",\n      \"evidence_ids\": [\"policy:s5#data\", \"policy:s6\", \"policy:s7\"]\n    },\n    {\n      \"finding\": \"NeuralDesk vendor is approved, with a current security review (212 days old) and medium risk rating; it processes personal data and stores data outside the operating region.\",\n      \"evidence_ids\": [\"vendor_registry:V009\", \"vendor_api:NeuralDesk\"]\n    }\n  ],\n  \"additional_approvals\": [],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"additional_risk_flags\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false,\n  \"overlap_assessment\": \"An existing NeuralDesk Business tool is available but its limited\u2011use restrictions likely do not satisfy the requested customer\u2011PII use case.\"\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 496,
+  "prompt_tokens": 2037,
+  "total_tokens": 2533
+ },
+ "latency_ms": 1575.9
+}

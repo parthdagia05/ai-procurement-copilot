@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"required_approvals\":[\"Department Head\",\"Procurement\",\"Privacy\"],\"risk_flags\":[\"privacy_review_required\"],\"missing_information\":[],\"rationale\":\"The request for Kudosly Recognition is $7,000, which is within the Customer Success department\u2019s available budget of $7,000. No existing approved tool overlaps. The vendor\u2019s security assessment is current, and the vendor is not new. However, the tool will process employee PII, triggering a required privacy review. The financial threshold for $7,000 requires Department Head and Procurement approvals, and the privacy review adds a Privacy approval. All required fields are present, so no clarification is needed.\",\"next_step\":\"Submit the request to the Department Head, Procurement, and Privacy reviewers for approval.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 270,
+  "prompt_tokens": 2441,
+  "total_tokens": 2711
+ },
+ "latency_ms": 2884.7
+}

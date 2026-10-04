@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"hold_for_manual_review\",\n  \"rationale\": \"The request exceeds $10,000 and involves confidential documents, but the vendor risk assessment is unavailable and legal terms are unknown, triggering mandatory security, privacy, and legal reviews.\",\n  \"next_step_detail\": \"Obtain a completed vendor security assessment and confirm that legal terms are acceptable before proceeding.\",\n  \"overlap_assessment\": \"\",\n  \"additional_approvals\": [],\n  \"additional_risk_flags\": [\n    {\n      \"flag\": \"security_review_required\",\n      \"reason\": \"Data class confidential_documents and vendor security status unknown (policy s5).\"\n    },\n    {\n      \"flag\": \"privacy_review_required\",\n      \"reason\": \"Data residency could not be verified for confidential documents (policy s6/s10).\"\n    },\n    {\n      \"flag\": \"legal_review_required\",\n      \"reason\": \"New vendor with spend $15,000 and unknown legal terms (policy s7).\"\n    },\n    {\n      \"flag\": \"vendor_risk_unavailable\",\n      \"reason\": \"Vendor\u2011risk service returned 503, no security assessment available (policy s5).\"\n    }\n  ],\n  \"additional_data_classes\": [\"confidential_documents\"],\n  \"additional_missing_information\": [],\n  \"clarification_questions\": [],\n  \"interpretations\": [\n    {\n      \"finding\": \"Budget is sufficient: $15,000 request fits within Finance's remaining $29,000 budget.\",\n      \"evidence_ids\": [\"budget:Finance\"]\n    },\n    {\n      \"finding\": \"No existing catalog tool matches the requested product or vendor.\",\n      \"evidence_ids\": [\"catalog:search:default\"]\n    },\n    {\n      \"finding\": \"Vendor risk service unavailable; security and data\u2011region status unverified.\",\n      \"evidence_ids\": [\"vendor_registry:V013\", \"vendor_api:NimbusAI\"]\n    }\n  ],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 497,
+  "prompt_tokens": 2099,
+  "total_tokens": 2596
+ },
+ "latency_ms": 1450.7
+}

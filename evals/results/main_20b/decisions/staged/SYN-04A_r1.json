@@ -1,0 +1,300 @@
+{
+ "decision": {
+  "request_id": "REQ-9041",
+  "recommendation": "proceed_to_standard_approval: Proceed to standard approval. The request meets the budget and policy requirements, with all necessary approvals identified in the policy floor and evidence confirming vendor status and security review.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "Ledgerly Close from Ledgerly (Expense Management): annual cost $4,500, 6 users, data access 'none', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-9041"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Noah Williams (IC4, Finance); manager Priya Shah (E006).",
+    "reference": "employee:E004"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Finance software budget: annual $90,000, committed $61,000, available $29,000; request $4,500 is within the available budget (headroom $24,500).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of Ledgerly Close.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: Ledgerly procurement status Approved, security Approved (2025-09-30), legal terms Approved.",
+    "reference": "vendor_registry:V102"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2025-09-30), risk low, processes personal data: no, stores data outside region: no.",
+    "reference": "vendor_api:Ledgerly"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2025-09-30 is 365 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:Ledgerly#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2025-09-30 is 365 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:Ledgerly#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $4,500 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Ledgerly Close is a new expense management tool requested by Finance with an annual cost of $4,500 for 6 users.",
+    "reference": "request:REQ-9041"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The request falls within the Finance software budget, leaving $24,500 headroom.",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Ledgerly is an approved vendor with current security and legal reviews, and does not process personal data.",
+    "reference": "vendor_registry:V102, vendor_api:Ledgerly"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "No existing catalog tool matches Ledgerly Close in vendor, category, or product name.",
+    "reference": "catalog:search:default"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement"
+  ],
+  "missing_information": [],
+  "risk_flags": [],
+  "next_step": "Send to Department Head and Procurement for approval. No specialist review was triggered. Ensure Department Head and Procurement sign off before procurement processing.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 2,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 2998.3,
+   "rate_limit_wait_ms": 1078.0,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "proceed_to_standard_approval",
+  "rationale": "The request meets the budget and policy requirements, with all necessary approvals identified in the policy floor and evidence confirming vendor status and security review.",
+  "next_step_detail": "Ensure Department Head and Procurement sign off before procurement processing.",
+  "overlap_assessment": "No existing catalog tool matches Ledgerly Close in vendor, category, or product name.",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Ledgerly Close is a new expense management tool requested by Finance with an annual cost of $4,500 for 6 users.",
+    "evidence_ids": [
+     "request:REQ-9041"
+    ]
+   },
+   {
+    "finding": "The request falls within the Finance software budget, leaving $24,500 headroom.",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "Ledgerly is an approved vendor with current security and legal reviews, and does not process personal data.",
+    "evidence_ids": [
+     "vendor_registry:V102",
+     "vendor_api:Ledgerly"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": {
+  "key_findings": [
+   {
+    "finding": "Ledgerly Close is a new expense management tool requested by Finance with an annual cost of $4,500 for 6 users.",
+    "evidence_ids": [
+     "request:REQ-9041"
+    ]
+   },
+   {
+    "finding": "The request falls within the Finance software budget, leaving $24,500 headroom.",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "Ledgerly is an approved vendor with current security and legal reviews, and does not process personal data.",
+    "evidence_ids": [
+     "vendor_registry:V102",
+     "vendor_api:Ledgerly"
+    ]
+   },
+   {
+    "finding": "Policy s4 requires Department Head and Procurement approvals for an annual amount of $4,500.",
+    "evidence_ids": [
+     "policy:s4"
+    ]
+   }
+  ],
+  "overlap_assessment": "No existing catalog tool matches Ledgerly Close in vendor, category, or product name.",
+  "stated_gap": "",
+  "concerns": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "injection_suspected": false
+ },
+ "score": {
+  "arm": "staged",
+  "repeat": 1,
+  "case_id": "SYN-04A",
+  "request_id": "REQ-9041",
+  "label": "proceed_to_standard_approval",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 5,
+  "values_total": 5,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 2998.3,
+  "rate_limit_wait_ms": 1078.0,
+  "net_latency_ms": 1920.3,
+  "llm_calls": 2,
+  "tool_calls": 5,
+  "tokens": 3837,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 15.2,
+   "kind": "vendor_api",
+   "vendor": "Ledgerly",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 10.1
+  },
+  {
+   "t_ms": 15.5,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "request:REQ-9041",
+    "employee:E004"
+   ]
+  },
+  {
+   "t_ms": 15.5,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "budget:Finance"
+   ]
+  },
+  {
+   "t_ms": 15.5,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 15.6,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "vendor_registry:V102",
+    "vendor_api:Ledgerly",
+    "vendor_registry:Ledgerly#review-age",
+    "vendor_api:Ledgerly#review-age"
+   ]
+  },
+  {
+   "t_ms": 15.6,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4"
+   ]
+  },
+  {
+   "t_ms": 1547.9,
+   "kind": "llm",
+   "cached": false,
+   "key": "dc3966bbf04477391a5569576cb90741",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 270,
+    "prompt_tokens": 1804,
+    "total_tokens": 2074
+   },
+   "latency_ms": 1530.0
+  },
+  {
+   "t_ms": 2997.0,
+   "kind": "llm",
+   "cached": false,
+   "key": "57e7a4b17d3ac3f7d37b10437f74c5ab",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 261,
+    "prompt_tokens": 1502,
+    "total_tokens": 1763
+   },
+   "latency_ms": 1446.4
+  },
+  {
+   "t_ms": 2998.3,
+   "kind": "merge",
+   "label": "proceed_to_standard_approval",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

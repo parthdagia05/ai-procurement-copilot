@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"rationale\":\"The request meets the $1,000.01\u2013$10,000 band requiring Department Head and Procurement approvals (policy:s4) and involves customer_pii with cross\u2011region data processing, triggering mandatory Security (policy:s5#data), Privacy (policy:s6, policy:s6-s7#region), and Legal (policy:s7) reviews. Existing catalog approval (catalog:SW009) does not cover the new integration or data class (policy:s8).\",\"next_step_detail\":\"Proceed with Security, Privacy, and Legal specialist reviews before any procurement action.\",\"overlap_assessment\":\"Existing NeuralDesk Business (SW009) covers general AI functionality but does not authorize the new customer_pii integration or the specific support\u2011reply use case.\",\"interpretations\":[{\"finding\":\"The request is for NeuralDesk Support Assistant, a General AI tool costing $6,000 annually for 20 users, with customer_pii data access and integration to HelpDeskly.\",\"evidence_ids\":[\"request:REQ-1004\"]},{\"finding\":\"The existing catalog contains NeuralDesk Business (SW009), a General AI tool from the same vendor, available to Customer Success, but its approved use does not cover the new customer_pii integration.\",\"evidence_ids\":[\"catalog:SW009\",\"purchase:PO-2531\"]},{\"finding\":\"Vendor NeuralDesk has passed security, legal, and privacy reviews within the last 365 days, but the new use case involves cross\u2011region data processing and customer_pii, triggering additional reviews.\",\"evidence_ids\":[\"vendor_registry:V009\",\"vendor_api:NeuralDesk\",\"policy:s5#data\",\"policy:s6\",\"policy:s6-s7#region\",\"policy:s7\"]}],\"additional_approvals\":[],\"additional_data_classes\":[],\"additional_missing_information\":[],\"additional_risk_flags\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 467,
+  "prompt_tokens": 2038,
+  "total_tokens": 2505
+ },
+ "latency_ms": 1098.5
+}

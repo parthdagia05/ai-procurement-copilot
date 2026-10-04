@@ -1,0 +1,192 @@
+{
+ "decision": {
+  "request_id": "REQ-1001",
+  "recommendation": "use_existing_tool: Use the existing tool instead of a new purchase. The request is for SignFlow Add\u2011on from SignFlow, a product already approved and available to Finance (catalog SW010, PO\u20112513). The annual cost ($800) is within the department\u2019s available budget ($29,000). The vendor\u2019s security assessment is current and the legal terms are standard. However, the tool processes personal data (employee PII) in internal documents, triggering a privacy review. No additional approvals are required beyond the standard privacy review.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "SignFlow Add-on from SignFlow (E-signature): annual cost $800, 3 users, data access 'internal_documents', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-1001"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Noah Williams (IC4, Finance); manager Priya Shah (E006).",
+    "reference": "employee:E004"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Finance software budget: annual $90,000, committed $61,000, available $29,000; request $800 is within the available budget (headroom $28,200).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool SignFlow (E-signature, vendor SignFlow): 45 seats, scope Company-wide, $16,000/yr - \"Electronic signatures\". Match: same_vendor, same_category, product_name; available for Finance.",
+    "reference": "catalog:SW010"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Prior purchase PO-2513 on 2026-07-04: Finance bought SignFlow for $16,000/yr (Approved; Company-wide agreement).",
+    "reference": "purchase:PO-2513"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: SignFlow procurement status Approved, security Approved (2026-06-20), legal terms Approved.",
+    "reference": "vendor_registry:V010"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-06-20), risk low, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:SignFlow"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-20 is 102 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:SignFlow#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-20 is 102 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:SignFlow#review-age"
+   }
+  ],
+  "required_approvals": [],
+  "missing_information": [],
+  "risk_flags": [
+   "existing_tool_overlap",
+   "privacy_review_required"
+  ],
+  "next_step": "Submit the request for a privacy review before re\u2011using the existing SignFlow license.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 4,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile"
+   ],
+   "latency_ms": 1653.0,
+   "rate_limit_wait_ms": 878.7,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "use_existing_tool",
+  "required_approvals": [],
+  "risk_flags": [
+   "existing_tool_overlap",
+   "privacy_review_required"
+  ],
+  "missing_information": [],
+  "rationale": "The request is for SignFlow Add\u2011on from SignFlow, a product already approved and available to Finance (catalog SW010, PO\u20112513). The annual cost ($800) is within the department\u2019s available budget ($29,000). The vendor\u2019s security assessment is current and the legal terms are standard. However, the tool processes personal data (employee PII) in internal documents, triggering a privacy review. No additional approvals are required beyond the standard privacy review.",
+  "next_step": "Submit the request for a privacy review before re\u2011using the existing SignFlow license.",
+  "human_review_required": true
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "unguarded",
+  "repeat": 1,
+  "case_id": "PUB-01",
+  "request_id": "REQ-1001",
+  "label": "use_existing_tool",
+  "label_correct": false,
+  "approvals_exact": false,
+  "approvals_missing": "Manager",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 2,
+  "critical_detail": "missing approval Manager | forbidden flag privacy_review_required",
+  "injection_handled": "",
+  "values_grounded": 3,
+  "values_total": 4,
+  "ungrounded_values": "2513",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": false,
+  "latency_ms": 1653.0,
+  "rate_limit_wait_ms": 878.7,
+  "net_latency_ms": 774.3,
+  "llm_calls": 1,
+  "tool_calls": 4,
+  "tokens": 2785,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 3.3,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.4,
+   "evidence_ids": [
+    "request:REQ-1001",
+    "employee:E004"
+   ]
+  },
+  {
+   "t_ms": 3.4,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "budget:Finance"
+   ]
+  },
+  {
+   "t_ms": 3.6,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "catalog:SW010",
+    "purchase:PO-2513"
+   ]
+  },
+  {
+   "t_ms": 4.8,
+   "kind": "vendor_api",
+   "vendor": "SignFlow",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 1.0
+  },
+  {
+   "t_ms": 4.8,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 1.2,
+   "evidence_ids": [
+    "vendor_registry:V010",
+    "vendor_api:SignFlow",
+    "vendor_registry:SignFlow#review-age",
+    "vendor_api:SignFlow#review-age"
+   ]
+  },
+  {
+   "t_ms": 1651.9,
+   "kind": "llm",
+   "cached": false,
+   "key": "9b1295a12cf9bdd6dfb54b1903bba265",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 255,
+    "prompt_tokens": 2530,
+    "total_tokens": 2785
+   },
+   "latency_ms": 1646.7
+  }
+ ]
+}

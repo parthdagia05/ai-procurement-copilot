@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"proceed_to_standard_approval\",\n  \"rationale\": \"The request for Ledgerly Close ($4,500 annual) is within Finance's available budget, has no catalog overlap, and the vendor is approved with a current security review; required Department Head and Procurement approvals are satisfied per policy s4.\",\n  \"next_step_detail\": \"\",\n  \"overlap_assessment\": \"\",\n  \"additional_approvals\": [],\n  \"additional_risk_flags\": [],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"clarification_questions\": [],\n  \"interpretations\": [\n    {\n      \"finding\": \"Budget availability confirmed for the $4,500 request.\",\n      \"evidence_ids\": [\"budget:Finance\"]\n    },\n    {\n      \"finding\": \"No existing catalog tool overlaps with Ledgerly Close.\",\n      \"evidence_ids\": [\"catalog:search:default\"]\n    },\n    {\n      \"finding\": \"Vendor Ledgerly is approved and security review is current.\",\n      \"evidence_ids\": [\"vendor_registry:V102\", \"vendor_api:Ledgerly\"]\n    }\n  ],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 293,
+  "prompt_tokens": 1872,
+  "total_tokens": 2165
+ },
+ "latency_ms": 1254.7
+}

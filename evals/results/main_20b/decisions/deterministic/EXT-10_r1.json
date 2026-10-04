@@ -1,0 +1,192 @@
+{
+ "decision": {
+  "request_id": "REQ-1010",
+  "recommendation": "proceed_to_standard_approval: Proceed to standard approval. Annual amount in the up to $1,000 band; approvals: Manager.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "SignFlow Training Pack from SignFlow (Professional Services): annual cost $950, 12 users, data access 'none', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-1010"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Noah Williams (IC4, Finance); manager Priya Shah (E006).",
+    "reference": "employee:E004"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Finance software budget: annual $90,000, committed $61,000, available $29,000; request $950 is within the available budget (headroom $28,050).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool SignFlow (E-signature, vendor SignFlow): 45 seats, scope Company-wide, $16,000/yr - \"Electronic signatures\". Match: same_vendor, product_name; available for Finance.",
+    "reference": "catalog:SW010"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Prior purchase PO-2513 on 2026-07-04: Finance bought SignFlow for $16,000/yr (Approved; Company-wide agreement).",
+    "reference": "purchase:PO-2513"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: SignFlow procurement status Approved, security Approved (2026-06-20), legal terms Approved.",
+    "reference": "vendor_registry:V010"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-06-20), risk low, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:SignFlow"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-20 is 102 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:SignFlow#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-20 is 102 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:SignFlow#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $950 falls in the up to $1,000 band: minimum approvals Manager (policy s4).",
+    "reference": "policy:s4"
+   }
+  ],
+  "required_approvals": [
+   "Manager"
+  ],
+  "missing_information": [],
+  "risk_flags": [],
+  "next_step": "Send to Manager for approval. No specialist review was triggered.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 0,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 3.2,
+   "rate_limit_wait_ms": 0.0,
+   "fallback_reason": "deterministic_mode",
+   "model": null
+  }
+ },
+ "assessment": null,
+ "evidence_pack": null,
+ "score": {
+  "arm": "deterministic",
+  "repeat": 1,
+  "case_id": "EXT-10",
+  "request_id": "REQ-1010",
+  "label": "proceed_to_standard_approval",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 0,
+  "values_total": 0,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 3.2,
+  "rate_limit_wait_ms": 0.0,
+  "net_latency_ms": 3.2,
+  "llm_calls": 0,
+  "tool_calls": 5,
+  "tokens": 0,
+  "cache_hits": 0,
+  "fallback_reason": "deterministic_mode"
+ },
+ "trace": [
+  {
+   "t_ms": 0.4,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.4,
+   "evidence_ids": [
+    "request:REQ-1010",
+    "employee:E004"
+   ]
+  },
+  {
+   "t_ms": 0.5,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "budget:Finance"
+   ]
+  },
+  {
+   "t_ms": 0.8,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.3,
+   "evidence_ids": [
+    "catalog:SW010",
+    "purchase:PO-2513"
+   ]
+  },
+  {
+   "t_ms": 3.0,
+   "kind": "vendor_api",
+   "vendor": "SignFlow",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 2.0
+  },
+  {
+   "t_ms": 3.1,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 2.3,
+   "evidence_ids": [
+    "vendor_registry:V010",
+    "vendor_api:SignFlow",
+    "vendor_registry:SignFlow#review-age",
+    "vendor_api:SignFlow#review-age"
+   ]
+  },
+  {
+   "t_ms": 3.1,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "policy:s4"
+   ]
+  },
+  {
+   "t_ms": 3.2,
+   "kind": "merge",
+   "label": "proceed_to_standard_approval",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

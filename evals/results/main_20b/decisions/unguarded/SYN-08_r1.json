@@ -1,0 +1,192 @@
+{
+ "decision": {
+  "request_id": "REQ-9008",
+  "recommendation": "proceed_to_standard_approval: Proceed to standard approval. The request for Kudosly Recognition is $7,000, which is within the Customer Success department\u2019s available budget of $7,000. No existing approved tool overlaps. The vendor\u2019s security assessment is current, and the vendor is not new. However, the tool will process employee PII, triggering a required privacy review. The financial threshold for $7,000 requires Department Head and Procurement approvals, and the privacy review adds a Privacy approval. All required fields are present, so no clarification is needed.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "Kudosly Recognition from Kudosly (Employee Engagement): annual cost $7,000, 40 users, data access 'employee_pii', integrations: SSO, HRIS, urgency 'normal'.",
+    "reference": "request:REQ-9008"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Mia Thompson (IC4, Customer Success); manager Robert King (E007).",
+    "reference": "employee:E005"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Customer Success software budget: annual $140,000, committed $133,000, available $7,000; request $7,000 is within the available budget (headroom $0).",
+    "reference": "budget:Customer Success"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of Kudosly Recognition.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: Kudosly procurement status Approved, security Approved (2026-07-15), legal terms Approved.",
+    "reference": "vendor_registry:V107"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-07-15), risk low, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:Kudosly"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-07-15 is 77 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:Kudosly#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-07-15 is 77 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:Kudosly#review-age"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Privacy"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "privacy_review_required"
+  ],
+  "next_step": "Submit the request to the Department Head, Procurement, and Privacy reviewers for approval.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 4,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile"
+   ],
+   "latency_ms": 2892.3,
+   "rate_limit_wait_ms": 1980.3,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "proceed_to_standard_approval",
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Privacy"
+  ],
+  "risk_flags": [
+   "privacy_review_required"
+  ],
+  "missing_information": [],
+  "rationale": "The request for Kudosly Recognition is $7,000, which is within the Customer Success department\u2019s available budget of $7,000. No existing approved tool overlaps. The vendor\u2019s security assessment is current, and the vendor is not new. However, the tool will process employee PII, triggering a required privacy review. The financial threshold for $7,000 requires Department Head and Procurement approvals, and the privacy review adds a Privacy approval. All required fields are present, so no clarification is needed.",
+  "next_step": "Submit the request to the Department Head, Procurement, and Privacy reviewers for approval.",
+  "human_review_required": true
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "unguarded",
+  "repeat": 1,
+  "case_id": "SYN-08",
+  "request_id": "REQ-9008",
+  "label": "proceed_to_standard_approval",
+  "label_correct": false,
+  "approvals_exact": false,
+  "approvals_missing": "Security",
+  "approvals_extra": "",
+  "escalation_correct": false,
+  "missing_info_correct": true,
+  "critical_failures": 2,
+  "critical_detail": "missing approval Security | missing flag security_review_required",
+  "injection_handled": "",
+  "values_grounded": 3,
+  "values_total": 3,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 2892.3,
+  "rate_limit_wait_ms": 1980.3,
+  "net_latency_ms": 912.0,
+  "llm_calls": 1,
+  "tool_calls": 4,
+  "tokens": 2711,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.7,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.6,
+   "evidence_ids": [
+    "request:REQ-9008",
+    "employee:E005"
+   ]
+  },
+  {
+   "t_ms": 1.0,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.3,
+   "evidence_ids": [
+    "budget:Customer Success"
+   ]
+  },
+  {
+   "t_ms": 1.5,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.5,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 4.8,
+   "kind": "vendor_api",
+   "vendor": "Kudosly",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 3.0
+  },
+  {
+   "t_ms": 4.9,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 3.5,
+   "evidence_ids": [
+    "vendor_registry:V107",
+    "vendor_api:Kudosly",
+    "vendor_registry:Kudosly#review-age",
+    "vendor_api:Kudosly#review-age"
+   ]
+  },
+  {
+   "t_ms": 2891.0,
+   "kind": "llm",
+   "cached": false,
+   "key": "1c8ca5bc3544460fa683346361c34f10",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 270,
+    "prompt_tokens": 2441,
+    "total_tokens": 2711
+   },
+   "latency_ms": 2884.7
+  }
+ ]
+}

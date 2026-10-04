@@ -1,0 +1,216 @@
+{
+ "decision": {
+  "request_id": "REQ-1003",
+  "recommendation": "route_for_specialist_review: Route for specialist review before approval. Security review required before Department Head, Procurement and Finance approval.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "CodeMate Teams Expansion from CodeMate (Developer AI): annual cost $18,000, 30 users, data access 'source_code', integrations: Git repositories, urgency 'normal'.",
+    "reference": "request:REQ-1003"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Arjun Mehta (IC5, Engineering); manager Maya Rao (E008).",
+    "reference": "employee:E002"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Engineering software budget: annual $300,000, committed $274,000, available $26,000; request $18,000 is within the available budget (headroom $8,000).",
+    "reference": "budget:Engineering"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool CodeMate (Developer AI, vendor CodeMate): 120 seats, scope Engineering, $90,000/yr - \"AI coding assistant\". Match: same_vendor, same_category, product_name; available for Engineering.",
+    "reference": "catalog:SW008"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Prior purchase PO-2440 on 2026-04-18: Engineering bought CodeMate for $90,000/yr (Approved; 120 seats).",
+    "reference": "purchase:PO-2440"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: CodeMate procurement status Approved, security Approved (2026-08-20), legal terms Approved.",
+    "reference": "vendor_registry:V008"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-08-20), risk medium, processes personal data: no, stores data outside region: no.",
+    "reference": "vendor_api:CodeMate"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-08-20 is 41 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:CodeMate#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-08-20 is 41 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:CodeMate#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $18,000 falls in the $10,000.01-$25,000 band: minimum approvals Department Head, Finance, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Existing catalog products in the same category (CodeMate (SW008)) must be considered before a new purchase; overlap is not an automatic rejection (policy s3).",
+    "reference": "policy:s3"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required because the request involves source_code (integration 'Git repositories' implies source_code) (policy s5).",
+    "reference": "policy:s5#data"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "AI tool: prior approvals of this vendor do not extend to new use cases or data classes (policy s8).",
+    "reference": "policy:s8"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Finance",
+   "Security"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "existing_tool_overlap",
+   "security_review_required"
+  ],
+  "next_step": "Send the evidence package to Security for review, then to Department Head, Procurement and Finance for approval. Do not purchase until every approval is recorded.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 0,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 1.5,
+   "rate_limit_wait_ms": 0.0,
+   "fallback_reason": "deterministic_mode",
+   "model": null
+  }
+ },
+ "assessment": null,
+ "evidence_pack": null,
+ "score": {
+  "arm": "deterministic",
+  "repeat": 1,
+  "case_id": "PUB-03",
+  "request_id": "REQ-1003",
+  "label": "route_for_specialist_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 0,
+  "values_total": 0,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": true,
+  "latency_ms": 1.5,
+  "rate_limit_wait_ms": 0.0,
+  "net_latency_ms": 1.5,
+  "llm_calls": 0,
+  "tool_calls": 5,
+  "tokens": 0,
+  "cache_hits": 0,
+  "fallback_reason": "deterministic_mode"
+ },
+ "trace": [
+  {
+   "t_ms": 0.2,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "request:REQ-1003",
+    "employee:E002"
+   ]
+  },
+  {
+   "t_ms": 0.2,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "budget:Engineering"
+   ]
+  },
+  {
+   "t_ms": 0.4,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "catalog:SW008",
+    "purchase:PO-2440"
+   ]
+  },
+  {
+   "t_ms": 1.4,
+   "kind": "vendor_api",
+   "vendor": "CodeMate",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 1.0
+  },
+  {
+   "t_ms": 1.5,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 1.1,
+   "evidence_ids": [
+    "vendor_registry:V008",
+    "vendor_api:CodeMate",
+    "vendor_registry:CodeMate#review-age",
+    "vendor_api:CodeMate#review-age"
+   ]
+  },
+  {
+   "t_ms": 1.5,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s3",
+    "policy:s5#data",
+    "policy:s8"
+   ]
+  },
+  {
+   "t_ms": 1.5,
+   "kind": "merge",
+   "label": "route_for_specialist_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

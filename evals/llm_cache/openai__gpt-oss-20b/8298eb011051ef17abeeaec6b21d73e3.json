@@ -1,0 +1,10 @@
+{
+ "content": "{\"key_findings\":[{\"finding\":\"Fieldnote Territory Planner is a new purchase with an annual cost of $7,500 for 12 users.\",\"evidence_ids\":[\"request:REQ-9007\"]},{\"finding\":\"The request originates from the Go To Market department head, requiring Department Head and Procurement approvals.\",\"evidence_ids\":[\"employee:E007\"]},{\"finding\":\"No approved catalog product shares the vendor, category or product name of Fieldnote Territory Planner.\",\"evidence_ids\":[\"catalog:search:default\"]},{\"finding\":\"The vendor Fieldnote has a current security review and approved legal terms, with no personal data processing or out\u2011of\u2011region storage.\",\"evidence_ids\":[\"vendor_registry:V106\",\"vendor_api:Fieldnote\"]}],\"overlap_assessment\":\"No existing catalog tool covers the requested Fieldnote Territory Planner.\",\"stated_gap\":\"\",\"concerns\":[\"Budget cannot be verified for the Go To Market department (policy s2, s10).\",\"Finance approval is required due to the unverifiable budget.\"]}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 294,
+  "prompt_tokens": 1876,
+  "total_tokens": 2170
+ },
+ "latency_ms": 57216.2
+}

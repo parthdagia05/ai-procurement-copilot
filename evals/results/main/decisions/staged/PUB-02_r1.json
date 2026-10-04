@@ -1,0 +1,324 @@
+{
+ "decision": {
+  "request_id": "REQ-1002",
+  "recommendation": "route_for_specialist_review: Route for specialist review before approval. The request exceeds the $10,000 threshold requiring Department Head, Finance, and Procurement approvals, and both security and legal reviews are pending per policy s5 and s7. Existing approved tools in the same category are available, but a functional gap has not been substantiated.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "BrandBoard Enterprise from BrandBoard (Design & Creative): annual cost $12,000, 25 users, data access 'internal_marketing', integrations: SSO, urgency 'normal'.",
+    "reference": "request:REQ-1002"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Sarah Lee (IC4, Marketing); manager David Chen (E009).",
+    "reference": "employee:E001"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Marketing software budget: annual $180,000, committed $165,000, available $15,000; request $12,000 is within the available budget (headroom $3,000).",
+    "reference": "budget:Marketing"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool PixelCraft Pro (Design & Creative, vendor PixelCraft): 65 seats, scope Company-wide, $32,000/yr - \"Design and prototyping\". Match: same_category; available for Marketing.",
+    "reference": "catalog:SW001"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool CreativeSuite (Design & Creative, vendor CreativeSuite Labs): 40 seats, scope Marketing, $27,000/yr - \"Creative production suite\". Match: same_category; available for Marketing.",
+    "reference": "catalog:SW002"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: BrandBoard procurement status New, security Pending (no review date), legal terms Draft.",
+    "reference": "vendor_registry:V011"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review not_completed (last review none), risk medium, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:BrandBoard"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $12,000 falls in the $10,000.01-$25,000 band: minimum approvals Department Head, Finance, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Existing catalog products in the same category (PixelCraft Pro (SW001), CreativeSuite (SW002)) must be considered before a new purchase; overlap is not an automatic rejection (policy s3).",
+    "reference": "policy:s3"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required: vendor security assessment not completed (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Legal review required: new vendor with annual spend $12,000 (>= $10,000); legal terms are 'Draft', not approved/standard (policy s7).",
+    "reference": "policy:s7"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "BrandBoard Enterprise costs $12,000 annually for 25 Marketing users with internal_marketing data access and SSO integration.",
+    "reference": "request:REQ-1002"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Marketing software budget has $15,000 available; the $12,000 request is within budget.",
+    "reference": "budget:Marketing"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Vendor BrandBoard is a new vendor; security assessment not completed and legal terms are in Draft.",
+    "reference": "vendor_registry:V011, vendor_api:BrandBoard"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Finance",
+   "Security",
+   "Legal"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "existing_tool_overlap",
+   "security_review_required",
+   "legal_review_required"
+  ],
+  "next_step": "Send the evidence package to Security and Legal for review, then to Department Head, Procurement and Finance for approval. Do not purchase until every approval is recorded. Obtain completed security assessment and approved legal terms before proceeding.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 2,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 61729.4,
+   "rate_limit_wait_ms": 56571.5,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-120b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "route_for_specialist_review",
+  "rationale": "The request exceeds the $10,000 threshold requiring Department Head, Finance, and Procurement approvals, and both security and legal reviews are pending per policy s5 and s7. Existing approved tools in the same category are available, but a functional gap has not been substantiated.",
+  "next_step_detail": "Obtain completed security assessment and approved legal terms before proceeding.",
+  "overlap_assessment": "Existing Design & Creative tools (PixelCraft Pro and CreativeSuite) are approved for Marketing, yet the requester cites a functional gap.",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "BrandBoard Enterprise costs $12,000 annually for 25 Marketing users with internal_marketing data access and SSO integration.",
+    "evidence_ids": [
+     "request:REQ-1002"
+    ]
+   },
+   {
+    "finding": "Marketing software budget has $15,000 available; the $12,000 request is within budget.",
+    "evidence_ids": [
+     "budget:Marketing"
+    ]
+   },
+   {
+    "finding": "Vendor BrandBoard is a new vendor; security assessment not completed and legal terms are in Draft.",
+    "evidence_ids": [
+     "vendor_registry:V011",
+     "vendor_api:BrandBoard"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": {
+  "key_findings": [
+   {
+    "finding": "BrandBoard Enterprise costs $12,000 annually for 25 Marketing users with internal_marketing data access and SSO integration.",
+    "evidence_ids": [
+     "request:REQ-1002"
+    ]
+   },
+   {
+    "finding": "Marketing software budget has $15,000 available; the $12,000 request is within budget.",
+    "evidence_ids": [
+     "budget:Marketing"
+    ]
+   },
+   {
+    "finding": "Existing approved Design & Creative tools PixelCraft Pro and CreativeSuite are available to Marketing.",
+    "evidence_ids": [
+     "catalog:SW001",
+     "catalog:SW002"
+    ]
+   },
+   {
+    "finding": "Vendor BrandBoard is a new vendor; security assessment not completed and legal terms are in Draft.",
+    "evidence_ids": [
+     "vendor_registry:V011",
+     "vendor_api:BrandBoard"
+    ]
+   }
+  ],
+  "overlap_assessment": "Existing tools in the same category are available, but the requester cites a functional gap.",
+  "stated_gap": "PixelCraft is too specialist for non\u2011designers; Marketing needs a fast campaign\u2011template creation tool.",
+  "concerns": [
+   "Security review for BrandBoard is pending (policy s5).",
+   "Legal terms are Draft and not approved (policy s7).",
+   "Overlap with existing tools requires justification before proceeding."
+  ],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "injection_suspected": false
+ },
+ "score": {
+  "arm": "staged",
+  "repeat": 1,
+  "case_id": "PUB-02",
+  "request_id": "REQ-1002",
+  "label": "route_for_specialist_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 9,
+  "values_total": 9,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": true,
+  "latency_ms": 61729.4,
+  "rate_limit_wait_ms": 56571.5,
+  "net_latency_ms": 5157.9,
+  "llm_calls": 2,
+  "tool_calls": 5,
+  "tokens": 4535,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 9.0,
+   "kind": "vendor_api",
+   "vendor": "BrandBoard",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 5.8
+  },
+  {
+   "t_ms": 9.2,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "request:REQ-1002",
+    "employee:E001"
+   ]
+  },
+  {
+   "t_ms": 9.2,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "budget:Marketing"
+   ]
+  },
+  {
+   "t_ms": 9.2,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "catalog:SW001",
+    "catalog:SW002"
+   ]
+  },
+  {
+   "t_ms": 9.2,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "vendor_registry:V011",
+    "vendor_api:BrandBoard"
+   ]
+  },
+  {
+   "t_ms": 9.2,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s3",
+    "policy:s5#vendor",
+    "policy:s7"
+   ]
+  },
+  {
+   "t_ms": 56163.1,
+   "kind": "tool_use_failed_retry_without_tools",
+   "error": "Error code: 400 - {'error': {'message': \"Tool call validation failed: tool call validation failed: attempted to call tool 'json' which was not in request.tools\", 'type': 'invalid_request_error', 'code"
+  },
+  {
+   "t_ms": 60115.4,
+   "kind": "llm",
+   "cached": false,
+   "key": "aab0db43feb11d88cb30092544c0c102",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 405,
+    "prompt_tokens": 1894,
+    "total_tokens": 2299
+   },
+   "latency_ms": 3951.7
+  },
+  {
+   "t_ms": 61727.4,
+   "kind": "llm",
+   "cached": false,
+   "key": "4c2ccfcaf3955c9280c6e43f80a018a0",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 481,
+    "prompt_tokens": 1755,
+    "total_tokens": 2236
+   },
+   "latency_ms": 1607.7
+  },
+  {
+   "t_ms": 61729.4,
+   "kind": "merge",
+   "label": "route_for_specialist_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"hold_for_manual_review\",\n  \"rationale\": \"The request exceeds the remaining engineering budget headroom by $2,000 and the vendor's security review is expired with conflicting registry information, requiring a fresh security assessment before approval.\",\n  \"next_step_detail\": \"Initiate a security re\u2011review and verify whether the existing SignalWatch catalog tool satisfies the advanced analytics requirements.\",\n  \"overlap_assessment\": \"An existing approved SignalWatch tool is available, but it is unclear if it meets the advanced analytics features requested.\",\n  \"interpretations\": [\n    {\n      \"finding\": \"Engineering software budget has $26,000 available, so the request is within budget.\",\n      \"evidence_ids\": [\"budget:Engineering\"]\n    },\n    {\n      \"finding\": \"Existing approved SignalWatch tool (SW005) is available to Engineering and covers observability.\",\n      \"evidence_ids\": [\"catalog:SW005\"]\n    },\n    {\n      \"finding\": \"Vendor security review is expired and registry information conflicts with vendor\u2011risk service.\",\n      \"evidence_ids\": [\"vendor_registry:V005\", \"vendor_api:SignalWatch\"]\n    }\n  ],\n  \"additional_approvals\": [],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"additional_risk_flags\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 417,
+  "prompt_tokens": 1832,
+  "total_tokens": 2249
+ },
+ "latency_ms": 57316.0
+}

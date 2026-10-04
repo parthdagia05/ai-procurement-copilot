@@ -1,0 +1,10 @@
+{
+ "content": "{\"key_findings\":[{\"finding\":\"BrandBoard Enterprise is a new design tool requested by Marketing for internal campaign template creation.\",\"evidence_ids\":[\"request:REQ-1002\"]},{\"finding\":\"The request falls within the Marketing software budget headroom of $3,000.\",\"evidence_ids\":[\"budget:Marketing\"]},{\"finding\":\"Existing approved tools PixelCraft Pro and CreativeSuite are in the same category and available to Marketing.\",\"evidence_ids\":[\"catalog:SW001\",\"catalog:SW002\"]},{\"finding\":\"Vendor BrandBoard is new, with no completed security review and draft legal terms.\",\"evidence_ids\":[\"vendor_registry:V011\",\"vendor_api:BrandBoard\"]}],\"overlap_assessment\":\"Existing catalog tools in the same category are available, but the requester indicates they are too specialist for non-designers, suggesting a gap.\",\"stated_gap\":\"PixelCraft is powerful but too specialist for non-designers.\",\"concerns\":[\"Vendor security assessment not completed (policy s5).\",\"Legal terms are draft and not approved (policy s7).\",\"New vendor status requires additional scrutiny.\"],\"additional_data_classes\":[],\"additional_missing_information\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 329,
+  "prompt_tokens": 2059,
+  "total_tokens": 2388
+ },
+ "latency_ms": 1138.5
+}

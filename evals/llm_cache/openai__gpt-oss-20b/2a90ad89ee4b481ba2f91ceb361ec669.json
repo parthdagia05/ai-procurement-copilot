@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"rationale\":\"The request for Corvid Survey Pro is within budget but the vendor is new and lacks a security assessment, triggering a security review per policy s5. Additionally, the request requires Department Head and Procurement approvals per policy s4.\",\"next_step_detail\":\"Confirm with the requester that the internal survey tool meets all data handling requirements and obtain a vendor security assessment or alternative vendor recommendation.\",\"overlap_assessment\":\"\",\"interpretations\":[{\"finding\":\"Annual cost $3,200 is within the Operations budget headroom of $16,800.\",\"evidence_ids\":[\"budget:Operations\"]},{\"finding\":\"No approved catalog product matches the vendor or category, so existing tools do not cover the need.\",\"evidence_ids\":[\"catalog:search:default\"]},{\"finding\":\"Vendor Corvid Survey has no security assessment record, requiring a security review.\",\"evidence_ids\":[\"vendor_api:Corvid Survey\"]}],\"additional_approvals\":[{\"role\":\"Department Head\",\"reason\":\"Annual amount $3,200 falls in the $1,000.01-$10,000 band (policy s4).\"},{\"role\":\"Procurement\",\"reason\":\"Annual amount $3,200 falls in the $1,000.01-$10,000 band (policy s4).\"},{\"role\":\"Security\",\"reason\":\"Vendor security assessment missing (policy s5).\"}],\"additional_risk_flags\":[{\"flag\":\"security_review_required\",\"reason\":\"Vendor has no security assessment record.\"},{\"flag\":\"vendor_assessment_missing\",\"reason\":\"Vendor risk service returned no assessment.\"}],\"additional_data_classes\":[],\"additional_missing_information\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 356,
+  "prompt_tokens": 2004,
+  "total_tokens": 2360
+ },
+ "latency_ms": 1628.2
+}

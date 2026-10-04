@@ -1,0 +1,257 @@
+{
+ "decision": {
+  "request_id": "REQ-9002",
+  "recommendation": "route_for_specialist_review: Route for specialist review before approval. The request exceeds $1,000 and requires Department Head, Procurement, Security, and Legal approvals per policies s4, s5, and s7; security assessment and legal term approval are pending.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "QuillPoint Proposals from QuillPoint (Proposal Software): annual cost $10,000, 14 users, data access 'internal_documents', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-9002"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Elena Garcia (IC3, Sales); manager Robert King (E007).",
+    "reference": "employee:E003"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Sales software budget: annual $220,000, committed $202,000, available $18,000; request $10,000 is within the available budget (headroom $8,000).",
+    "reference": "budget:Sales"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of QuillPoint Proposals.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: QuillPoint procurement status New, security Pending (no review date), legal terms Draft.",
+    "reference": "vendor_registry:V101"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review not_completed (last review none), risk medium, processes personal data: no, stores data outside region: no.",
+    "reference": "vendor_api:QuillPoint"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $10,000 falls in the $1,000.01-$10,000 band: minimum approvals Department Head, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required: vendor security assessment not completed (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Legal review required: new vendor with annual spend $10,000 (>= $10,000); legal terms are 'Draft', not approved/standard (policy s7).",
+    "reference": "policy:s7"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Annual cost $10,000 is within the Sales budget headroom.",
+    "reference": "budget:Sales"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "No existing catalog tool overlaps the requested proposal software.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Security review and legal review are required for a new vendor with draft terms.",
+    "reference": "policy:s5#vendor, policy:s7"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Security",
+   "Legal"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "legal_review_required"
+  ],
+  "next_step": "Send the evidence package to Security and Legal for review, then to Department Head and Procurement for approval. Do not purchase until every approval is recorded.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 59545.0,
+   "rate_limit_wait_ms": 56841.6,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-120b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "route_for_specialist_review",
+  "rationale": "The request exceeds $1,000 and requires Department Head, Procurement, Security, and Legal approvals per policies s4, s5, and s7; security assessment and legal term approval are pending.",
+  "next_step_detail": "",
+  "overlap_assessment": "",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Annual cost $10,000 is within the Sales budget headroom.",
+    "evidence_ids": [
+     "budget:Sales"
+    ]
+   },
+   {
+    "finding": "No existing catalog tool overlaps the requested proposal software.",
+    "evidence_ids": [
+     "catalog:search:default"
+    ]
+   },
+   {
+    "finding": "Security review and legal review are required for a new vendor with draft terms.",
+    "evidence_ids": [
+     "policy:s5#vendor",
+     "policy:s7"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "single",
+  "repeat": 1,
+  "case_id": "SYN-02",
+  "request_id": "REQ-9002",
+  "label": "route_for_specialist_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 2,
+  "values_total": 2,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": "",
+  "latency_ms": 59545.0,
+  "rate_limit_wait_ms": 56841.6,
+  "net_latency_ms": 2703.4,
+  "llm_calls": 1,
+  "tool_calls": 5,
+  "tokens": 2214,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.5,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.5,
+   "evidence_ids": [
+    "request:REQ-9002",
+    "employee:E003"
+   ]
+  },
+  {
+   "t_ms": 0.7,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "budget:Sales"
+   ]
+  },
+  {
+   "t_ms": 1.0,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.3,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 2.2,
+   "kind": "vendor_api",
+   "vendor": "QuillPoint",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 0.9
+  },
+  {
+   "t_ms": 2.2,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 1.2,
+   "evidence_ids": [
+    "vendor_registry:V101",
+    "vendor_api:QuillPoint"
+   ]
+  },
+  {
+   "t_ms": 2.2,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s5#vendor",
+    "policy:s7"
+   ]
+  },
+  {
+   "t_ms": 57244.1,
+   "kind": "tool_use_failed_retry_without_tools",
+   "error": "Error code: 400 - {'error': {'message': \"Tool call validation failed: tool call validation failed: attempted to call tool 'json' which was not in request.tools\", 'type': 'invalid_request_error', 'code"
+  },
+  {
+   "t_ms": 59543.6,
+   "kind": "llm",
+   "cached": false,
+   "key": "8be2483c80b6ff18fa0466dc826e47bc",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 309,
+    "prompt_tokens": 1905,
+    "total_tokens": 2214
+   },
+   "latency_ms": 2296.2
+  },
+  {
+   "t_ms": 59545.0,
+   "kind": "merge",
+   "label": "route_for_specialist_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

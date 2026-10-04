@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"required_approvals\":[\"Department Head\",\"Finance\",\"Procurement\",\"Legal\",\"Security\"],\"risk_flags\":[\"security_review_required\",\"legal_review_required\",\"vendor_risk_unavailable\",\"vendor_assessment_missing\"],\"missing_information\":[],\"rationale\":\"The request for NimbusAI Contract Reviewer meets all required fields (requester, department, product, cost, users, purpose, data access, integrations). The annual cost of $15,000 is within Finance\u2019s available budget ($29,000). The vendor is new, the legal terms are not standard, and the vendor-risk service is unavailable, triggering a legal review. The data access level is \u2018confidential_documents\u2019, requiring a security review. No existing approved tool overlaps. Therefore the request should proceed to standard approval with the specified approvals and specialist reviews.\",\"next_step\":\"Submit to Department Head, Finance, Procurement, Legal, and Security for review and approval.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 487,
+  "prompt_tokens": 2336,
+  "total_tokens": 2823
+ },
+ "latency_ms": 2288.6
+}

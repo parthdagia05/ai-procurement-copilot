@@ -1,45 +1,8 @@
-# AI Procurement Request Copilot
+# Architecture and design details
 
-An internal copilot that reviews a software purchase request, gathers evidence with tools, applies the procurement policy deterministically, and recommends the next action — while every approval stays with a human.
+Technical companion to the [README](../README.md). The original design rationale (before building) is in [`DESIGN_PROPOSAL.md`](DESIGN_PROPOSAL.md).
 
-> FDE Assessment 3. All data is synthetic. Design rationale: [`docs/DESIGN_PROPOSAL.md`](docs/DESIGN_PROPOSAL.md). Ship decision: [`docs/DECISION_MEMO.md`](docs/DECISION_MEMO.md).
-
-**Ship decision: Architecture A (single agent on a deterministic policy floor).** See [Architecture comparison](#architecture-comparison).
-
----
-
-## 1. Setup and run (macOS / Linux)
-
-```bash
-./start.sh
-```
-
-That one command creates a Python 3.12 virtual environment (via `uv` if installed, otherwise `python3.12`/`python3.11`), installs dependencies, copies `.env.example` to `.env`, runs the pre-flight check, and starts:
-
-- mock vendor-risk API: http://127.0.0.1:8001
-- copilot UI: http://127.0.0.1:8501
-
-No Python 3.11/3.12? `brew install uv` (recommended) or `brew install python@3.12`.
-
-**LLM key (optional).** Without a key the copilot runs in *deterministic mode*: the policy engine alone produces a complete, policy-correct decision. To enable the agents, put a free Groq key in `.env`:
-
-```
-LLM_PROVIDER=groq
-GROQ_API_KEY=gsk_...
-```
-
-Any OpenAI-compatible provider works (`LLM_PROVIDER=gemini|openai`, or `LLM_BASE_URL` + `MODEL_NAME`). Default model: `openai/gpt-oss-120b` on Groq.
-
-| Command | What it does |
-|---|---|
-| `make test` | 50 unit/integration tests, no LLM calls |
-| `make public` | starter-pack public runner on both architectures |
-| `make eval-replay` | reproduces the committed evaluation **offline, without a key**, from `evals/llm_cache/` |
-| `make eval` | live evaluation (needs a key; resumable; stops cleanly on daily quota) |
-
----
-
-## 2. Product workflow
+## Product workflow
 
 ```mermaid
 flowchart LR
@@ -66,9 +29,8 @@ The UI (Streamlit) shows the three required panels:
 
 Output contract (`src/contracts.py`, unchanged except optional telemetry fields): `recommendation | evidence | required_approvals | missing_information | risk_flags | next_step | human_review_required | telemetry`. The recommendation string starts with one of five labels: `proceed_to_standard_approval`, `route_for_specialist_review`, `use_existing_tool`, `request_clarification`, `hold_for_manual_review`.
 
----
 
-## 3. Architecture
+## Architecture
 
 **AI interprets and recommends; code owns thresholds and deterministic checks; humans own approvals and exceptions.**
 
@@ -156,11 +118,10 @@ The five mandatory tools run through the same registry (and telemetry) before th
 | Injection in request, vendor notes or API notes | flagged, ignored, floor unaffected, model text sanitised |
 | LLM quota / error / invalid output | deterministic decision, reason recorded |
 
----
 
-## 4. Assumptions
+## Assumptions
 
-Policy ambiguities and how they were resolved (full list with evidence: [`docs/DESIGN_PROPOSAL.md` §1.2](docs/DESIGN_PROPOSAL.md)):
+Policy ambiguities and how they were resolved (full list with evidence: [`DESIGN_PROPOSAL.md` §1.2](DESIGN_PROPOSAL.md)):
 
 - **Bands:** ≤$1,000 Manager; ≤$10,000 Dept Head + Procurement; ≤$25,000 + Finance; above + CFO. Legal for a new vendor is **≥ $10,000**, so a new vendor at exactly $10,000 needs Legal but not Finance.
 - **Review validity:** current while `(reference date − review date) ≤ 365 days`. Reference date is parsed from the policy (2026-09-30).
@@ -171,25 +132,6 @@ Policy ambiguities and how they were resolved (full list with evidence: [`docs/D
 - **Budget** is checked per request (open requests from the same department are not summed — listed as a limitation).
 - `human_review_required` is always `True`; the escalation level is expressed through approvals and the label.
 
----
-
-## 5. Evaluation
-
-_Filled in from `evals/results/main/summary.md`._
-
----
-
-## 6. Architecture comparison
-
-_See below._
-
----
-
-## 7. Known limitations
-
-_See below._
-
----
 
 ## Repository layout
 

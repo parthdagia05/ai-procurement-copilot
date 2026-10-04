@@ -26,6 +26,9 @@ def _norm_value(v: str) -> str:
     return v.replace("$", "").replace(",", "").replace(" ", "").lower().removesuffix(".00")
 
 
+_DASHES = str.maketrans({c: "-" for c in "\u2010\u2011\u2012\u2013\u2014\u2015\u2212"})
+
+
 def llm_text(ctx: RunContext) -> list[str]:
     """Only text the model wrote (not code templates)."""
     a = ctx.memo.get("assessment") or {}
@@ -33,7 +36,8 @@ def llm_text(ctx: RunContext) -> list[str]:
     texts += [i.get("finding", "") for i in a.get("interpretations", [])]
     pack = ctx.memo.get("evidence_pack") or {}
     texts += [i.get("finding", "") for i in pack.get("key_findings", [])]
-    return [t for t in texts if t]
+    # Models sometimes write record ids with non-breaking hyphens ("PO\u20112513").
+    return [t.translate(_DASHES) for t in texts if t]
 
 
 def value_grounding(ctx: RunContext, decision: ProcurementDecision) -> tuple[int, int, list[str]]:

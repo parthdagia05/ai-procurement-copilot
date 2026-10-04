@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"use_existing_tool\",\"required_approvals\":[],\"risk_flags\":[\"existing_tool_overlap\",\"privacy_review_required\"],\"missing_information\":[],\"rationale\":\"The request is for SignFlow Add\u2011on from SignFlow, a product already approved and available to Finance (catalog SW010, PO\u20112513). The annual cost ($800) is within the department\u2019s available budget ($29,000). The vendor\u2019s security assessment is current and the legal terms are standard. However, the tool processes personal data (employee PII) in internal documents, triggering a privacy review. No additional approvals are required beyond the standard privacy review.\",\"next_step\":\"Submit the request for a privacy review before re\u2011using the existing SignFlow license.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 255,
+  "prompt_tokens": 2530,
+  "total_tokens": 2785
+ },
+ "latency_ms": 1646.7
+}

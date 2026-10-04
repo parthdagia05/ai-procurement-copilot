@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"rationale\":\"The request meets the budget band (policy s4) and has available headroom, but vendor BrandBoard lacks a completed security review (policy s5) and has draft legal terms (policy s7). Existing approved tools in the same category are available, yet the requester notes a functional gap, requiring specialist assessment to determine if a new tool is truly needed.\",\"next_step_detail\":\"Request a detailed functional comparison from Marketing and a vendor security assessment report before proceeding.\",\"overlap_assessment\":\"Existing approved tools PixelCraft Pro and CreativeSuite are available to Marketing, but the requester indicates they are too specialist for non-designers, suggesting a gap.\",\"interpretations\":[{\"finding\":\"BrandBoard Enterprise is a new design tool requested by Marketing for internal campaign template creation.\",\"evidence_ids\":[\"request:REQ-1002\"]},{\"finding\":\"The request falls within the Marketing software budget headroom of $3,000.\",\"evidence_ids\":[\"budget:Marketing\"]},{\"finding\":\"Vendor BrandBoard is new, with no completed security review and draft legal terms.\",\"evidence_ids\":[\"vendor_registry:V011\",\"vendor_api:BrandBoard\"]}],\"additional_approvals\":[],\"additional_data_classes\":[],\"additional_missing_information\":[],\"additional_risk_flags\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 332,
+  "prompt_tokens": 1735,
+  "total_tokens": 2067
+ },
+ "latency_ms": 1453.8
+}

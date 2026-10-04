@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"route_for_specialist_review\",\n  \"rationale\": \"The request meets the budget band ($10,000.01\u2011$25,000) and has a current security review, but policy s3 requires consideration of the existing CodeMate license and policy s5 mandates a security review for source_code access, so specialist review is needed before proceeding.\",\n  \"next_step_detail\": \"Obtain the required Department Head, Finance, Procurement, and Security approvals and confirm seat capacity against the existing license.\",\n  \"overlap_assessment\": \"An existing approved CodeMate license (SW008) already covers the same vendor, category, and product name, but the expansion still requires review.\",\n  \"interpretations\": [\n    {\n      \"finding\": \"Requested CodeMate Teams Expansion costs $18,000 annually for 30 users, accesses source_code, and integrates with Git repositories.\",\n      \"evidence_ids\": [\"request:REQ-1003\"]\n    },\n    {\n      \"finding\": \"Engineering software budget has $26,000 available, so the $18,000 request is within budget.\",\n      \"evidence_ids\": [\"budget:Engineering\"]\n    },\n    {\n      \"finding\": \"An approved CodeMate license (SW008) already exists for Engineering with 120 seats and covers the same vendor, category, and product name.\",\n      \"evidence_ids\": [\"catalog:SW008\"]\n    }\n  ],\n  \"additional_approvals\": [],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"additional_risk_flags\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 484,
+  "prompt_tokens": 1795,
+  "total_tokens": 2279
+ },
+ "latency_ms": 54486.6
+}

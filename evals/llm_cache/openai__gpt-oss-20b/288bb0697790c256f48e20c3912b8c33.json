@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"route_for_specialist_review\",\"required_approvals\":[\"Department Head\",\"Finance\",\"Procurement\",\"Security\",\"Privacy\",\"Legal\"],\"risk_flags\":[\"budget_insufficient\",\"security_review_required\",\"privacy_review_required\",\"legal_review_required\",\"vendor_assessment_missing\"],\"missing_information\":[],\"rationale\":\"The request for ProspectPilot from GrowthForge has an annual cost of $22,000, which exceeds the Sales department\u2019s available budget of $18,000, triggering a budget_insufficient flag. The vendor is new, with no completed security assessment and unknown legal terms, and the tool will process customer PII and store data outside the operating region, necessitating security, privacy, and legal reviews. No existing approved tool overlaps, so vendor_assessment_missing is flagged. All required request fields are present, so missing_information is empty.\",\"next_step\":\"Submit the request to the Finance, Procurement, Security, Privacy, and Legal teams for specialist review and obtain the necessary approvals before proceeding.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 386,
+  "prompt_tokens": 2323,
+  "total_tokens": 2709
+ },
+ "latency_ms": 2981.9
+}

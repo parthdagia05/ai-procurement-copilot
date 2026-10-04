@@ -1,0 +1,321 @@
+{
+ "decision": {
+  "request_id": "REQ-1009",
+  "recommendation": "hold_for_manual_review: Hold for manual review. The request for NimbusAI Contract Reviewer involves confidential documents and a new vendor with unverified security and legal terms, triggering mandatory security, privacy, and legal reviews per policies s5, s6, and s7. The vendor-risk service is unavailable, so vendor assessment cannot be confirmed, and the product is not in the approved catalog, requiring manual vetting.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "NimbusAI Contract Reviewer from NimbusAI (Legal AI): annual cost $15,000, 8 users, data access 'confidential_documents', integrations: Document repository, urgency 'normal'.",
+    "reference": "request:REQ-1009"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Noah Williams (IC4, Finance); manager Priya Shah (E006).",
+    "reference": "employee:E004"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Finance software budget: annual $90,000, committed $61,000, available $29,000; request $15,000 is within the available budget (headroom $14,000).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "No approved catalog product shares the vendor, category or product name of NimbusAI Contract Reviewer.",
+    "reference": "catalog:search:default"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: NimbusAI procurement status New, security Unknown (no review date), legal terms Unknown.",
+    "reference": "vendor_registry:V013"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service unavailable (http_503 after 2 attempt(s)): security status, personal-data processing and data region could not be verified; no favourable status assumed (policy s10).",
+    "reference": "vendor_api:NimbusAI"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $15,000 falls in the $10,000.01-$25,000 band: minimum approvals Department Head, Finance, Procurement (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required because the request involves confidential_documents (integration 'Document repository' implies confidential_documents) (policy s5).",
+    "reference": "policy:s5#data"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Security review required: vendor-risk service unavailable, assessment unverified; vendor security status unknown (policy s5).",
+    "reference": "policy:s5#vendor"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Data residency could not be verified for sensitive data: Privacy review; no favourable status assumed (policy s6, s10).",
+    "reference": "policy:s6#region-unverified"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Legal review required: new vendor with annual spend $15,000 (>= $10,000); legal terms are 'Unknown', not approved/standard (policy s7).",
+    "reference": "policy:s7"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "AI tool: prior approvals of this vendor do not extend to new use cases or data classes (policy s8).",
+    "reference": "policy:s8"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Vendor NimbusAI is new with no prior approved use and unknown security status.",
+    "reference": "vendor_registry:V013, vendor_api:NimbusAI"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The request involves confidential documents and requires security, privacy, and legal reviews.",
+    "reference": "policy:s5#data, policy:s5#vendor, policy:s6#region-unverified, policy:s7"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The product is not in the approved catalog, so no existing tool overlap.",
+    "reference": "catalog:search:default"
+   }
+  ],
+  "required_approvals": [
+   "Department Head",
+   "Procurement",
+   "Finance",
+   "Security",
+   "Privacy",
+   "Legal"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "security_review_required",
+   "privacy_review_required",
+   "legal_review_required",
+   "vendor_risk_unavailable"
+  ],
+  "next_step": "Hold the request. Security, Privacy and Legal to manually verify the unresolved evidence (material evidence is unavailable, conflicting or unverifiable) before routing to Department Head, Procurement and Finance for approval. Ask the requester to provide a signed vendor security assessment and confirm that the integration with the document repository will not expose sensitive data beyond the approved scope.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 1,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 58528.7,
+   "rate_limit_wait_ms": 56918.5,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-20b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "hold_for_manual_review",
+  "rationale": "The request for NimbusAI Contract Reviewer involves confidential documents and a new vendor with unverified security and legal terms, triggering mandatory security, privacy, and legal reviews per policies s5, s6, and s7. The vendor-risk service is unavailable, so vendor assessment cannot be confirmed, and the product is not in the approved catalog, requiring manual vetting.",
+  "next_step_detail": "Ask the requester to provide a signed vendor security assessment and confirm that the integration with the document repository will not expose sensitive data beyond the approved scope.",
+  "overlap_assessment": "",
+  "additional_approvals": [
+   {
+    "role": "Department Head",
+    "reason": "Annual amount $15,000 falls in the $10,000.01-$25,000 band (policy s4)."
+   },
+   {
+    "role": "Finance",
+    "reason": "Annual amount $15,000 falls in the $10,000.01-$25,000 band (policy s4)."
+   },
+   {
+    "role": "Procurement",
+    "reason": "Annual amount $15,000 falls in the $10,000.01-$25,000 band (policy s4)."
+   },
+   {
+    "role": "Security",
+    "reason": "Data class confidential_documents and vendor risk unavailable require security review (policy s5)."
+   },
+   {
+    "role": "Privacy",
+    "reason": "Data residency unverified for sensitive data requires privacy review (policy s6)."
+   },
+   {
+    "role": "Legal",
+    "reason": "New vendor with annual spend $15,000 and unknown legal terms requires legal review (policy s7)."
+   }
+  ],
+  "additional_risk_flags": [
+   {
+    "flag": "security_review_required",
+    "reason": "Confidential documents and unverified vendor security (policy s5)."
+   },
+   {
+    "flag": "privacy_review_required",
+    "reason": "Data residency unverified for sensitive data (policy s6)."
+   },
+   {
+    "flag": "legal_review_required",
+    "reason": "New vendor with unknown legal terms (policy s7)."
+   },
+   {
+    "flag": "vendor_risk_unavailable",
+    "reason": "Vendor-risk service unavailable, assessment unverified (policy s5)."
+   }
+  ],
+  "additional_data_classes": [
+   "confidential_documents"
+  ],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Vendor NimbusAI is new with no prior approved use and unknown security status.",
+    "evidence_ids": [
+     "vendor_registry:V013",
+     "vendor_api:NimbusAI"
+    ]
+   },
+   {
+    "finding": "The request involves confidential documents and requires security, privacy, and legal reviews.",
+    "evidence_ids": [
+     "policy:s5#data",
+     "policy:s5#vendor",
+     "policy:s6#region-unverified",
+     "policy:s7"
+    ]
+   },
+   {
+    "finding": "The product is not in the approved catalog, so no existing tool overlap.",
+    "evidence_ids": [
+     "catalog:search:default"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": null,
+ "score": {
+  "arm": "single",
+  "repeat": 1,
+  "case_id": "PUB-06",
+  "request_id": "REQ-1009",
+  "label": "hold_for_manual_review",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 0,
+  "values_total": 0,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 0,
+  "label_rejected": 0,
+  "public_min_checks": true,
+  "latency_ms": 58528.7,
+  "rate_limit_wait_ms": 56918.5,
+  "net_latency_ms": 1610.2,
+  "llm_calls": 1,
+  "tool_calls": 5,
+  "tokens": 2842,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 0.4,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.4,
+   "evidence_ids": [
+    "request:REQ-1009",
+    "employee:E004"
+   ]
+  },
+  {
+   "t_ms": 0.6,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.1,
+   "evidence_ids": [
+    "budget:Finance"
+   ]
+  },
+  {
+   "t_ms": 1.0,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.4,
+   "evidence_ids": [
+    "catalog:search:default"
+   ]
+  },
+  {
+   "t_ms": 514.0,
+   "kind": "vendor_api",
+   "vendor": "NimbusAI",
+   "status": "unavailable",
+   "reason": "http_503",
+   "attempts": 2,
+   "latency_ms": 512.7
+  },
+  {
+   "t_ms": 514.2,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 513.1,
+   "evidence_ids": [
+    "vendor_registry:V013",
+    "vendor_api:NimbusAI"
+   ]
+  },
+  {
+   "t_ms": 514.4,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.2,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s5#data",
+    "policy:s5#vendor",
+    "policy:s6#region-unverified",
+    "policy:s7",
+    "policy:s8"
+   ]
+  },
+  {
+   "t_ms": 58524.3,
+   "kind": "llm",
+   "cached": false,
+   "key": "a099b779637ec1d29c8a7adc85b22a24",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 578,
+    "prompt_tokens": 2264,
+    "total_tokens": 2842
+   },
+   "latency_ms": 58007.5
+  },
+  {
+   "t_ms": 58528.7,
+   "kind": "merge",
+   "label": "hold_for_manual_review",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 0,
+   "label_rejected": 0
+  }
+ ]
+}

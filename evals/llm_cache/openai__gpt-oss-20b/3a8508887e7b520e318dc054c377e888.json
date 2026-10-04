@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"required_approvals\":[\"Manager\",\"Department Head\",\"Procurement\"],\"risk_flags\":[\"security_review_required\",\"legal_review_required\"],\"missing_information\":[],\"rationale\":\"The request for QuillPoint Proposals meets all required fields: requester, department, product/vendor, annual cost ($10,000), user count (14), business purpose, data access level, and integrations. The annual cost is within the Sales department\u2019s available budget ($18,000). No existing approved tool overlaps. The vendor is new, with no completed security assessment and draft legal terms, triggering security and legal review requirements. No privacy concerns are identified. Therefore the request can proceed to standard approval with the minimum required approvals, while routing for security and legal specialist review.\",\"next_step\":\"Submit to Manager, Department Head, and Procurement for approval; concurrently forward to Security and Legal for review.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 291,
+  "prompt_tokens": 2327,
+  "total_tokens": 2618
+ },
+ "latency_ms": 56726.3
+}

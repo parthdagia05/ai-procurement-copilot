@@ -1,0 +1,321 @@
+{
+ "decision": {
+  "request_id": "REQ-1001",
+  "recommendation": "proceed_to_standard_approval: Proceed to standard approval. Annual amount in the up to $1,000 band; approvals: Manager.",
+  "evidence": [
+   {
+    "source": "get_request_context",
+    "finding": "SignFlow Add-on from SignFlow (E-signature): annual cost $800, 3 users, data access 'internal_documents', integrations: none, urgency 'normal'.",
+    "reference": "request:REQ-1001"
+   },
+   {
+    "source": "get_request_context",
+    "finding": "Requester Noah Williams (IC4, Finance); manager Priya Shah (E006).",
+    "reference": "employee:E004"
+   },
+   {
+    "source": "check_budget",
+    "finding": "Finance software budget: annual $90,000, committed $61,000, available $29,000; request $800 is within the available budget (headroom $28,200).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Existing Approved tool SignFlow (E-signature, vendor SignFlow): 45 seats, scope Company-wide, $16,000/yr - \"Electronic signatures\". Match: same_vendor, same_category, product_name; available for Finance.",
+    "reference": "catalog:SW010"
+   },
+   {
+    "source": "search_existing_software",
+    "finding": "Prior purchase PO-2513 on 2026-07-04: Finance bought SignFlow for $16,000/yr (Approved; Company-wide agreement).",
+    "reference": "purchase:PO-2513"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Internal registry: SignFlow procurement status Approved, security Approved (2026-06-20), legal terms Approved.",
+    "reference": "vendor_registry:V010"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Vendor-risk service: security review approved (last review 2026-06-20), risk low, processes personal data: yes, stores data outside region: no.",
+    "reference": "vendor_api:SignFlow"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-20 is 102 days before the reference date 2026-09-30 (valid 365 days): current per registry.",
+    "reference": "vendor_registry:SignFlow#review-age"
+   },
+   {
+    "source": "get_vendor_profile",
+    "finding": "Security review dated 2026-06-20 is 102 days before the reference date 2026-09-30 (valid 365 days): current per vendor-risk service.",
+    "reference": "vendor_api:SignFlow#review-age"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Annual amount $800 falls in the up to $1,000 band: minimum approvals Manager (policy s4).",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "evaluate_policy_rules",
+    "finding": "Existing catalog products in the same category (SignFlow (SW010)) must be considered before a new purchase; overlap is not an automatic rejection (policy s3).",
+    "reference": "policy:s3"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Finance requests SignFlow Add-on for three additional signing identities at $800/yr.",
+    "reference": "request:REQ-1001"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "The request is within Finance's available software budget ($29,000 headroom).",
+    "reference": "budget:Finance"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "Policy s4 requires only Manager approval for amounts up to $1,000.",
+    "reference": "policy:s4"
+   },
+   {
+    "source": "copilot_analysis",
+    "finding": "An existing approved SignFlow deployment (SW010) covers e\u2011signature needs, but the request adds three new signing identities that may require additional seats.",
+    "reference": "catalog:SW010, purchase:PO-2513"
+   }
+  ],
+  "required_approvals": [
+   "Manager"
+  ],
+  "missing_information": [],
+  "risk_flags": [
+   "existing_tool_overlap"
+  ],
+  "next_step": "Send to Manager for approval. No specialist review was triggered. Obtain the required Manager approval (Priya Shah) before creating a purchase order for the add\u2011on.",
+  "human_review_required": true,
+  "telemetry": {
+   "llm_calls": 2,
+   "tool_calls": 5,
+   "tool_names": [
+    "get_request_context",
+    "check_budget",
+    "search_existing_software",
+    "get_vendor_profile",
+    "evaluate_policy_rules"
+   ],
+   "latency_ms": 60469.4,
+   "rate_limit_wait_ms": 56109.0,
+   "fallback_reason": null,
+   "model": "openai/gpt-oss-120b"
+  }
+ },
+ "assessment": {
+  "recommendation_label": "proceed_to_standard_approval",
+  "rationale": "The request for a SignFlow add\u2011on costing $800 is within the Manager\u2011only approval band (policy s4) and fits within Finance's available software budget ($29,000 headroom). An existing company\u2011wide SignFlow license is already approved, but the policy does not forbid additional seats, so standard approval can proceed.",
+  "next_step_detail": "Obtain the required Manager approval (Priya Shah) before creating a purchase order for the add\u2011on.",
+  "overlap_assessment": "An existing approved SignFlow deployment (SW010) covers e\u2011signature needs, but the request adds three new signing identities that may require additional seats.",
+  "additional_approvals": [],
+  "additional_risk_flags": [],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "interpretations": [
+   {
+    "finding": "Finance requests SignFlow Add-on for three additional signing identities at $800/yr.",
+    "evidence_ids": [
+     "request:REQ-1001"
+    ]
+   },
+   {
+    "finding": "The request is within Finance's available software budget ($29,000 headroom).",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "Policy s4 requires only Manager approval for amounts up to $1,000.",
+    "evidence_ids": [
+     "policy:s4"
+    ]
+   }
+  ],
+  "injection_suspected": false
+ },
+ "evidence_pack": {
+  "key_findings": [
+   {
+    "finding": "Finance requests SignFlow Add-on for three additional signing identities at $800/yr.",
+    "evidence_ids": [
+     "request:REQ-1001"
+    ]
+   },
+   {
+    "finding": "The request is within Finance's available software budget ($29,000 headroom).",
+    "evidence_ids": [
+     "budget:Finance"
+    ]
+   },
+   {
+    "finding": "An approved company\u2011wide SignFlow license (SW010) already exists and is available to Finance.",
+    "evidence_ids": [
+     "catalog:SW010",
+     "purchase:PO-2513"
+    ]
+   },
+   {
+    "finding": "Policy s4 requires only Manager approval for amounts up to $1,000.",
+    "evidence_ids": [
+     "policy:s4"
+    ]
+   }
+  ],
+  "overlap_assessment": "An existing approved SignFlow deployment covers e\u2011signature needs for Finance.",
+  "stated_gap": "",
+  "concerns": [
+   "Confirm that the three additional signing identities are not already covered by the existing license seats.",
+   "Verify that the manager approval (Manager) is obtained as required by policy s4.",
+   "Ensure no duplicate licensing cost is incurred given the company\u2011wide agreement."
+  ],
+  "additional_data_classes": [],
+  "additional_missing_information": [],
+  "clarification_questions": [],
+  "injection_suspected": false
+ },
+ "score": {
+  "arm": "staged",
+  "repeat": 1,
+  "case_id": "PUB-01",
+  "request_id": "REQ-1001",
+  "label": "proceed_to_standard_approval",
+  "label_correct": true,
+  "approvals_exact": true,
+  "approvals_missing": "",
+  "approvals_extra": "",
+  "escalation_correct": true,
+  "missing_info_correct": true,
+  "critical_failures": 0,
+  "critical_detail": "",
+  "injection_handled": "",
+  "values_grounded": 10,
+  "values_total": 10,
+  "ungrounded_values": "",
+  "ungrounded_claims_dropped": 0,
+  "unsafe_text_dropped": 1,
+  "label_rejected": 0,
+  "public_min_checks": true,
+  "latency_ms": 60469.4,
+  "rate_limit_wait_ms": 56109.0,
+  "net_latency_ms": 4360.4,
+  "llm_calls": 2,
+  "tool_calls": 5,
+  "tokens": 4301,
+  "cache_hits": 0,
+  "fallback_reason": ""
+ },
+ "trace": [
+  {
+   "t_ms": 4.2,
+   "kind": "vendor_api",
+   "vendor": "SignFlow",
+   "status": "ok",
+   "reason": null,
+   "attempts": 1,
+   "latency_ms": 1.1
+  },
+  {
+   "t_ms": 4.3,
+   "kind": "tool",
+   "name": "get_request_context",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "request:REQ-1001",
+    "employee:E004"
+   ]
+  },
+  {
+   "t_ms": 4.3,
+   "kind": "tool",
+   "name": "check_budget",
+   "args": {},
+   "status": "within",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "budget:Finance"
+   ]
+  },
+  {
+   "t_ms": 4.3,
+   "kind": "tool",
+   "name": "search_existing_software",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "catalog:SW010",
+    "purchase:PO-2513"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "get_vendor_profile",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "vendor_registry:V010",
+    "vendor_api:SignFlow",
+    "vendor_registry:SignFlow#review-age",
+    "vendor_api:SignFlow#review-age"
+   ]
+  },
+  {
+   "t_ms": 4.4,
+   "kind": "tool",
+   "name": "evaluate_policy_rules",
+   "args": {},
+   "status": "ok",
+   "latency_ms": 0.0,
+   "evidence_ids": [
+    "policy:s4",
+    "policy:s3"
+   ]
+  },
+  {
+   "t_ms": 56098.6,
+   "kind": "tool_use_failed_retry_without_tools",
+   "error": "Error code: 400 - {'error': {'message': \"Tool call validation failed: tool call validation failed: attempted to call tool 'json' which was not in request.tools\", 'type': 'invalid_request_error', 'code"
+  },
+  {
+   "t_ms": 58997.5,
+   "kind": "llm",
+   "cached": false,
+   "key": "4eba5993e2388cd3b32e6d87e5d1e753",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 448,
+    "prompt_tokens": 1759,
+    "total_tokens": 2207
+   },
+   "latency_ms": 2898.0
+  },
+  {
+   "t_ms": 60468.5,
+   "kind": "llm",
+   "cached": false,
+   "key": "952f651b7ed8dd1e309710fc7a037107",
+   "tool_calls": [],
+   "usage": {
+    "completion_tokens": 471,
+    "prompt_tokens": 1623,
+    "total_tokens": 2094
+   },
+   "latency_ms": 1466.8
+  },
+  {
+   "t_ms": 60469.4,
+   "kind": "merge",
+   "label": "proceed_to_standard_approval",
+   "ungrounded_dropped": 0,
+   "unsafe_text_dropped": 1,
+   "label_rejected": 0
+  }
+ ]
+}

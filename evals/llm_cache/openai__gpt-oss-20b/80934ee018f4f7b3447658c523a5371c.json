@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"required_approvals\":[\"Manager\",\"Department Head\",\"Procurement\"],\"risk_flags\":[],\"missing_information\":[],\"rationale\":\"The request for Ledgerly Close (annual cost $4,500, 6 users) meets all required fields: requester, department, product/vendor, cost, user count, business purpose, data access level, and integrations. The cost is within the Finance department\u2019s available budget ($29,000 headroom). No existing approved tool overlaps in vendor, category, or product. Vendor security assessment is current (dated 2025-09-30, within 365 days), and legal terms are standard. No privacy or additional security concerns are identified. Therefore the request can proceed to standard approval with the minimum required approvals of Manager, Department Head, and Procurement.\",\"next_step\":\"Submit the request to the Manager, Department Head, and Procurement for approval.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 292,
+  "prompt_tokens": 2418,
+  "total_tokens": 2710
+ },
+ "latency_ms": 2656.5
+}

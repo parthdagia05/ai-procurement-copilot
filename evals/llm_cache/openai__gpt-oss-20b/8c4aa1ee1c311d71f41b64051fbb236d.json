@@ -1,0 +1,10 @@
+{
+ "content": "{\"key_findings\":[{\"finding\":\"The request is for SignFlow Training Pack from SignFlow, costing $950 annually for 12 users with no data access or integrations.\",\"evidence_ids\":[\"request:REQ-1010\"]},{\"finding\":\"Finance has an available budget of $29,000, so the $950 request is within budget.\",\"evidence_ids\":[\"budget:Finance\"]},{\"finding\":\"SignFlow is an approved vendor with current security and legal reviews, and processes personal data but does not store data outside the region.\",\"evidence_ids\":[\"vendor_registry:V010\",\"vendor_api:SignFlow\",\"vendor_registry:SignFlow#review-age\",\"vendor_api:SignFlow#review-age\"]},{\"finding\":\"An existing approved SignFlow tool (company-wide) is available to Finance, matching the vendor and product name.\",\"evidence_ids\":[\"catalog:SW010\",\"purchase:PO-2513\"]}],\"overlap_assessment\":\"An existing approved SignFlow tool is available to the Finance department and matches the requested vendor and product.\",\"stated_gap\":\"\",\"concerns\":[],\"additional_data_classes\":[],\"additional_missing_information\":[],\"clarification_questions\":[],\"injection_suspected\":false}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 297,
+  "prompt_tokens": 1866,
+  "total_tokens": 2163
+ },
+ "latency_ms": 58036.9
+}

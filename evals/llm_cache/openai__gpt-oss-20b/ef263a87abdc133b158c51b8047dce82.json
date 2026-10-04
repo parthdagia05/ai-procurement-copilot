@@ -1,0 +1,10 @@
+{
+ "content": "{\"recommendation_label\":\"proceed_to_standard_approval\",\"required_approvals\":[\"Manager\",\"Department Head\",\"Procurement\",\"Privacy\"],\"risk_flags\":[\"privacy_review_required\"],\"missing_information\":[],\"rationale\":\"The request for BrightPath Feedback is within the available budget ($5,500 < $7,000 headroom). No existing approved tool overlaps. The vendor\u2019s security assessment is current, and the vendor is not new, so no legal review is required. However, the tool will process customer PII, triggering a privacy review. All other required fields are present.\",\"next_step\":\"Submit the request to the standard approval workflow, ensuring the Privacy team completes their review before final approval.\",\"human_review_required\":true}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 269,
+  "prompt_tokens": 2582,
+  "total_tokens": 2851
+ },
+ "latency_ms": 57047.4
+}
