@@ -145,3 +145,13 @@ class StagedTests(unittest.TestCase):
         d, ctx = run("REQ-1004", "staged", llm=FakeLLM([pack(), LLMError("down")]))
         self.assertIn("llm_error", d.telemetry.fallback_reason)
         self.assertEqual(set(d.required_approvals), {"Department Head", "Procurement", "Security", "Privacy", "Legal"})
+
+
+class ToolUseFailedTests(unittest.TestCase):
+    def test_malformed_tool_call_retries_without_tools(self):
+        from src.llm.client import ToolUseFailed
+        with ensure_mock_api():
+            llm = FakeLLM([ToolUseFailed("attempted to call tool 'json'"), answer()])
+            d, ctx = run("REQ-1003", "single", llm=llm)
+        self.assertIsNone(d.telemetry.fallback_reason)
+        self.assertIsNone(llm.sent[1]["tools"])

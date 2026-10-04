@@ -16,7 +16,7 @@ from typing import TypeVar
 
 from pydantic import BaseModel, ValidationError
 
-from src.llm.client import LLMClient, LLMError
+from src.llm.client import LLMClient, LLMError, ToolUseFailed
 from src.runtime import RunContext
 from src.tools import MANDATORY_TOOLS, run_tool, tool_specs
 
@@ -72,7 +72,13 @@ def agent_turns(ctx: RunContext, llm: LLMClient, messages: list[dict], model: ty
                             + json.dumps(inline_refs(schema), separators=(",", ":"))}]
     reply: dict = {}
     for turn in range(MAX_FOLLOW_UP_TURNS + 1):
-        reply = llm.chat(ctx, messages, tools=specs if turn < MAX_FOLLOW_UP_TURNS else None, cache_tag=tag)
+        use_tools = turn < MAX_FOLLOW_UP_TURNS
+        try:
+            reply = llm.chat(ctx, messages, tools=specs if use_tools else None, cache_tag=tag)
+        except ToolUseFailed as exc:
+            # Typically the model tried to return its answer as a tool call: ask again without tools.
+            ctx.log("tool_use_failed_retry_without_tools", error=str(exc)[:200])
+            reply = llm.chat(ctx, messages, tools=None, cache_tag=tag)
         if not reply["tool_calls"]:
             break
         messages.append({

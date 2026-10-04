@@ -77,7 +77,8 @@ def run_arm(arm: str, cases: list[dict], public: dict, repeat: int, llm: LLMClie
                 print(f"  {arm:13} r{repeat} {case['case_id']:8} label={row['label']:30} "
                       f"{'OK ' if row['label_correct'] else 'BAD'} critical={row['critical_failures']} "
                       f"calls={row['llm_calls']} tokens={row['tokens']} net={row['net_latency_ms']:.0f}ms"
-                      + (f"  !! {row['critical_detail']}" if row["critical_failures"] else ""), flush=True)
+                      + (f"  !! {row['critical_detail']}" if row["critical_failures"] else "")
+                      + (f"  [fallback: {reason[:90]}]" if reason and arm != "deterministic" else ""), flush=True)
     os.environ.pop("PROCUREMENT_DATA_DIR", None)
     return rows
 

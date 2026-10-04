@@ -43,6 +43,10 @@ class QuotaExhausted(LLMError):
     pass
 
 
+class ToolUseFailed(LLMError):
+    """The model emitted a malformed tool call (e.g. a call to a non-existent tool named 'json')."""
+
+
 class _Limiter:
     """Sliding 60-second window over requests and (estimated) tokens."""
 
@@ -140,6 +144,8 @@ class LLMClient:
                 time.sleep(pause + 0.5)
             except (APIConnectionError, APIStatusError) as exc:
                 status = getattr(exc, "status_code", None)
+                if status == 400 and "tool_use_failed" in str(exc):
+                    raise ToolUseFailed(str(exc)[:300]) from exc
                 if status is not None and status < 500 and status != 408:
                     raise LLMError(f"{type(exc).__name__} {status}: {str(exc)[:300]}") from exc
                 if attempt >= 3:

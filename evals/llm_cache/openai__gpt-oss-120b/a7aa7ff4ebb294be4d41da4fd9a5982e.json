@@ -1,0 +1,10 @@
+{
+ "content": "{\n  \"recommendation_label\": \"use_existing_tool\",\n  \"rationale\": \"Finance already has an approved company\u2011wide SignFlow license covering e\u2011signature needs, and the requested add\u2011on provides the same functionality at a low cost.\",\n  \"next_step_detail\": \"\",\n  \"overlap_assessment\": \"The existing SignFlow tool (SW010) is available to Finance and satisfies the signing identity requirement.\",\n  \"interpretations\": [\n    {\n      \"finding\": \"Existing approved SignFlow license is company\u2011wide and covers the requested capability.\",\n      \"evidence_ids\": [\"catalog:SW010\", \"purchase:PO-2513\"]\n    },\n    {\n      \"finding\": \"Request cost $800 is within Finance's available budget.\",\n      \"evidence_ids\": [\"budget:Finance\"]\n    },\n    {\n      \"finding\": \"Manager approval satisfies policy s4 for amounts up to $1,000.\",\n      \"evidence_ids\": [\"policy:s4\"]\n    }\n  ],\n  \"additional_approvals\": [],\n  \"additional_risk_flags\": [],\n  \"additional_data_classes\": [],\n  \"additional_missing_information\": [],\n  \"clarification_questions\": [],\n  \"injection_suspected\": false\n}",
+ "tool_calls": [],
+ "usage": {
+  "completion_tokens": 323,
+  "prompt_tokens": 1997,
+  "total_tokens": 2320
+ },
+ "latency_ms": 1162.7
+}
