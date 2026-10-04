@@ -47,7 +47,8 @@ def scan(location: str, text: object) -> list[InjectionHit]:
 
 # Phrases in LLM-written text that would claim an approval was GRANTED.
 _GRANTED_CLAIM = re.compile(
-    r"\b(is|has been|was|are|have been|been)\s+(fully\s+)?(approved|authori[sz]ed|signed off)\b"
+    r"\b(is|has been|was|are|have been|been)\s+(fully\s+|already\s+)?(approved|authori[sz]ed|signed off)\b"
+    r"|\b(has|have|had)\s+(already\s+)?(approved|authori[sz]ed|signed off)\b"
     r"|\b(cfo|security|legal|privacy|finance)[- ]approved\b"
     r"|\bpre-?approved\b"
     r"|\bapproval (is )?granted\b",
@@ -63,4 +64,5 @@ def claims_approval_granted(text: str | None) -> bool:
     narrower pattern set ("is approved" about a vendor is still blocked: the
     sanitiser prefers a false positive to a fabricated approval).
     """
-    return bool(text and _GRANTED_CLAIM.search(text))
+    # Model text that itself reads like an injection ("skip review") is equally unsafe.
+    return bool(text and (_GRANTED_CLAIM.search(text) or scan("model_output", text)))

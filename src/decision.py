@@ -191,6 +191,7 @@ def build_decision(ctx: RunContext, base: PolicyResult, assessment: AgentAssessm
         label = policy.default_label
 
     ctx.memo["merge_notes"] = notes
+    ctx.memo["final_policy"] = policy
     ctx.log("merge", label=label, **notes)
 
     recommendation = f"{label}: {LABEL_TEXT[label]}. {rationale or _summary(label, policy, ctx)}"

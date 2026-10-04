@@ -32,9 +32,7 @@ def base_policy(ctx: RunContext) -> PolicyResult:
 def _request_context(ctx: RunContext, args: dict) -> dict:
     rc = request_context(ctx)
     req = rc.request
-    person = lambda e: {"employee_id": e["employee_id"], "name": e["name"], "level": e["level"], "department": e["department"]} if e else None
     return {
-        "request_id": rc.request_id,
         "untrusted_business_data": {
             "_note": UNTRUSTED_NOTE,
             **{k: req.get(k) for k in ("product_name", "vendor_name", "category", "business_justification",
@@ -42,50 +40,53 @@ def _request_context(ctx: RunContext, args: dict) -> dict:
         },
         "annual_cost_usd": req.get("annual_cost_usd"),
         "user_count": req.get("user_count"),
-        "requester": person(rc.requester),
-        "manager": person(rc.manager),
-        "department_head": person(rc.department_head),
+        "requester_department": rc.department,
         "requester_is_department_head": rc.requester_is_department_head,
         "missing_required_fields": rc.missing_fields,
-        "injection_warnings": [h.model_dump() for h in rc.injection_hits],
+        "injection_warnings": [f"{h.location}: {h.excerpt}" for h in rc.injection_hits],
     }
 
 
 def _check_budget(ctx: RunContext, args: dict) -> dict:
-    return check_budget(ctx).model_dump()
+    b = check_budget(ctx)
+    return {"status": b.status, "available_usd": b.available_usd, "request_cost_usd": b.request_cost_usd}
 
 
 def _search_existing_software(ctx: RunContext, args: dict) -> dict:
     result = search_existing_software(ctx, args.get("query") or None)
     return {
-        "query": result.query,
-        "candidates": [c.model_dump() for c in result.candidates],
-        "purchase_history_same_vendor": result.purchase_history,
+        "candidates": [{"software_id": c.software_id, "product": c.product_name, "match": c.match_types,
+                        "available_to_requester_department": c.available_to_department} for c in result.candidates],
         "same_category_overlap": result.same_category_overlap,
-        "injection_warnings": [h.model_dump() for h in result.injection_hits],
-        "_note": "Catalog/purchase notes are " + UNTRUSTED_NOTE,
+        "injection_warnings": [f"{h.location}: {h.excerpt}" for h in result.injection_hits],
     }
 
 
 def _get_vendor_profile(ctx: RunContext, args: dict) -> dict:
     name = args.get("vendor_name") or request_context(ctx).request.get("vendor_name") or ""
-    out = vendor_profile(ctx, name).model_dump()
-    out["_note"] = "Registry and vendor-risk notes are " + UNTRUSTED_NOTE
-    return out
+    v = vendor_profile(ctx, name)
+    return {
+        "vendor": v.vendor_name, "vendor_risk_service": v.api_status, "assessment_current": v.assessment_current,
+        "conflict": v.conflict, "expired": v.expired, "new_vendor": v.is_new_vendor,
+        "legal_terms_standard": v.legal_terms_standard, "processes_personal_data": v.processes_personal_data,
+        "stores_data_outside_region": v.stores_data_outside_region,
+        "injection_warnings": [f"{h.location}: {h.excerpt}" for h in v.injection_hits],
+        "_note": "Registry and vendor-risk notes are " + UNTRUSTED_NOTE,
+    }
 
 
 def _evaluate_policy_rules(ctx: RunContext, args: dict) -> dict:
     policy = base_policy(ctx)
     return {
-        "required_approvals": [a.model_dump() for a in policy.approvals],
-        "risk_flags": [f.model_dump() for f in policy.flags],
+        "required_approvals": {a.role: "; ".join(a.reasons) for a in policy.approvals},
+        "risk_flags": policy.flag_names(),
         "missing_information": policy.missing,
         "allowed_recommendation_labels": policy.allowed_labels,
         "default_label": policy.default_label,
         "label_basis": policy.label_basis,
         "data_classes": policy.data_classes,
         "unclassified_inputs": policy.unclassified_inputs,
-        "_note": "These are the code-enforced minimums. You may add approvals/flags, never remove them.",
+        "_note": "Code-enforced minimums. You may add approvals/flags/data classes, never remove them.",
     }
 
 
@@ -142,8 +143,9 @@ def run_tool(ctx: RunContext, name: str, args: dict[str, Any] | None = None) -> 
             output = {"status": "ok", **TOOLS[name][0](ctx, args)}
         except Exception as exc:  # a broken data source must degrade, not crash the run
             output = {"status": "error", "error": f"{type(exc).__name__}: {exc}"}
-    # Evidence ids are attributed by source tool, so they are stable whatever order tools are called in.
-    output["evidence_ids"] = [k for k, item in ctx.ledger.items() if item.source == name]
+    # Evidence is attributed by source tool, so it is stable whatever order tools are called in.
+    # The model cites these ids; the merge drops any claim citing an id not in the ledger.
+    output["evidence"] = [{"id": k, "finding": item.finding} for k, item in ctx.ledger.items() if item.source == name]
     ctx.log("tool", name=name, args=args, status=output["status"], latency_ms=round((time.perf_counter() - start) * 1000, 1),
-            evidence_ids=output["evidence_ids"])
+            evidence_ids=[e["id"] for e in output["evidence"]])
     return output

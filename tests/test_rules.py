@@ -95,7 +95,8 @@ class GoldRegressionTests(unittest.TestCase):
     def test_all_gold_cases(self):
         gold = json.loads((ROOT / "evals" / "gold_cases.json").read_text(encoding="utf-8"))["cases"]
         for data_dir in sorted({c["data_dir"] for c in gold}):
-            with mock.patch.dict(os.environ, {"PROCUREMENT_DATA_DIR": data_dir}), ensure_mock_api(ROOT / data_dir):
+            with mock.patch.dict(os.environ, {"PROCUREMENT_DATA_DIR": data_dir, "COPILOT_MODE": "deterministic"}), \
+                    ensure_mock_api(ROOT / data_dir):
                 for case in [c for c in gold if c["data_dir"] == data_dir]:
                     with self.subTest(case=case["case_id"]):
                         d, e = handle_request(case["request_id"]), case["expected"]
