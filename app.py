@@ -112,6 +112,10 @@ else:
         st.write(decision.recommendation.split(":", 1)[1].strip().removeprefix(LABEL_TEXT.get(label, "")).lstrip(". "))
 
         policy = ctx.memo.get("final_policy")
+        if policy and policy.default_label != label:
+            # Evaluation showed the model's only label errors were disagreements with the policy default.
+            st.warning(f"The copilot's suggestion differs from the policy engine default "
+                       f"(**{LABEL_STYLE[policy.default_label][1]}**). Reviewer decides.")
         reasons = {a.role: a.reasons for a in policy.approvals} if policy else {}
         st.markdown("**Approvals required** (human sign-off)")
         for role in decision.required_approvals:

@@ -105,6 +105,12 @@ class LLMClient:
             effort = "low" if "gpt-oss" in model else ("none" if "qwen" in model else "")
         return {"reasoning_effort": effort} if effort else {}
 
+    def _key(self, payload: dict, cache_tag: str) -> str:
+        return hashlib.sha256(json.dumps({"p": payload, "tag": cache_tag}, sort_keys=True).encode()).hexdigest()[:32]
+
+    def _path(self, key: str) -> Path:
+        return CACHE_DIR / self.settings.model.replace("/", "__") / f"{key}.json"
+
     def chat(self, ctx: RunContext, messages: list[dict], *, tools: list[dict] | None = None,
              response_format: dict | None = None, cache_tag: str = "") -> dict:
         payload: dict[str, Any] = {"model": self.settings.model, "messages": messages, "temperature": 0, **self._extra()}
@@ -112,16 +118,22 @@ class LLMClient:
             payload["tools"] = tools
         if response_format:
             payload["response_format"] = response_format
-        key = hashlib.sha256(json.dumps({"p": payload, "tag": cache_tag}, sort_keys=True).encode()).hexdigest()[:32]
-        path = CACHE_DIR / self.settings.model.replace("/", "__") / f"{key}.json"
+        key = self._key(payload, cache_tag)
+        path = self._path(key)
         ctx.telemetry.model = self.settings.model
 
         if self.cache_mode in {"record", "replay"} and path.exists():
             cached = json.loads(path.read_text(encoding="utf-8"))
+            if cached.get("error") == "tool_use_failed":
+                raise ToolUseFailed("replayed: model emitted a malformed tool call")
             ctx.telemetry.llm_calls += 1
             ctx.log("llm", cached=True, key=key, tool_calls=[t["name"] for t in cached["tool_calls"]], usage=cached.get("usage"))
             return cached
         if self.cache_mode == "replay":
+            # Responses recorded before failure markers existed: a with-tools call that failed
+            # is identifiable because the identical call WITHOUT tools was cached as its retry.
+            if tools and self._path(self._key({k: v for k, v in payload.items() if k != "tools"}, cache_tag)).exists():
+                raise ToolUseFailed("replayed: model emitted a malformed tool call")
             raise CacheMiss(f"no cached response for {key}")
         if not self.settings.enabled:
             raise LLMError("no LLM API key configured")
@@ -145,6 +157,9 @@ class LLMClient:
             except (APIConnectionError, APIStatusError) as exc:
                 status = getattr(exc, "status_code", None)
                 if status == 400 and "tool_use_failed" in str(exc):
+                    if self.cache_mode == "record":  # so replay follows the same path
+                        path.parent.mkdir(parents=True, exist_ok=True)
+                        path.write_text(json.dumps({"error": "tool_use_failed"}), encoding="utf-8")
                     raise ToolUseFailed(str(exc)[:300]) from exc
                 if status is not None and status < 500 and status != 408:
                     raise LLMError(f"{type(exc).__name__} {status}: {str(exc)[:300]}") from exc
