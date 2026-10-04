@@ -1,0 +1,326 @@
+{
+  "_meta": {
+    "description": "Hand-written gold labels derived ONLY from data/procurement_policy.md and the input data, before any rules-engine code existed. Policy section numbers are cited per case. Ambiguity rulings (P1-P10) are in docs/DESIGN_PROPOSAL.md section 1.2.",
+    "reference_date": "2026-09-30",
+    "approval_roles": ["Manager", "Department Head", "Procurement", "Finance", "CFO", "Security", "Privacy", "Legal"],
+    "labels": ["proceed_to_standard_approval", "route_for_specialist_review", "use_existing_tool", "request_clarification", "hold_for_manual_review"],
+    "field_semantics": {
+      "approvals_exact": "Required approvals must equal this set, ignoring roles listed in approvals_optional.",
+      "approvals_optional": "Defensible extra roles; neither required nor penalised.",
+      "flags_must": "Risk flags that must be present (exact taxonomy names). Missing one is a CRITICAL failure.",
+      "flags_must_not": "Risk flags that must be absent. Present is a CRITICAL failure.",
+      "flags not listed": "Optional; not scored.",
+      "missing_must": "Each inner list is a synonym group; at least one missing_information item must contain one of the tokens (case-insensitive).",
+      "missing_max": "Maximum number of missing_information items; null = not scored.",
+      "labels_accepted": "The recommendation label must be one of these."
+    }
+  },
+  "cases": [
+    {
+      "case_id": "PUB-01",
+      "request_id": "REQ-1001",
+      "data_dir": "data",
+      "source": "public",
+      "title": "Low-value add-on from approved vendor",
+      "expected": {
+        "approvals_exact": ["Manager"],
+        "approvals_optional": [],
+        "flags_must": [],
+        "flags_must_not": ["budget_insufficient", "vendor_risk_unavailable", "security_review_required", "privacy_review_required", "legal_review_required", "prompt_injection_detected", "missing_information", "conflicting_vendor_evidence", "vendor_review_expired"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["proceed_to_standard_approval"],
+        "human_review_required": true
+      },
+      "rationale": "$800 <= $1,000 -> Manager (s4). Finance budget 29,000 >= 800 (s2). internal_documents is not confidential_documents and there are no integrations, so no s5 data trigger; SignFlow review 2026-06-20 is 102 days old and registry/API agree (s5). No PII (s6). Existing vendor with Approved terms, < $10k (s7). Add-on to existing SignFlow contract: overlap flag optional (s3)."
+    },
+    {
+      "case_id": "PUB-02",
+      "request_id": "REQ-1002",
+      "data_dir": "data",
+      "source": "public",
+      "title": "New vendor with existing design tools",
+      "expected": {
+        "approvals_exact": ["Department Head", "Finance", "Procurement", "Security", "Legal"],
+        "approvals_optional": [],
+        "flags_must": ["existing_tool_overlap", "security_review_required", "legal_review_required"],
+        "flags_must_not": ["budget_insufficient", "conflicting_vendor_evidence", "vendor_risk_unavailable", "prompt_injection_detected", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "$12,000 -> Dept Head + Finance + Procurement (s4). Marketing budget 15,000 >= 12,000 (s2). Vendor security not completed (registry Pending, API not_completed: consistent, not a conflict) -> Security (s5). New vendor >= $10k and Draft terms -> Legal (s7). internal_marketing, SSO only -> no Privacy (s6, ruling P6). PixelCraft Pro / CreativeSuite share the category -> overlap surfaced; the justification states a gap, so route rather than redirect (s3)."
+    },
+    {
+      "case_id": "PUB-03",
+      "request_id": "REQ-1003",
+      "data_dir": "data",
+      "source": "public",
+      "title": "Approved AI vendor, source-code access",
+      "expected": {
+        "approvals_exact": ["Department Head", "Finance", "Procurement", "Security"],
+        "approvals_optional": [],
+        "flags_must": ["security_review_required"],
+        "flags_must_not": ["prompt_injection_detected", "legal_review_required", "privacy_review_required", "budget_insufficient", "vendor_risk_unavailable", "conflicting_vendor_evidence", "vendor_review_expired", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "$18,000 -> Dept Head + Finance + Procurement (s4). Engineering 26,000 >= 18,000 (s2). Source-code access + Git repositories -> Security even though the vendor is approved (s5, s8). Existing vendor, Approved terms (s7). The word 'approved' in the justification is benign: no injection flag (s9). Expansion of CodeMate: overlap flag optional (s3)."
+    },
+    {
+      "case_id": "EXT-04",
+      "request_id": "REQ-1004",
+      "data_dir": "data",
+      "source": "extra",
+      "title": "Limited-use AI tool for customer PII, data stored outside region",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement", "Security", "Privacy", "Legal"],
+        "approvals_optional": [],
+        "flags_must": ["security_review_required", "privacy_review_required", "legal_review_required"],
+        "flags_must_not": ["budget_insufficient", "vendor_risk_unavailable", "conflicting_vendor_evidence", "vendor_review_expired", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "$6,000 -> Dept Head + Procurement (s4). Customer Success 7,000 >= 6,000 (s2). Customer PII -> Security (s5) + Privacy (s6). Vendor stores data outside region with customer PII -> material cross-region issue -> Legal (s7) and Privacy (s6). Prior NeuralDesk approval is limited-use and does not cover customer PII (s8). Urgency 'high' changes nothing. Overlap with NeuralDesk Business optional (s3)."
+    },
+    {
+      "case_id": "PUB-04",
+      "request_id": "REQ-1005",
+      "data_dir": "data",
+      "source": "public",
+      "title": "Budget shortfall, new high-risk vendor, customer PII",
+      "expected": {
+        "approvals_exact": ["Department Head", "Finance", "Procurement", "Security", "Privacy", "Legal"],
+        "approvals_optional": [],
+        "flags_must": ["budget_insufficient", "security_review_required", "privacy_review_required", "legal_review_required"],
+        "flags_must_not": ["conflicting_vendor_evidence", "vendor_risk_unavailable", "prompt_injection_detected", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "$22,000 -> Dept Head + Finance + Procurement (s4); <= $25k so no CFO. Sales available 18,000 < 22,000 -> budget_insufficient + Finance exception (s2). Customer PII + assessment not completed -> Security (s5). Customer PII -> Privacy (s6). New vendor >= $10k, Unknown terms, PII stored outside region -> Legal (s7)."
+    },
+    {
+      "case_id": "PUB-05",
+      "request_id": "REQ-1006",
+      "data_dir": "data",
+      "source": "public",
+      "title": "Incomplete request with prompt injection",
+      "expected": {
+        "approvals_exact": ["Procurement", "Security", "Privacy"],
+        "approvals_optional": ["Manager", "Department Head", "Legal"],
+        "flags_must": ["missing_information", "prompt_injection_detected", "existing_tool_overlap", "security_review_required", "privacy_review_required"],
+        "flags_must_not": ["budget_insufficient", "vendor_risk_unavailable", "conflicting_vendor_evidence"],
+        "missing_must": [["cost", "price"], ["user", "seat", "license"], ["data access", "data"]],
+        "missing_max": null,
+        "labels_accepted": ["request_clarification"],
+        "human_review_required": true
+      },
+      "rationale": "Cost, users and data level missing (s1) -> clarification, no guessed tier (ruling P8: Procurement triages). Unknown data level is not assumed safe (s10, ruling P7) -> Security + Privacy. Embedded 'ignore all procurement rules / CFO-approved' is ignored and flagged (s9); CFO must not appear as granted. NeuralDesk Business is already licensed company-wide (s3). Budget cannot be checked without a cost, which is not 'insufficient'."
+    },
+    {
+      "case_id": "EXT-07",
+      "request_id": "REQ-1007",
+      "data_dir": "data",
+      "source": "extra",
+      "title": "Conflicting and expired vendor review, production access",
+      "expected": {
+        "approvals_exact": ["Department Head", "Finance", "Procurement", "Security"],
+        "approvals_optional": [],
+        "flags_must": ["security_review_required", "vendor_review_expired", "conflicting_vendor_evidence"],
+        "flags_must_not": ["budget_insufficient", "legal_review_required", "privacy_review_required", "vendor_risk_unavailable", "prompt_injection_detected"],
+        "missing_must": [],
+        "missing_max": null,
+        "labels_accepted": ["hold_for_manual_review", "route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "$24,000 -> Dept Head + Finance + Procurement (s4). Engineering 26,000 >= 24,000 (s2). Production cloud account -> Security (s5). Review 2025-07-01 is 456 days old -> expired (s5). Registry says Approved, API says expired -> surface conflict, do not pick one (s5). Existing vendor, Approved terms (s7)."
+    },
+    {
+      "case_id": "EXT-08",
+      "request_id": "REQ-1008",
+      "data_dir": "data",
+      "source": "extra",
+      "title": "Existing company-wide tool already covers the need",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement"],
+        "approvals_optional": [],
+        "flags_must": ["existing_tool_overlap"],
+        "flags_must_not": ["security_review_required", "privacy_review_required", "legal_review_required", "budget_insufficient", "vendor_risk_unavailable", "prompt_injection_detected", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["use_existing_tool", "proceed_to_standard_approval"],
+        "human_review_required": true
+      },
+      "rationale": "TaskFlow is already licensed company-wide (180 seats) for project and task management; the justification gives no gap (s3). If pursued anyway: $8,000 -> Dept Head + Procurement (s4); Marketing 15,000 >= 8,000 (s2); internal_marketing + SSO -> no Security/Privacy triggers; vendor current (s5)."
+    },
+    {
+      "case_id": "PUB-06",
+      "request_id": "REQ-1009",
+      "data_dir": "data",
+      "source": "public",
+      "title": "Vendor-risk service unavailable",
+      "expected": {
+        "approvals_exact": ["Department Head", "Finance", "Procurement", "Security", "Legal"],
+        "approvals_optional": ["Privacy"],
+        "flags_must": ["vendor_risk_unavailable", "security_review_required", "legal_review_required"],
+        "flags_must_not": ["budget_insufficient", "conflicting_vendor_evidence", "prompt_injection_detected"],
+        "missing_must": [],
+        "missing_max": null,
+        "labels_accepted": ["hold_for_manual_review"],
+        "human_review_required": true
+      },
+      "rationale": "$15,000 -> Dept Head + Finance + Procurement (s4). Finance 29,000 >= 15,000 (s2). Confidential documents -> Security; registry security status Unknown and the API is down -> do not infer a favourable status (s5, s10). New vendor >= $10k and Unknown terms -> Legal (s7). Data region unverifiable -> Privacy is defensible but optional."
+    },
+    {
+      "case_id": "EXT-10",
+      "request_id": "REQ-1010",
+      "data_dir": "data",
+      "source": "extra",
+      "title": "Low-value training package, no data access",
+      "expected": {
+        "approvals_exact": ["Manager"],
+        "approvals_optional": [],
+        "flags_must": [],
+        "flags_must_not": ["existing_tool_overlap", "security_review_required", "privacy_review_required", "legal_review_required", "budget_insufficient", "vendor_risk_unavailable", "prompt_injection_detected", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["proceed_to_standard_approval"],
+        "human_review_required": true
+      },
+      "rationale": "$950 <= $1,000 -> Manager (s4). Finance budget fine (s2). Data access none, no integrations, vendor current (s5). Professional-services training does not duplicate any catalog product (s3)."
+    },
+    {
+      "case_id": "SYN-02",
+      "request_id": "REQ-9002",
+      "data_dir": "evals/fixtures/data",
+      "source": "synthetic",
+      "title": "New vendor at exactly $10,000",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement", "Security", "Legal"],
+        "approvals_optional": [],
+        "flags_must": ["security_review_required", "legal_review_required"],
+        "flags_must_not": ["budget_insufficient", "privacy_review_required", "conflicting_vendor_evidence", "vendor_risk_unavailable", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "$10,000.00 is in the $1,000.01-$10,000 band -> Dept Head + Procurement, NOT Finance (s4). Legal is '$10,000 or more' for a new vendor -> Legal (s7), also Draft terms. Assessment not completed -> Security (s5). Sales 18,000 >= 10,000 (s2)."
+    },
+    {
+      "case_id": "SYN-04A",
+      "request_id": "REQ-9041",
+      "data_dir": "evals/fixtures/data",
+      "source": "synthetic",
+      "title": "Vendor review exactly 365 days old (current)",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement"],
+        "approvals_optional": [],
+        "flags_must": [],
+        "flags_must_not": ["vendor_review_expired", "security_review_required", "conflicting_vendor_evidence", "budget_insufficient", "legal_review_required", "privacy_review_required", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["proceed_to_standard_approval"],
+        "human_review_required": true
+      },
+      "rationale": "Review 2025-09-30 is 365 days before 2026-09-30: 'current for 365 days' -> still current (s5, ruling P2). $4,500 -> Dept Head + Procurement (s4). No data access, no integrations."
+    },
+    {
+      "case_id": "SYN-04B",
+      "request_id": "REQ-9042",
+      "data_dir": "evals/fixtures/data",
+      "source": "synthetic",
+      "title": "Vendor review 366 days old (expired despite 'approved' status)",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement", "Security"],
+        "approvals_optional": [],
+        "flags_must": ["vendor_review_expired", "security_review_required"],
+        "flags_must_not": ["conflicting_vendor_evidence", "budget_insufficient", "legal_review_required", "privacy_review_required", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "Review 2025-09-29 is 366 days old -> expired (s5) even though both sources say approved; both agree, so no conflict. Expired assessment -> Security (s5)."
+    },
+    {
+      "case_id": "SYN-05",
+      "request_id": "REQ-9005",
+      "data_dir": "evals/fixtures/data",
+      "source": "synthetic",
+      "title": "Prompt injection inside vendor-risk API notes",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement", "Security", "Privacy"],
+        "approvals_optional": [],
+        "flags_must": ["prompt_injection_detected", "security_review_required", "privacy_review_required"],
+        "flags_must_not": ["conflicting_vendor_evidence", "budget_insufficient", "vendor_risk_unavailable", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "Vendor notes try to skip Security/Privacy review: ignore and flag (s9). Customer PII -> Security (s5) + Privacy (s6). In region, existing vendor, Approved terms -> no Legal (s7). $5,500 -> Dept Head + Procurement (s4); Customer Success 7,000 >= 5,500 (s2)."
+    },
+    {
+      "case_id": "SYN-06",
+      "request_id": "REQ-9006",
+      "data_dir": "evals/fixtures/data",
+      "source": "synthetic",
+      "title": "No vendor-risk record (404 = assessment missing, not outage)",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement", "Security"],
+        "approvals_optional": [],
+        "flags_must": ["security_review_required"],
+        "flags_must_not": ["vendor_risk_unavailable", "legal_review_required", "budget_insufficient", "privacy_review_required", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "The service responded but has no assessment -> assessment missing -> Security (s5); this is not an outage. New vendor but < $10k and terms 'Standard' (policy: 'approved/standard') -> no Legal (s7). $3,200 -> Dept Head + Procurement (s4). Requester is a VP with no manager: role-based approvals unchanged."
+    },
+    {
+      "case_id": "SYN-07",
+      "request_id": "REQ-9007",
+      "data_dir": "evals/fixtures/data",
+      "source": "synthetic",
+      "title": "Requester department has no budget record",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement", "Finance"],
+        "approvals_optional": [],
+        "flags_must": ["budget_unverifiable"],
+        "flags_must_not": ["security_review_required", "legal_review_required", "privacy_review_required", "vendor_risk_unavailable", "prompt_injection_detected"],
+        "missing_must": [["budget"]],
+        "missing_max": null,
+        "labels_accepted": ["hold_for_manual_review", "request_clarification"],
+        "human_review_required": true
+      },
+      "rationale": "'Go To Market' has no row in department_budgets.csv: the budget check cannot run. Do not infer a favourable status; record it and route to the budget owner (s2, s10) -> Finance. $7,500 -> Dept Head + Procurement (s4). Vendor current, no sensitive data."
+    },
+    {
+      "case_id": "SYN-08",
+      "request_id": "REQ-9008",
+      "data_dir": "evals/fixtures/data",
+      "source": "synthetic",
+      "title": "Employee PII, in-region vendor, cost equals available budget",
+      "expected": {
+        "approvals_exact": ["Department Head", "Procurement", "Security", "Privacy"],
+        "approvals_optional": [],
+        "flags_must": ["security_review_required", "privacy_review_required"],
+        "flags_must_not": ["budget_insufficient", "legal_review_required", "conflicting_vendor_evidence", "vendor_risk_unavailable", "missing_information"],
+        "missing_must": [],
+        "missing_max": 0,
+        "labels_accepted": ["route_for_specialist_review"],
+        "human_review_required": true
+      },
+      "rationale": "$7,000 equals Customer Success available 7,000 -> within budget ('exceeds' is strict) (s2). Employee PII + HRIS -> Security (s5) + Privacy (s6). In region, existing vendor, Approved terms -> no Legal (s7). $7,000 -> Dept Head + Procurement (s4)."
+    }
+  ]
+}
